@@ -8,16 +8,16 @@
         subtract
         multiply
         divide
-        percent
+        enter
         1/x
         x^2
         sqrt(x)
         decimal
+        +/-
     memory (maybe):
         memory clear (MC)
         memory recall (MR)
         memory+ (M+)
         memory- (M-)
         memory store (MS)
-
 */
