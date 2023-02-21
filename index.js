@@ -20,6 +20,7 @@ function operate() {
             multiply();
             break;
         case 'divide':
+            if (b === 0) return;
             divide();
     }
     return result;
