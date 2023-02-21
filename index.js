@@ -24,7 +24,39 @@ calculator.addEventListener('click', function (e) {
     }   
     });
 
-function number(number) {}
+function number(number) {
+    switch(number) {
+        case 'zero':
+            entry.textContent += '0';
+            break;
+        case 'one':
+            entry.textContent += '1';
+            break;
+        case 'two':
+            entry.textContent += '2';
+            break;
+        case 'three':
+            entry.textContent += '3';
+            break;
+        case 'four':
+            entry.textContent += '4';
+            break;
+        case 'five':
+            entry.textContent += '5';
+            break;
+        case 'six':
+            entry.textContent += '6';
+            break;
+        case 'seven':
+            entry.textContent += '7';
+            break;
+        case 'eight':
+            entry.textContent += '8';
+            break;
+        case 'nine':
+            entry.textContent += '9';
+    }
+}
 
 const add = () => result = a + b;
 const subtract = () => result = a - b;
