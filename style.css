@@ -1,0 +1,52 @@
+/* .superscript {
+    font-size: smaller;
+    vertical-align: super;
+} */
+#screen {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    font-size: 1.2rem;
+    height: 20vh;
+}
+
+#memory {
+    
+}
+
+#firstNum {
+    grid-column-end: span 3;
+    justify-self: end;
+}
+
+#secondNum {
+    grid-column-end: span 4;
+    grid-row-end: span 3;
+    justify-self: end;
+    align-self: end;
+    font-size: 3rem;
+    margin: 1rem 0rem 0.5rem;
+}
+
+#memoryKeys {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    gap: 0.3rem;
+    margin: 1rem 0rem;
+}
+
+#keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    height: 70vh;
+}
+
+.key {
+    font-size: 1.2rem;
+}
+
+#zero {
+    grid-column-end: span 2;
+}
