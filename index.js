@@ -11,7 +11,7 @@ let result = 0;
 calculator.addEventListener('click', function (e) {
     switch(e.target.className) {
         case 'key number':
-            number(e.target.id);
+            addNumber(e.target.id);
             break;
         case 'key operator':
             operate(e.target.id);
@@ -24,9 +24,9 @@ calculator.addEventListener('click', function (e) {
     }   
     });
 
-function number(number) {
+function addNumber(id) {
     if (entry.textContent.length >= 16) return;
-    switch(number) {
+    switch(id) {
         case 'zero':
             entry.textContent += '0';
             break;
@@ -57,6 +57,10 @@ function number(number) {
         case 'nine':
             entry.textContent += '9';
     }
+    formatNum();
+}
+
+function formatNum() {
     const noCommas = entry.textContent.replace(/,/g, '');
     const formattedNumber = parseInt(noCommas, 10).toLocaleString();
     entry.textContent = formattedNumber;
