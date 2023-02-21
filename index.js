@@ -56,6 +56,9 @@ function number(number) {
         case 'nine':
             entry.textContent += '9';
     }
+    const noCommas = entry.textContent.replace(/,/g, '');
+    const formattedNumber = parseInt(noCommas, 10).toLocaleString();
+    entry.textContent = formattedNumber;
 }
 
 const add = () => result = a + b;
