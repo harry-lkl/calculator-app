@@ -1,6 +1,6 @@
 const memory = document.getElementById('memory');
-const first
-
+const operation = document.getElementById('operation');
+const entry = document.getElementById('entry');
 const calculator = document.getElementById('keys');
 
 let sign = 'add';
