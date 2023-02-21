@@ -1,24 +1,12 @@
-let operator = '';
-let a = 0;
+let operator = 'divide';
+let a = 12;
 let b = 0;
 let result = 0;
 
-function add() {
-    return result = a + b;
-}
-
-function subtract() {
-    return result = a - b;
-}
-
-function multiply() {
-    return result = a * b;
-}
-
-function divide() {
-    if (b === 0) return;
-    return result = a / b;
-}
+const add = () => result = a + b;
+const subtract = () => result = a - b;
+const multiply = () => result = a * b;
+const divide = () => result = a / b;
 
 function operate() {
     switch(operator) {
@@ -34,4 +22,5 @@ function operate() {
         case 'divide':
             divide();
     }
-    }
+    return result;
+}
