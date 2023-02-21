@@ -2,6 +2,7 @@ const memory = document.getElementById('memory');
 const operation = document.getElementById('operation');
 const entry = document.getElementById('entry');
 const calculator = document.getElementById('keys');
+const entryMaxLength = 16;
 
 let sign = 'add';
 let a = 0;
@@ -25,7 +26,7 @@ calculator.addEventListener('click', function (e) {
     });
 
 function addNumber(id) {
-    if (entry.textContent.length >= 16) return;
+    if (entry.textContent.length >= entryMaxLength) return;
     switch(id) {
         case 'zero':
             entry.textContent += '0';
