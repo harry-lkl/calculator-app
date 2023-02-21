@@ -10,9 +10,9 @@
     height: 20vh;
 }
 
-#memory {
+/* #memory {
     
-}
+} */
 
 #firstNum {
     grid-column-end: span 3;

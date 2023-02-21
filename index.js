@@ -1,4 +1,4 @@
-let operator = 'divide';
+let sign = 'divide';
 let a = 12;
 let b = 0;
 let result = 0;
@@ -9,7 +9,7 @@ const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
 function operate() {
-    switch(operator) {
+    switch(sign) {
         case 'add':
             add();
             break;
@@ -25,3 +25,4 @@ function operate() {
     }
     return result;
 }
+
