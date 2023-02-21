@@ -25,7 +25,7 @@ calculator.addEventListener('click', function (e) {
     });
 
 function number(number) {
-    if (entry.textContent.length >= 15) return;
+    if (entry.textContent.length >= 16) return;
     switch(number) {
         case 'zero':
             entry.textContent += '0';
