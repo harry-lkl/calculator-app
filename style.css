@@ -14,12 +14,12 @@
     
 } */
 
-#firstNum {
+#operation {
     grid-column-end: span 3;
     justify-self: end;
 }
 
-#secondNum {
+#entry {
     grid-column-end: span 4;
     grid-row-end: span 3;
     justify-self: end;

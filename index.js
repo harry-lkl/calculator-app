@@ -1,3 +1,6 @@
+const memory = document.getElementById('memory');
+const first
+
 const calculator = document.getElementById('keys');
 
 let sign = 'add';
