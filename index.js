@@ -26,7 +26,7 @@ calculator.addEventListener('click', function (e) {
 
 function addNumber(id) {
     if (entry.textContent.length >= entryMaxLength) return;
-    if (selectedOperator === true) entry.textContent = '';
+    if (selectedOperator === true) clearEntry();
     selectedOperator = false;
     switch(id) {
         case 'zero':
@@ -77,11 +77,11 @@ function operate(id) {
     } else if (entry.textContent === '') {
         return;
     }
-/*     if (operation.textContent === '') {
+    if (operation.textContent === '') {
         a = yeetCommas();
         return setOperation(id);
     }
-    b = yeetCommas; */
+    b = yeetCommas;
     switch(id) {
         case 'add':
             add();
@@ -124,3 +124,4 @@ function setOperation(id) {
 
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
+const clearEntry = () => entry.textContent = '';
