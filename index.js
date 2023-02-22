@@ -74,31 +74,39 @@ const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
 function operate(id) {
-    userEnteredNum = false;
     if (operation.textContent === '') {
-        a = yeetCommas();
+        a = toNum();
+        userEnteredNum = false;
         return setOperation(id);
     }
-    //  if there's an operation going but no new number entered, only change the sign and operation display
     if (userEnteredNum === false) {
-        a = yeetCommas();
+        a = toNum();
         return setOperation(id);
     }
-    switch(id) {
-        case 'add':
-            add();
-            break;
-        case 'subtract':
-            subtract();
-            break;
-        case 'multiply':
-            multiply();
-            break;
-        case 'divide':
-            if (b === 0) return;
-            divide();
+    if (userEnteredNum === true) {
+        b = toNum();
+        userEnteredNum = false;
+        userSelectedOperator = true;
+        switch(id) {
+            case 'add':
+                add();
+                break;
+            case 'subtract':
+                subtract();
+                break;
+            case 'multiply':
+                multiply();
+                break;
+            case 'divide':
+                if (b === 0) return;
+                divide();
+        }
+        entry.textContent = result;
+        formatNum();
+        b = '';
+        result = '';
+        operate(id);
     }
-    return result;
 }
 
 function modify(id) {}
@@ -126,5 +134,6 @@ function setOperation(id) {
 
 //  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
+const toNum = () => parseFloat(yeetCommas(), 10);
 const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
 const clearEntry = () => entry.textContent = '';
