@@ -4,12 +4,21 @@ const entry = document.getElementById('entry');
 const calculator = document.getElementById('keys');
 const entryMaxLength = 16;
 
-let operator = 'add';
+let operator = '';
 let userSelectedOperator = false;
 let userEnteredNum = false;
 let a = '';
 let b = '';
 let result = '';
+
+function fullReset() {
+    let operator = '';
+    let userSelectedOperator = false;
+    let userEnteredNum = false;
+    let a = '';
+    let b = '';
+    let result = '';
+}
 
 calculator.addEventListener('click', function (e) {
     switch(e.target.className) {
