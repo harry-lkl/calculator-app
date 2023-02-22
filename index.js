@@ -74,6 +74,8 @@ const divide = () => result = a / b;
 function operate(id) {
     if (entry.textContent === '' && id === 'subtract') {
         entry.textContent = '-';
+    } else if (entry.textContent === '') {
+        return;
     }
 /*     if (operation.textContent === '') {
         a = yeetCommas();
