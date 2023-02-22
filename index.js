@@ -96,14 +96,13 @@ function signs(id) {
     }
     if (userEnteredNum === true) {
         b = toNum();
-        userEnteredNum = false;
-        userSelectedOperator = true;
-        entry.textContent = operations();
-        if (typeof entry.textContent !== Number) return;
+        operations();
+        entry.textContent = result;
         formatNum();
         a = '';
         b = '';
         result = '';
+        userEnteredNum = false;
         signs(id);
     }
 }
@@ -123,7 +122,6 @@ function operations() {
             if (b === 0) return `error: x/0`;
             divide();
     }
-    return result;
 }
 
 function modify(id) {}
