@@ -61,11 +61,6 @@ function addNumber(id) {
     formatNum();
 }
 
-function formatNum() {
-    const yeetCommas = entry.textContent.replace(/,/g, '');
-    entry.textContent = parseInt(yeetCommas, 10).toLocaleString();
-}
-
 const inverse = () => result = 1 / a;
 const squared = () => result = a ** 2;
 const sqrt = () => result = Math.sqrt(a);
@@ -93,4 +88,10 @@ function operate() {
 }
 
 function modify(modifier) {}
-function setSign(sign) {}
+
+function setSign(sign) {
+
+}
+
+const yeetCommas = () => entry.textContent.replace(/,/g, '');
+const formatNum = () => entry.textContent = parseInt(yeetCommas(), 10).toLocaleString();
