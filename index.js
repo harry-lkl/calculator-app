@@ -87,26 +87,32 @@ function operate(id) {
         b = toNum();
         userEnteredNum = false;
         userSelectedOperator = true;
-        switch(operator) {
-            case 'add':
-                add();
-                break;
-            case 'subtract':
-                subtract();
-                break;
-            case 'multiply':
-                multiply();
-                break;
-            case 'divide':
-                if (b === 0) return;
-                divide();
-        }
-        entry.textContent = result;
+        entry.textContent = operations();
+        if (typeof entry.textContent !== Number) return;
         formatNum();
+        a = '';
         b = '';
         result = '';
         operate(id);
     }
+}
+
+function operations() {
+    switch(operator) {
+        case 'add':
+            add();
+            break;
+        case 'subtract':
+            subtract();
+            break;
+        case 'multiply':
+            multiply();
+            break;
+        case 'divide':
+            if (b === 0) return `error: x/0`;
+            divide();
+    }
+    return result;
 }
 
 function modify(id) {}
