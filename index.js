@@ -29,6 +29,7 @@ function addNumber(id) {
     if (entry.textContent.length >= entryMaxLength) return;
     if (userSelectedOperator === true) clearEntry();
     userSelectedOperator = false;
+    userEnteredNum = true;
     switch(id) {
         case 'zero':
             entry.textContent += '0';
@@ -73,11 +74,16 @@ const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
 function operate(id) {
+    userEnteredNum = false;
     if (operation.textContent === '') {
         a = yeetCommas();
         return setOperation(id);
     }
     //  if there's an operation going but no new number entered, only change the sign and operation display
+    if (userEnteredNum === false) {
+        a = yeetCommas();
+        return setOperation(id);
+    }
     switch(id) {
         case 'add':
             add();
