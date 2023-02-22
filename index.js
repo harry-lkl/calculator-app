@@ -16,12 +16,14 @@ calculator.addEventListener('click', function (e) {
         case 'key number':
             addNumber(e.target.id);
             break;
-        case 'key operator':
-            operate(e.target.id);
+        case 'key sign':
+            signs(e.target.id);
             break;
         case 'key modifier':
             modify(e.target.id);
             break;
+        case 'key operator':
+            operate(e.target.id);
     }   
     });
 
@@ -73,7 +75,7 @@ const subtract = () => result = a - b;
 const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
-function operate(id) {
+function signs(id) {
     if (operation.textContent === '') {
         a = toNum();
         userEnteredNum = false;
@@ -93,7 +95,7 @@ function operate(id) {
         a = '';
         b = '';
         result = '';
-        operate(id);
+        signs(id);
     }
 }
 
