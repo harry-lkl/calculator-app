@@ -87,7 +87,7 @@ function operate(id) {
         b = toNum();
         userEnteredNum = false;
         userSelectedOperator = true;
-        switch(id) {
+        switch(operator) {
             case 'add':
                 add();
                 break;
