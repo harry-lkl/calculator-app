@@ -16,14 +16,14 @@ calculator.addEventListener('click', function (e) {
         case 'key number':
             addNumber(e.target.id);
             break;
-        case 'key sign':
-            signs(e.target.id);
+        case 'key operator':
+            operator(e.target.id);
+            break;
+        case 'key function':
+            functions(e.target.id);
             break;
         case 'key modifier':
             modify(e.target.id);
-            break;
-        case 'key operator':
-            operate(e.target.id);
     }   
     });
 
@@ -75,7 +75,7 @@ const subtract = () => result = a - b;
 const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
-function signs(id) {
+function operator(id) {
     if (operation.textContent === '') {
         a = toNum();
         userEnteredNum = false;
@@ -94,7 +94,7 @@ function signs(id) {
         b = '';
         result = '';
         userEnteredNum = false;
-        signs(id);
+        operator(id);
     }
 }
 
@@ -118,7 +118,6 @@ function setOperation(id) {
     }
     userSelectedOperator = true;
 }
-
 
 function operations() {
     switch(operator) {
@@ -163,3 +162,15 @@ function clearAll() {
     entry.textContent = 0;
     operation.textContent = '';
 }
+
+// x functions: immediately execute on the number in entry
+    //  the operation is posted in operation
+    //  the answer is posted in entry
+    //  if there is already an operation (a and operator is set), execute on the number in entry plus complete the operation
+    //  the operation is posted in operation
+// signs: if there isn't an operation, post the current operation with the sign
+    //  if there is an operation, execute on the number in entry
+    //  the result is posted in entry
+    //  the result is posted in operation with the new selected sign
+// equal: if there is no sign set, operation equal entry
+    //  if there is a sign set, a has a value, b = entry and operate
