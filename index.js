@@ -11,15 +11,6 @@ let a = '';
 let b = '';
 let result = '';
 
-function fullReset() {
-    let operator = '';
-    let userSelectedOperator = false;
-    let userEnteredNum = false;
-    let a = '';
-    let b = '';
-    let result = '';
-}
-
 calculator.addEventListener('click', function (e) {
     switch(e.target.className) {
         case 'key number':
@@ -107,25 +98,6 @@ function signs(id) {
     }
 }
 
-function operations() {
-    switch(operator) {
-        case 'add':
-            add();
-            break;
-        case 'subtract':
-            subtract();
-            break;
-        case 'multiply':
-            multiply();
-            break;
-        case 'divide':
-            if (b === 0) return `error: x/0`;
-            divide();
-    }
-}
-
-function modify(id) {}
-
 function setOperation(id) {
     switch(id) {
         case 'add':
@@ -147,8 +119,47 @@ function setOperation(id) {
     userSelectedOperator = true;
 }
 
+
+function operations() {
+    switch(operator) {
+        case 'add':
+            add();
+            break;
+        case 'subtract':
+            subtract();
+            break;
+        case 'multiply':
+            multiply();
+            break;
+        case 'divide':
+            if (b === 0) return `error: x/0`;
+            divide();
+    }
+}
+
+function modify(id) {
+    switch(id) {
+        case 'clearAll':
+            clearAll();
+            break;
+        case 'clearEntry':
+            entry.textContent = 0;
+    }
+}
+
 //  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => parseFloat(yeetCommas(), 10);
 const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
 const clearEntry = () => entry.textContent = '';
+
+function clearAll() {
+    operator = '';
+    userSelectedOperator = false;
+    userEnteredNum = false;
+    a = '';
+    b = '';
+    result = '';
+    entry.textContent = 0;
+    operation.textContent = '';
+}
