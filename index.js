@@ -70,18 +70,19 @@ const subtract = () => result = a - b;
 const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
-//  when operation is empty, - adds -sign to entry, but others do nothing
 function operate(id) {
     if (entry.textContent === '' && id === 'subtract') {
-        entry.textContent = '-';
-    } else if (entry.textContent === '') {
+        return entry.textContent = '-';
+    } else if (entry.textContent === '' || entry.textContent === '-') {
         return;
     }
-    if (operation.textContent === '') {
+
+    //  working on this part
+/*     if (operation.textContent === '') {
         a = yeetCommas();
         return setOperation(id);
     }
-    b = yeetCommas;
+    b = yeetCommas; */
     switch(id) {
         case 'add':
             add();
