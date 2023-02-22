@@ -62,6 +62,7 @@ function addNumber(id) {
     formatNum();
 }
 
+//  operations
 const inverse = () => result = 1 / a;
 const squared = () => result = a ** 2;
 const sqrt = () => result = Math.sqrt(a);
@@ -123,6 +124,7 @@ function setOperation(id) {
     selectedOperator = true;
 }
 
+//  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
 const clearEntry = () => entry.textContent = '';
