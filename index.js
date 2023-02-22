@@ -17,10 +17,10 @@ calculator.addEventListener('click', function (e) {
             addNumber(e.target.id);
             break;
         case 'key operator':
-            operator(e.target.id);
+            operate(e.target.id);
             break;
         case 'key function':
-            functions(e.target.id);
+            runFunction(e.target.id);
             break;
         case 'key modifier':
             modify(e.target.id);
@@ -75,7 +75,7 @@ const subtract = () => result = a - b;
 const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
-function operator(id) {
+function operate(id) {
     if (operation.textContent === '') {
         a = toNum();
         userEnteredNum = false;
@@ -94,7 +94,7 @@ function operator(id) {
         b = '';
         result = '';
         userEnteredNum = false;
-        operator(id);
+        operate(id);
     }
 }
 
