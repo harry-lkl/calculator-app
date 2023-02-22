@@ -5,7 +5,8 @@ const calculator = document.getElementById('keys');
 const entryMaxLength = 16;
 
 let operator = 'add';
-let selectedOperator = false;
+let userSelectedOperator = false;
+let userEnteredNum = false;
 let a = '';
 let b = '';
 let result = '';
@@ -26,8 +27,8 @@ calculator.addEventListener('click', function (e) {
 
 function addNumber(id) {
     if (entry.textContent.length >= entryMaxLength) return;
-    if (selectedOperator === true) clearEntry();
-    selectedOperator = false;
+    if (userSelectedOperator === true) clearEntry();
+    userSelectedOperator = false;
     switch(id) {
         case 'zero':
             entry.textContent += '0';
@@ -72,18 +73,11 @@ const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
 function operate(id) {
-/*     if (entry.textContent === '' && id === 'subtract') {
-        return entry.textContent = '-';
-    } else if (entry.textContent === '' || entry.textContent === '-') {
-        return;
-    } */
-
-    //  working on this part
-/*     if (operation.textContent === '') {
+    if (operation.textContent === '') {
         a = yeetCommas();
         return setOperation(id);
     }
-    b = yeetCommas; */
+    //  if there's an operation going but no new number entered, only change the sign and operation display
     switch(id) {
         case 'add':
             add();
@@ -121,7 +115,7 @@ function setOperation(id) {
             operation.textContent = entry.textContent + ' ÷';
             operator = 'divide';
     }
-    selectedOperator = true;
+    userSelectedOperator = true;
 }
 
 //  formatting
