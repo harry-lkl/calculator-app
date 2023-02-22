@@ -62,11 +62,13 @@ function addNumber(id) {
 }
 
 function formatNum() {
-    const noCommas = entry.textContent.replace(/,/g, '');
-    const formattedNumber = parseInt(noCommas, 10).toLocaleString();
-    entry.textContent = formattedNumber;
+    const yeetCommas = entry.textContent.replace(/,/g, '');
+    entry.textContent = parseInt(yeetCommas, 10).toLocaleString();
 }
 
+const inverse = () => result = 1 / a;
+const squared = () => result = a ** 2;
+const sqrt = () => result = Math.sqrt(a);
 const add = () => result = a + b;
 const subtract = () => result = a - b;
 const multiply = () => result = a * b;
