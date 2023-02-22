@@ -4,10 +4,11 @@ const entry = document.getElementById('entry');
 const calculator = document.getElementById('keys');
 const entryMaxLength = 16;
 
-let sign = 'add';
-let a = 0;
-let b = 0;
-let result = 0;
+let operator = 'add';
+let selectedOperator = false;
+let a = '';
+let b = '';
+let result = '';
 
 calculator.addEventListener('click', function (e) {
     switch(e.target.className) {
@@ -20,13 +21,13 @@ calculator.addEventListener('click', function (e) {
         case 'key modifier':
             modify(e.target.id);
             break;
-        case 'key sign':
-            setSign(e.target.id);
     }   
     });
 
 function addNumber(id) {
     if (entry.textContent.length >= entryMaxLength) return;
+    if (selectedOperator === true) entry.textContent = '';
+    selectedOperator = false;
     switch(id) {
         case 'zero':
             entry.textContent += '0';
@@ -69,8 +70,14 @@ const subtract = () => result = a - b;
 const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
-function operate() {
-    switch(sign) {
+function operate(id) {
+    if (entry.textContent === '') return;
+    if (operation.textContent === '') {
+        a = yeetCommas();
+        return setOperation(id);
+    }
+    b = yeetCommas;
+    switch(id) {
         case 'add':
             add();
             break;
@@ -87,11 +94,28 @@ function operate() {
     return result;
 }
 
-function modify(modifier) {}
+function modify(id) {}
 
-function setSign(sign) {
-
+function setOperation(id) {
+    switch(id) {
+        case 'add':
+            operation.textContent = entry.textContent + ' +';
+            operator = 'add';
+            break;
+        case 'subtract':
+            operation.textContent = entry.textContent + ' -';
+            operator = 'subtract';
+            break;
+        case 'multiply':
+            operation.textContent = entry.textContent + ' ×';
+            operator = 'multiply';
+            break;
+        case 'divide':
+            operation.textContent = entry.textContent + ' ÷';
+            operator = 'divide';
+    }
+    selectedOperator = true;
 }
 
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
-const formatNum = () => entry.textContent = parseInt(yeetCommas(), 10).toLocaleString();
+const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
