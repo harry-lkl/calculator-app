@@ -72,11 +72,11 @@ const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
 function operate(id) {
-    if (entry.textContent === '' && id === 'subtract') {
+/*     if (entry.textContent === '' && id === 'subtract') {
         return entry.textContent = '-';
     } else if (entry.textContent === '' || entry.textContent === '-') {
         return;
-    }
+    } */
 
     //  working on this part
 /*     if (operation.textContent === '') {
