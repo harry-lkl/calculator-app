@@ -109,10 +109,10 @@ function operate(id) {
         userEnteredNum = false;
         userSelectedOperator = true;
         if (a === '' && b === '' && operator === '') {
-            result = toNum(entry.textContent);
+            result = toNum();
             operation.textContent = `${result} =`;
         } else if (a !== '' && operator !== "") {
-            b = toNum(entry.textContent);
+            b = toNum();
             operations();
             operation.textContent = `${a} ${operatorSymbol} ${b} =`;
             entry.textContent = result;
@@ -189,7 +189,7 @@ function modify(id) {
 //  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => parseFloat(yeetCommas(), 10);
-const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
+const formatNum = () => parseFloat(yeetCommas(), 10).toLocaleString();
 const clearEntry = () => entry.textContent = '';
 
 function clearAll() {
