@@ -5,6 +5,7 @@ const calculator = document.getElementById('keys');
 const entryMaxLength = 16;
 
 let operator = '';
+let operatorSymbol = '';
 let userSelectedOperator = false;
 let userEnteredNum = false;
 let a = '';
@@ -75,17 +76,23 @@ const subtract = () => result = a - b;
 const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
+/* function equal() {
+    //  if no sign is selected, push entry to operation with = sign and keep the entry
+    //  if a sign is selected, push entry into b, operate, post operation with a, b, and equal sign to operation, answer to entry
+    //  if it is pressed again, keep sign and b, update entry into a, operate
+}
+
 function operate(id) {
+    //  if no ongoing operation, save anything in entry to a and post the operation
     if (operation.textContent === '') {
-        a = toNum();
         userEnteredNum = false;
-        return setOperation(id);
-    }
-    if (userEnteredNum === false) {
         a = toNum();
         return setOperation(id);
-    }
-    if (userEnteredNum === true) {
+    //  if no number was entered but there is an operation, switch between the signs
+    } else if (userEnteredNum === false) {
+        return setOperation(id);
+    } else if (userEnteredNum === true) {
+        userEnteredNum = false;
         b = toNum();
         operations();
         entry.textContent = result;
@@ -93,27 +100,60 @@ function operate(id) {
         a = '';
         b = '';
         result = '';
-        userEnteredNum = false;
         operate(id);
     }
+} */
+
+function operate(id) {
+    if (id === 'equal') {
+        userEnteredNum = false;
+        userSelectedOperator = true;
+        if (a === '' && b === '' && operator === '') {
+            result = toNum(entry.textContent);
+            operation.textContent = `${result} =`;
+        } else if (a !== '' && operator !== "") {
+            b = toNum(entry.textContent);
+            operations();
+            operation.textContent = `${a} ${operatorSymbol} ${b} =`;
+            entry.textContent = result;
+            formatNum();
+        }
+    }
+    //  +-x/
+        //  a = toNum(entry.textContent);
+        //  setOperation(id)
+    //  equal sign
+        //  if a, b, operation === '';
+            //  result = toNum(entry.textContent);
+            //  operation.textContent = entry.textContent + ' =';
+        //  if a !== '';    <- operation is set, a stored, currently a number in entry
+            //  b = toNum(entry.textContent);
+            //  operations()
+            //  operation.textContent = a 'operator' b =
+            //  entry.textContent = formatNum(result)
+
 }
 
 function setOperation(id) {
     switch(id) {
         case 'add':
-            operation.textContent = entry.textContent + ' +';
+            operation.textContent = `${entry.textContent} +`;
+            operatorSymbol = '+';
             operator = 'add';
             break;
         case 'subtract':
-            operation.textContent = entry.textContent + ' -';
+            operation.textContent = `${entry.textContent} -`;
+            operatorSymbol = '-';
             operator = 'subtract';
             break;
         case 'multiply':
-            operation.textContent = entry.textContent + ' ×';
+            operation.textContent = `${entry.textContent} ×`;
+            operatorSymbol = '×';
             operator = 'multiply';
             break;
         case 'divide':
-            operation.textContent = entry.textContent + ' ÷';
+            operation.textContent = `${entry.textContent} ÷`;
+            operatorSymbol = '÷';
             operator = 'divide';
     }
     userSelectedOperator = true;
@@ -154,6 +194,7 @@ const clearEntry = () => entry.textContent = '';
 
 function clearAll() {
     operator = '';
+    operatorSymbol = '';
     userSelectedOperator = false;
     userEnteredNum = false;
     a = '';
