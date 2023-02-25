@@ -50,6 +50,7 @@ calculator.addEventListener('click', function (e) {
     }   
     });
 
+//  number
 function addNumber(id) {
     userEnteredNum = true;
     if (entry.textContent.length >= entryMaxLength) return;
