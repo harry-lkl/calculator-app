@@ -6,7 +6,7 @@ const entryMaxLength = 16;
 
 let operator = '';
 let operatorSymbol = '';
-let userSelectedOperator = false;
+let userPressedOperator = false;
 let userEnteredNum = false;
 let userEnteredEqual = true;
 let a = '';
@@ -16,7 +16,7 @@ let result = '';
 function resetAll() {
     operator = '';
     operatorSymbol = '';
-    userSelectedOperator = false;
+    userPressedOperator = false;
     userEnteredNum = false;
     let equalled = true;
     a = '';
@@ -32,7 +32,6 @@ function resetOperation() {
     a = '';
     b = '';
     result = '';
-    operation.textContent = '';
 }
 
 calculator.addEventListener('click', function (e) {
@@ -55,11 +54,12 @@ function addNumber(id) {
     userEnteredNum = true;
     if (userEnteredEqual === true) {
         resetOperation();
+        operation.textContent = '';
         userEnteredEqual = false;
     }
     if (entry.textContent.length >= entryMaxLength) return;
-    if (userSelectedOperator === true || entry.textContent === '0') clearEntry();
-    userSelectedOperator = false;
+    if (userPressedOperator === true || entry.textContent === '0') clearEntry();
+    userPressedOperator = false;
     switch(id) {
         case 'zero':
             entry.textContent += '0';
@@ -132,33 +132,43 @@ function operate(id) {
 } */
 
 function operate(id) {
-    userEnteredNum = false;
-    userSelectedOperator = true;
     if (id === 'equal') {
-        userEnteredEqual = true;
-        if (a === '' && b === '' && operator === '') {
-            result = toNum();
-            operation.textContent = `${result} =`;
-        } else if (a !== '' && operator !== '' && b === '') {
+        userEnteredNum = false;
+        if (operator === '') {
+            userEnteredEqual = true;
+            a = toNum();
+            result = a
+            operation.textContent = `${a} =`;
+            resetOperation();
+        } else if (operator !== '' && userEnteredEqual === false) {
+            userEnteredEqual = true;
             b = toNum();
             operations();
             operation.textContent = `${a} ${operatorSymbol} ${b} =`;
             entry.textContent = result;
             formatNum();
-        } else if (a !== '' && operator !== '' && b !== '') {
+        } else if (operator !== '' && userEnteredEqual === true) {
+            userEnteredEqual = false;
             a = result;
-            result = '';
             entry.textContent = b;
+            result = '';
             b = '';
             operate(id);
+        } else {
+            console.log('unchecked error: equal')
         }
-    } else {
-        userEnteredEqual = false;
+    } else if (id === 'add' || id === 'subtract' || id === 'multiply' || id ==='divide') {
         a = toNum();
         setOperation(id);
     }
     //  +-x/
-        //  if user entered a number, push it to a and setOperation
+        //  if there is no a, no operator, then assign a and setOperation
+        //  if there is a, operator, b, and a result, then assign result to a, clear everything, and assign a and setOperation
+        //  if there is a and operator, then only change the sign
+        //  if there is a and operator, and a new number is entered, then operate and attach the new sign
+
+        //  if operation is set, then
+        //  push entry to a and setOperation
         //  a = toNum(entry.textContent);
         //  setOperation(id)
         //  if user entered a second number, then operate 
@@ -196,7 +206,7 @@ function setOperation(id) {
             operatorSymbol = '÷';
             operator = 'divide';
     }
-    userSelectedOperator = true;
+    userPressedOperator = true;
 }
 
 function operations() {
