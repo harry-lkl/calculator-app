@@ -8,9 +8,32 @@ let operator = '';
 let operatorSymbol = '';
 let userSelectedOperator = false;
 let userEnteredNum = false;
+let userEnteredEqual = true;
 let a = '';
 let b = '';
 let result = '';
+
+function resetAll() {
+    operator = '';
+    operatorSymbol = '';
+    userSelectedOperator = false;
+    userEnteredNum = false;
+    let equalled = true;
+    a = '';
+    b = '';
+    result = '';
+    entry.textContent = 0;
+    operation.textContent = '';
+}
+
+function resetOperation() {
+    operator = '';
+    operatorSymbol = '';
+    a = '';
+    b = '';
+    result = '';
+    operation.textContent = '';
+}
 
 calculator.addEventListener('click', function (e) {
     switch(e.target.className) {
@@ -29,10 +52,14 @@ calculator.addEventListener('click', function (e) {
     });
 
 function addNumber(id) {
-    if (entry.textContent.length >= entryMaxLength) return;
-    if (userSelectedOperator === true) clearEntry();
-    userSelectedOperator = false;
     userEnteredNum = true;
+    if (userEnteredEqual === true) {
+        resetOperation();
+        userEnteredEqual = false;
+    }
+    if (entry.textContent.length >= entryMaxLength) return;
+    if (userSelectedOperator === true || entry.textContent === '0') clearEntry();
+    userSelectedOperator = false;
     switch(id) {
         case 'zero':
             entry.textContent += '0';
@@ -105,23 +132,36 @@ function operate(id) {
 } */
 
 function operate(id) {
+    userEnteredNum = false;
+    userSelectedOperator = true;
     if (id === 'equal') {
-        userEnteredNum = false;
-        userSelectedOperator = true;
+        userEnteredEqual = true;
         if (a === '' && b === '' && operator === '') {
             result = toNum();
             operation.textContent = `${result} =`;
-        } else if (a !== '' && operator !== "") {
+        } else if (a !== '' && operator !== '' && b === '') {
             b = toNum();
             operations();
             operation.textContent = `${a} ${operatorSymbol} ${b} =`;
             entry.textContent = result;
             formatNum();
+        } else if (a !== '' && operator !== '' && b !== '') {
+            a = result;
+            result = '';
+            entry.textContent = b;
+            b = '';
+            operate(id);
         }
+    } else {
+        userEnteredEqual = false;
+        a = toNum();
+        setOperation(id);
     }
     //  +-x/
+        //  if user entered a number, push it to a and setOperation
         //  a = toNum(entry.textContent);
         //  setOperation(id)
+        //  if user entered a second number, then operate 
     //  equal sign
         //  if a, b, operation === '';
             //  result = toNum(entry.textContent);
@@ -176,10 +216,14 @@ function operations() {
     }
 }
 
+function runFunction() {
+
+}
+
 function modify(id) {
     switch(id) {
         case 'clearAll':
-            clearAll();
+            resetAll();
             break;
         case 'clearEntry':
             entry.textContent = 0;
@@ -189,20 +233,8 @@ function modify(id) {
 //  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => parseFloat(yeetCommas(), 10);
-const formatNum = () => parseFloat(yeetCommas(), 10).toLocaleString();
+const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
 const clearEntry = () => entry.textContent = '';
-
-function clearAll() {
-    operator = '';
-    operatorSymbol = '';
-    userSelectedOperator = false;
-    userEnteredNum = false;
-    a = '';
-    b = '';
-    result = '';
-    entry.textContent = 0;
-    operation.textContent = '';
-}
 
 // x functions: immediately execute on the number in entry
     //  the operation is posted in operation

@@ -2,17 +2,23 @@
     font-size: smaller;
     vertical-align: super;
 } */
+body {
+    margin: 0;
+}
+
+#calculator {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 #screen {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    font-size: 1.2rem;
-    height: 20vh;
+    font-size: 4rem;
+    height: 25vh;
 }
-
-/* #memory {
-    
-} */
 
 #operation {
     grid-column-end: span 3;
@@ -24,7 +30,7 @@
     grid-row-end: span 3;
     justify-self: end;
     align-self: end;
-    font-size: 3rem;
+    font-size: 7.5rem;
     margin: 1rem 0rem 0.5rem;
 }
 
@@ -33,18 +39,24 @@
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: 1fr;
     gap: 0.3rem;
-    margin: 1rem 0rem;
+    margin: 1.2rem 0.5rem 3rem;
+}
+
+.memoryKey {
+    font-size: 3rem;
 }
 
 #keys {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
-    height: 70vh;
+    gap: 1.5rem;
+    height: 65vh;
+    margin: 0rem 0.5rem;
 }
 
 .key {
-    font-size: 1.2rem;
+    font-size: 3rem;
 }
 
 #zero {
