@@ -6,7 +6,7 @@ const entryMaxLength = 16;
 
 let operator = '';
 let operatorSymbol = '';
-let userPressedOperator = false;
+let userEnteredOperator = false;
 let userEnteredNum = false;
 let userEnteredEqual = true;
 let a = '';
@@ -16,7 +16,7 @@ let result = '';
 function resetAll() {
     operator = '';
     operatorSymbol = '';
-    userPressedOperator = false;
+    userEnteredOperator = false;
     userEnteredNum = false;
     let equalled = true;
     a = '';
@@ -52,14 +52,15 @@ calculator.addEventListener('click', function (e) {
 
 function addNumber(id) {
     userEnteredNum = true;
+    if (entry.textContent.length >= entryMaxLength) return;
     if (userEnteredEqual === true) {
         resetOperation();
+        clearEntry();
         operation.textContent = '';
         userEnteredEqual = false;
     }
-    if (entry.textContent.length >= entryMaxLength) return;
-    if (userPressedOperator === true || entry.textContent === '0') clearEntry();
-    userPressedOperator = false;
+    if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
+    userEnteredOperator = false;
     switch(id) {
         case 'zero':
             entry.textContent += '0';
@@ -157,7 +158,9 @@ function operate(id) {
         } else {
             console.log('unchecked error: equal')
         }
-    } else if (id === 'add' || id === 'subtract' || id === 'multiply' || id ==='divide') {
+    } else {
+        userEnteredOperator = true;
+        userEnteredEqual = false;
         a = toNum();
         setOperation(id);
     }
@@ -206,7 +209,7 @@ function setOperation(id) {
             operatorSymbol = '÷';
             operator = 'divide';
     }
-    userPressedOperator = true;
+    userEnteredOperator = true;
 }
 
 function operations() {
