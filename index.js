@@ -9,6 +9,7 @@ let operatorSymbol = '';
 let userEnteredOperator = false;
 let userEnteredNum = true;
 let userEnteredEqual = false;
+let isChaining = false;
 let a = '';
 let b = '';
 let result = '';
@@ -19,6 +20,7 @@ function resetAll() {
     userEnteredOperator = false;
     userEnteredNum = true;
     userEnteredEqual = false;
+    isChaining = false;
     a = '';
     b = '';
     result = '';
@@ -135,6 +137,7 @@ function operate(id) {
 
 function operate(id) {
     if (id === 'equal') {
+        isChaining = false;
         userEnteredNum = false;
         if (operator === '') {
             userEnteredEqual = true;
@@ -145,7 +148,7 @@ function operate(id) {
         } else if (operator !== '' && userEnteredEqual === false) {
             userEnteredEqual = true;
             b = toNum();
-            operations();
+            runOperations();
             operation.textContent = `${a} ${operatorSymbol} ${b} =`;
             entry.textContent = result;
             formatNum();
@@ -162,20 +165,34 @@ function operate(id) {
     } else {
         userEnteredOperator = true;
         userEnteredEqual = false;
-        a = toNum();
-        setOperation(id);
+        if (isChaining === true && userEnteredNum === true) {
+            userEnteredNum = false;
+            operate('equal');
+            a = toNum();
+            setOperation(id);
+            operate(id);
+        } else {
+            isChaining = true;
+            userEnteredNum = false;
+            a = toNum();
+            setOperation(id);
+        }
     }
     //  +-x/
-        //  if there is no a, no operator, then assign a and setOperation
-        //  if there is a, operator, b, and a result, then assign result to a, clear everything, and assign a and setOperation
-        //  if there is a and operator, then only change the sign
-        //  if there is a and operator, and a new number is entered, then operate and attach the new sign
+/*      default
+            a = toNum();
+            setOperation(id);
+        chaining: default false, true when operator is entered, false when equal is pressed
+            (if chaining === false and userEnteredNum === true, change the sign and set userEnteredNum to false and chaining to true
+            if chaining === true and userEnteredNum === false, change the sign and set userEnteredNum to false and chaining to true)
 
-        //  if operation is set, then
-        //  push entry to a and setOperation
-        //  a = toNum(entry.textContent);
-        //  setOperation(id)
-        //  if user entered a second number, then operate 
+            this logic seem sound
+***                
+            if chaining === true && userEnteredNum === true, call operate, then set chaining back to true
+            else change the sign and set userEnteredNum to false and chaining to true
+
+            operate needs to end the chain
+            */
     //  equal sign
         //  if a, b, operation === '';
             //  result = toNum(entry.textContent);
@@ -210,10 +227,9 @@ function setOperation(id) {
             operatorSymbol = '÷';
             operator = 'divide';
     }
-    userEnteredOperator = true;
 }
 
-function operations() {
+function runOperations() {
     switch(operator) {
         case 'add':
             add();
