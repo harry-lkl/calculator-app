@@ -4,24 +4,24 @@ const entry = document.getElementById('entry');
 const calculator = document.getElementById('keys');
 const entryMaxLength = 16;
 
+let isChaining = false;
 let operator = '';
 let operatorSymbol = '';
-let userEnteredOperator = false;
-let userEnteredNum = true;
 let userEnteredEqual = false;
-let isChaining = false;
+let userEnteredNum = true;
+let userEnteredOperator = false;
 let a = '';
 let b = '';
 let result = '';
 
 //  resets
 function resetAll() {
+    isChaining = false;
     operator = '';
     operatorSymbol = '';
-    userEnteredOperator = false;
-    userEnteredNum = true;
     userEnteredEqual = false;
-    isChaining = false;
+    userEnteredNum = true;
+    userEnteredOperator = false;
     a = '';
     b = '';
     result = '';
@@ -141,11 +141,11 @@ function operate(id) {
             b = '';
             operate(id);
         } else {
-            console.log('unchecked error: equal')
+            console.log('error: equal')
         }
     } else {
-        userEnteredOperator = true;
         userEnteredEqual = false;
+        userEnteredOperator = true;
         if (isChaining === true && userEnteredNum === true) {
             userEnteredNum = false;
             operate('equal');
@@ -210,14 +210,19 @@ function runFunction() {
 //  entry modifiers
 function modify(id) {
     switch(id) {
+        case 'backspace':
+            backspace();
+            break;
+        case 'dot':
+            break;
         case 'clearAll':
             resetAll();
             break;
         case 'clearEntry':
             entry.textContent = 0;
             break;
-        case 'backspace':
-            backspace();
+        case 'negate':
+            negate();
     }
 }
 
@@ -225,6 +230,12 @@ function backspace() {
     const currentNum = yeetCommas();
     if (currentNum.length === 1) return entry.textContent = '0';
     entry.textContent = currentNum.slice(0, currentNum.length - 1);
+    formatNum();
+}
+
+function negate() {
+    const currentNum = toNum();
+    entry.textContent = -currentNum;
     formatNum();
 }
 
