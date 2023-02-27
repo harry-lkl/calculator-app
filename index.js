@@ -14,6 +14,7 @@ let a = '';
 let b = '';
 let result = '';
 
+//  resets
 function resetAll() {
     operator = '';
     operatorSymbol = '';
@@ -36,6 +37,13 @@ function resetOperation() {
     result = '';
 }
 
+//  formatting
+const yeetCommas = () => entry.textContent.replace(/,/g, '');
+const toNum = () => parseFloat(yeetCommas(), 10);
+const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
+const clearEntry = () => entry.textContent = '';
+
+//  key-press listener
 calculator.addEventListener('click', function (e) {
     switch(e.target.className) {
         case 'key number':
@@ -52,7 +60,7 @@ calculator.addEventListener('click', function (e) {
     }   
     });
 
-//  number
+//  numbers
 function addNumber(id) {
     userEnteredNum = true;
     if (entry.textContent.length >= entryMaxLength) return;
@@ -107,34 +115,6 @@ const subtract = () => result = a - b;
 const multiply = () => result = a * b;
 const divide = () => result = a / b;
 
-/* function equal() {
-    //  if no sign is selected, push entry to operation with = sign and keep the entry
-    //  if a sign is selected, push entry into b, operate, post operation with a, b, and equal sign to operation, answer to entry
-    //  if it is pressed again, keep sign and b, update entry into a, operate
-}
-
-function operate(id) {
-    //  if no ongoing operation, save anything in entry to a and post the operation
-    if (operation.textContent === '') {
-        userEnteredNum = false;
-        a = toNum();
-        return setOperation(id);
-    //  if no number was entered but there is an operation, switch between the signs
-    } else if (userEnteredNum === false) {
-        return setOperation(id);
-    } else if (userEnteredNum === true) {
-        userEnteredNum = false;
-        b = toNum();
-        operations();
-        entry.textContent = result;
-        formatNum();
-        a = '';
-        b = '';
-        result = '';
-        operate(id);
-    }
-} */
-
 function operate(id) {
     if (id === 'equal') {
         isChaining = false;
@@ -178,31 +158,6 @@ function operate(id) {
             setOperation(id);
         }
     }
-    //  +-x/
-/*      default
-            a = toNum();
-            setOperation(id);
-        chaining: default false, true when operator is entered, false when equal is pressed
-            (if chaining === false and userEnteredNum === true, change the sign and set userEnteredNum to false and chaining to true
-            if chaining === true and userEnteredNum === false, change the sign and set userEnteredNum to false and chaining to true)
-
-            this logic seem sound
-***                
-            if chaining === true && userEnteredNum === true, call operate, then set chaining back to true
-            else change the sign and set userEnteredNum to false and chaining to true
-
-            operate needs to end the chain
-            */
-    //  equal sign
-        //  if a, b, operation === '';
-            //  result = toNum(entry.textContent);
-            //  operation.textContent = entry.textContent + ' =';
-        //  if a !== '';    <- operation is set, a stored, currently a number in entry
-            //  b = toNum(entry.textContent);
-            //  operations()
-            //  operation.textContent = a 'operator' b =
-            //  entry.textContent = formatNum(result)
-
 }
 
 function setOperation(id) {
@@ -246,10 +201,12 @@ function runOperations() {
     }
 }
 
+//  x-functions
 function runFunction() {
 
 }
 
+//  entry modifiers
 function modify(id) {
     switch(id) {
         case 'clearAll':
@@ -259,12 +216,6 @@ function modify(id) {
             entry.textContent = 0;
     }
 }
-
-//  formatting
-const yeetCommas = () => entry.textContent.replace(/,/g, '');
-const toNum = () => parseFloat(yeetCommas(), 10);
-const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
-const clearEntry = () => entry.textContent = '';
 
 // x functions: immediately execute on the number in entry
     //  the operation is posted in operation
