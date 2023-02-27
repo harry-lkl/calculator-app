@@ -214,6 +214,7 @@ function modify(id) {
             backspace();
             break;
         case 'dot':
+            dot();
             break;
         case 'clearAll':
             resetAll();
@@ -231,6 +232,11 @@ function backspace() {
     if (currentNum.length === 1) return entry.textContent = '0';
     entry.textContent = currentNum.slice(0, currentNum.length - 1);
     formatNum();
+}
+
+function dot() {
+    if (userEnteredEqual === true) addNumber('zero');
+    if (entry.textContent.indexOf('.') === -1) entry.textContent += '.';
 }
 
 function negate() {
