@@ -41,6 +41,7 @@ function resetOperation() {
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => parseFloat(yeetCommas(), 10);
 const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
+
 const clearEntry = () => entry.textContent = '';
 
 //  key-press listener
@@ -214,7 +215,17 @@ function modify(id) {
             break;
         case 'clearEntry':
             entry.textContent = 0;
+            break;
+        case 'backspace':
+            backspace();
     }
+}
+
+function backspace() {
+    const currentNum = yeetCommas();
+    if (currentNum.length === 1) return entry.textContent = '0';
+    entry.textContent = currentNum.slice(0, currentNum.length - 1);
+    formatNum();
 }
 
 // x functions: immediately execute on the number in entry
