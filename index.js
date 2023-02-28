@@ -2,7 +2,7 @@ const memory = document.getElementById('memory');
 const operation = document.getElementById('operation');
 const entry = document.getElementById('entry');
 const calculator = document.getElementById('keys');
-const entryMaxLength = 16;
+const entryMaxLength = 12;
 
 let isChaining = false;
 let operator = '';
@@ -29,6 +29,8 @@ function resetAll() {
     operation.textContent = '';
 }
 
+resetAll();
+
 function resetOperation() {
     operator = '';
     operatorSymbol = '';
@@ -39,9 +41,8 @@ function resetOperation() {
 
 //  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
-const toNum = () => parseFloat(yeetCommas(), 10);
-const formatNum = () => entry.textContent = parseFloat(yeetCommas(), 10).toLocaleString();
-
+const toNum = () => +yeetCommas();
+const formatNum = () => entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: entryMaxLength});
 const clearEntry = () => entry.textContent = '';
 
 //  key-press listener
@@ -64,7 +65,7 @@ calculator.addEventListener('click', function (e) {
 //  numbers
 function addNumber(id) {
     userEnteredNum = true;
-    if (entry.textContent.length >= entryMaxLength) return;
+    let digitCount = yeetCommas().length;
     if (userEnteredEqual === true) {
         resetOperation();
         clearEntry();
@@ -72,6 +73,7 @@ function addNumber(id) {
         userEnteredEqual = false;
     }
     if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
+    if (digitCount >= entryMaxLength) return;
     userEnteredOperator = false;
     switch(id) {
         case 'zero':
