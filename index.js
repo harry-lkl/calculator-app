@@ -66,6 +66,7 @@ calculator.addEventListener('click', function (e) {
             }
         } else {
             return console.log(`error: event listeners`)
+            disabled = true;
         }
     });
 
@@ -156,6 +157,7 @@ function operate(id) {
             operate(id);
         } else {
             console.log('error: equal')
+            disabled = true;
         }
     } else {
         userEnteredEqual = false;
