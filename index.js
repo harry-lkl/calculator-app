@@ -42,24 +42,31 @@ function resetOperation() {
 //  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => +yeetCommas();
-const formatNum = () => entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: entryMaxLength});
+const formatNum = () => entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: entryMaxLength}); // <- maxdigits need to be dynamic?
 const clearEntry = () => entry.textContent = '';
 
 //  key-press listener
 calculator.addEventListener('click', function (e) {
-    switch(e.target.className) {
-        case 'key number':
-            addNumber(e.target.id);
-            break;
-        case 'key operator':
-            operate(e.target.id);
-            break;
-        case 'key function':
-            runFunction(e.target.id);
-            break;
-        case 'key modifier':
-            modify(e.target.id);
-    }   
+        if (disabled === true) {
+            console.log(`it's true`);
+            resetAll();
+        } else if (disabled === false) {
+            switch(e.target.className) {
+                case 'key number':
+                    addNumber(e.target.id);
+                    break;
+                case 'key operator':
+                    operate(e.target.id);
+                    break;
+                case 'key function':
+                    runFunction(e.target.id);
+                    break;
+                case 'key modifier':
+                    modify(e.target.id);
+            }
+        } else {
+            return console.log(`error: event listeners`)
+        }
     });
 
 //  numbers
@@ -110,9 +117,6 @@ function addNumber(id) {
 }
 
 //  operations
-const inverse = () => result = 1 / a;
-const squared = () => result = a ** 2;
-const sqrt = () => result = Math.sqrt(a);
 const add = () => result = a + b;
 const subtract = () => result = a - b;
 const multiply = () => result = a * b;
@@ -132,7 +136,7 @@ function operate(id) {
             userEnteredEqual = true;
             b = toNum();
             runOperations();
-            if (result = 'error: x/0') {
+            if (typeof result === 'string') {
                 entry.textContent = `pfft lmao`;
                 operation.textContent = result;
                 disabled = true;
@@ -210,6 +214,10 @@ function runOperations() {
 }
 
 //  x-functions
+const inverse = () => result = 1 / a;
+const squared = () => result = a ** 2;
+const sqrt = () => result = Math.sqrt(a);
+
 function runFunction() {
 
 }
