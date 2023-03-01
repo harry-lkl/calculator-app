@@ -42,7 +42,13 @@ function resetOperation() {
 //  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => +yeetCommas();
-const formatNum = () => entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: entryMaxLength}); // <- maxdigits need to be dynamic?
+function formatNum() {
+    const decimalIndex = yeetCommas().indexOf('.');
+    let maxDecimals = entryMaxLength;
+    console.log(decimalIndex);
+    if (decimalIndex !== -1) maxDecimals = entryMaxLength - decimalIndex;
+    entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
+}
 const clearEntry = () => entry.textContent = '';
 
 //  key-press listener
