@@ -174,25 +174,22 @@ function operate(id) {
 function setOperation(id) {
     switch(id) {
         case 'add':
-            operation.textContent = `${entry.textContent} +`;
             operatorSymbol = '+';
             operator = 'add';
             break;
         case 'subtract':
-            operation.textContent = `${entry.textContent} -`;
             operatorSymbol = '-';
             operator = 'subtract';
             break;
         case 'multiply':
-            operation.textContent = `${entry.textContent} ×`;
             operatorSymbol = '×';
             operator = 'multiply';
             break;
         case 'divide':
-            operation.textContent = `${entry.textContent} ÷`;
             operatorSymbol = '÷';
             operator = 'divide';
     }
+    operation.textContent = `${entry.textContent} ${operatorSymbol}`;
 }
 
 function runOperations() {
