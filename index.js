@@ -87,7 +87,7 @@ function addNumber(id) {
         userEnteredEqual = false;
     }
     if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
-    if (digitCount >= entryMaxLength) return;
+    if (digitCount >= entryMaxLength && userEnteredOperator === false) return;
     userEnteredOperator = false;
     switch(id) {
         case 'zero':
