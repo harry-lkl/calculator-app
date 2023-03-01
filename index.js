@@ -4,6 +4,7 @@ const entry = document.getElementById('entry');
 const calculator = document.getElementById('keys');
 const entryMaxLength = 12;
 
+let disabled = false;
 let isChaining = false;
 let operator = '';
 let operatorSymbol = '';
@@ -16,6 +17,7 @@ let result = '';
 
 //  resets
 function resetAll() {
+    disabled = false;
     isChaining = false;
     operator = '';
     operatorSymbol = '';
@@ -28,8 +30,6 @@ function resetAll() {
     entry.textContent = 0;
     operation.textContent = '';
 }
-
-resetAll();
 
 function resetOperation() {
     operator = '';
@@ -132,6 +132,14 @@ function operate(id) {
             userEnteredEqual = true;
             b = toNum();
             runOperations();
+            if (result = 'error: x/0') {
+                entry.textContent = `pfft lmao`;
+                operation.textContent = result;
+                disabled = true;
+                resetOperation();
+                // disable most buttons, operator and clear buttons will resetAll();
+                return;
+            }
             operation.textContent = `${a} ${operatorSymbol} ${b} =`;
             entry.textContent = result;
             formatNum();
@@ -199,7 +207,7 @@ function runOperations() {
             multiply();
             break;
         case 'divide':
-            if (b === 0) return `error: x/0`;
+            if (b === 0) return result = `error: x/0`;
             divide();
     }
 }
