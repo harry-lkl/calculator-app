@@ -145,7 +145,7 @@ function operate(id) {
             userEnteredEqual = true;
             b = toNum();
             runOperations();
-            if (typeof result === 'string') {
+            if (result.indexOf('e') !== -1) {
                 entry.textContent = `pfft lmao`;
                 operation.textContent = result;
                 disabled = true;
@@ -225,22 +225,7 @@ function runOperations() {
 
 //  x-functions
 /* const percent = () => result = b / 100; */
-const squared = () => result = b ** 2;
 const sqrt = () => result = Math.sqrt(b);
-
-function percent() {
-    if (operator === 'add' || operator === 'subtract') {
-        b = toNum();
-        result = a * b / 100;
-    } else {
-        b = toNum();
-        result = b / 100;
-    }
-    entry.textContent = result;
-    b = result;
-    result = '';
-    operation.textContent = `${a} ${operatorSymbol} ${b}`
-}
 
 function runFunction(id) {
     backspaceLock = true;
@@ -256,6 +241,24 @@ function runFunction(id) {
             sqrt();
         }
     formatNum();
+}
+
+function percent() {
+    if (operator === 'add' || operator === 'subtract') {
+        b = toNum();
+        result = a * b / 100;
+    } else {
+        b = toNum();
+        result = b / 100;
+    }
+    entry.textContent = result;
+    b = result;
+    result = '';
+    operation.textContent = `${a} ${operatorSymbol} ${b}`
+}
+
+function squared() {
+    const squared = () => result = b ** 2;
 }
 
 //  entry modifiers
