@@ -4,6 +4,7 @@ const entry = document.getElementById('entry');
 const calculator = document.getElementById('keys');
 const entryMaxLength = 12;
 
+let backspaceLock = false;
 let disabled = false;
 let isChaining = false;
 let operator = '';
@@ -17,6 +18,7 @@ let result = '';
 
 //  resets
 function resetAll() {
+    backspaceLock = false;
     disabled = false;
     isChaining = false;
     operator = '';
@@ -54,7 +56,7 @@ const clearEntry = () => entry.textContent = '';
 //  key-press listener
 calculator.addEventListener('click', function (e) {
         if (disabled === true) {
-            console.log(`it's true`);
+            console.log(`disabled`);
             resetAll();
         } else if (disabled === false) {
             switch(e.target.className) {
@@ -148,7 +150,6 @@ function operate(id) {
                 operation.textContent = result;
                 disabled = true;
                 resetOperation();
-                // disable most buttons, operator and clear buttons will resetAll();
                 return;
             }
             operation.textContent = `${a} ${operatorSymbol} ${b} =`;
@@ -162,10 +163,11 @@ function operate(id) {
             b = '';
             operate(id);
         } else {
-            console.log('error: equal')
+            console.log(`error: equal`)
             disabled = true;
         }
     } else {
+        backspaceLock = false;
         userEnteredEqual = false;
         userEnteredOperator = true;
         if (isChaining === true && userEnteredNum === true) {
@@ -222,12 +224,38 @@ function runOperations() {
 }
 
 //  x-functions
-const inverse = () => result = 1 / a;
-const squared = () => result = a ** 2;
-const sqrt = () => result = Math.sqrt(a);
+/* const percent = () => result = b / 100; */
+const squared = () => result = b ** 2;
+const sqrt = () => result = Math.sqrt(b);
 
-function runFunction() {
+function percent() {
+    if (operator === 'add' || operator === 'subtract') {
+        b = toNum();
+        result = a * b / 100;
+    } else {
+        b = toNum();
+        result = b / 100;
+    }
+    entry.textContent = result;
+    b = result;
+    result = '';
+    operation.textContent = `${a} ${operatorSymbol} ${b}`
+}
 
+function runFunction(id) {
+    backspaceLock = true;
+    b = toNum();
+    switch(id) {
+        case 'percent':
+            percent();
+            break;
+        case 'squared':
+            squared();
+            break;
+        case 'sqrt':
+            sqrt();
+        }
+    formatNum();
 }
 
 //  entry modifiers
@@ -244,6 +272,7 @@ function modify(id) {
             break;
         case 'clearEntry':
             entry.textContent = 0;
+            operation.textContent =`${a} ${operatorSymbol}`;
             break;
         case 'negate':
             negate();
@@ -251,6 +280,7 @@ function modify(id) {
 }
 
 function backspace() {
+    if (backspaceLock === true) return;
     const currentNum = yeetCommas();
     if (currentNum.length === 1) return entry.textContent = '0';
     entry.textContent = currentNum.slice(0, currentNum.length - 1);
@@ -267,15 +297,3 @@ function negate() {
     entry.textContent = -currentNum;
     formatNum();
 }
-
-// x functions: immediately execute on the number in entry
-    //  the operation is posted in operation
-    //  the answer is posted in entry
-    //  if there is already an operation (a and operator is set), execute on the number in entry plus complete the operation
-    //  the operation is posted in operation
-// signs: if there isn't an operation, post the current operation with the sign
-    //  if there is an operation, execute on the number in entry
-    //  the result is posted in entry
-    //  the result is posted in operation with the new selected sign
-// equal: if there is no sign set, operation equal entry
-    //  if there is a sign set, a has a value, b = entry and operate
