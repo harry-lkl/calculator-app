@@ -12,8 +12,10 @@ let operatorSymbol = '';
 let userEnteredEqual = false;
 let userEnteredNum = true;
 let userEnteredOperator = false;
+let xFunction = '';
 let a = '';
 let b = '';
+let c = '';
 let result = '';
 
 //  resets
@@ -26,8 +28,10 @@ function resetAll() {
     userEnteredEqual = false;
     userEnteredNum = true;
     userEnteredOperator = false;
+    xFunction = '';
     a = '';
     b = '';
+    c = '';
     result = '';
     entry.textContent = 0;
     operation.textContent = '';
@@ -36,8 +40,10 @@ function resetAll() {
 function resetOperation() {
     operator = '';
     operatorSymbol = '';
+    xFunction = '';
     a = '';
     b = '';
+    c = '';
     result = '';
 }
 
@@ -47,7 +53,6 @@ const toNum = () => +yeetCommas();
 function formatNum() {
     const decimalIndex = yeetCommas().indexOf('.');
     let maxDecimals = entryMaxLength;
-    console.log(decimalIndex);
     if (decimalIndex !== -1) maxDecimals = entryMaxLength - decimalIndex;
     entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
 }
@@ -83,10 +88,11 @@ function addNumber(id) {
     userEnteredNum = true;
     let digitCount = yeetCommas().length;
     if (userEnteredEqual === true) {
-        resetOperation();
+/*         resetOperation();
         clearEntry();
         operation.textContent = '';
-        userEnteredEqual = false;
+        userEnteredEqual = false; */
+        resetAll();
     }
     if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
     if (digitCount >= entryMaxLength && userEnteredOperator === false) return;
@@ -147,7 +153,15 @@ function operate(id) {
                 resetOperation();
                 return;
             }
-            operation.textContent = `${a} ${operatorSymbol} ${b} =`;
+            if (xFunction === 'squared') {
+                operation.textContent = `${a} ${operatorSymbol} ${c}² =`;
+            } else if (xFunction === 'sqrt') {
+                operation.textContent = `sqrt`;
+            } else  if (xFunction === '') {
+                operation.textContent = `${a} ${operatorSymbol} ${b} =`;
+            } else {
+                console.log(`error: equal post operation`)
+            }
             entry.textContent = result;
             formatNum();
         } else if (operator !== '' && userEnteredEqual === true) {
@@ -224,7 +238,6 @@ function runOperations() {
 }
 
 //  x-functions
-/* const percent = () => result = b / 100; */
 const sqrt = () => result = Math.sqrt(b);
 
 function runFunction(id) {
@@ -258,7 +271,14 @@ function percent() {
 }
 
 function squared() {
-    const squared = () => result = b ** 2;
+    xFunction = 'squared';
+    b = toNum();
+    c = toNum();
+    result = b ** 2;
+    entry.textContent = result;
+    operation.textContent = `${a} ${operatorSymbol} ${c}²`;
+    b = result;
+    result = '';
 }
 
 //  entry modifiers
