@@ -88,10 +88,6 @@ function addNumber(id) {
     userEnteredNum = true;
     let digitCount = yeetCommas().length;
     if (userEnteredEqual === true) {
-/*         resetOperation();
-        clearEntry();
-        operation.textContent = '';
-        userEnteredEqual = false; */
         resetAll();
     }
     if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
@@ -139,9 +135,16 @@ function operate(id) {
         if (operator === '') {
             userEnteredEqual = true;
             a = toNum();
-            result = a
-            operation.textContent = `${a} =`;
-            resetOperation();
+            result = a;
+            if (xFunction === 'squared') {
+                operation.textContent = `${c}² =`;
+            } else if (xFunction === 'sqrt') {
+                operation.textContent = `sqrt`;
+            } else  if (xFunction === '') {
+                operation.textContent = `${a} =`;
+            } else {
+                console.log(`error: equal post operation`)
+            }
         } else if (operator !== '' && userEnteredEqual === false) {
             userEnteredEqual = true;
             b = toNum();
@@ -150,7 +153,6 @@ function operate(id) {
                 entry.textContent = `pfft lmao`;
                 operation.textContent = result;
                 disabled = true;
-                resetOperation();
                 return;
             }
             if (xFunction === 'squared') {
