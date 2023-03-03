@@ -126,11 +126,6 @@ function addNumber(id) {
 }
 
 //  operations
-const add = () => result = a + b;
-const subtract = () => result = a - b;
-const multiply = () => result = a * b;
-const divide = () => result = a / b;
-
 function operate(id) {
     if (id === 'equal') {
         isChaining = false;
@@ -145,7 +140,7 @@ function operate(id) {
             userEnteredEqual = true;
             b = toNum();
             runOperations();
-            if (result.indexOf('e') !== -1) {
+            if (typeof result === 'string' && result.indexOf('e') !== -1) {
                 entry.textContent = `pfft lmao`;
                 operation.textContent = result;
                 disabled = true;
@@ -205,6 +200,11 @@ function setOperation(id) {
     }
     operation.textContent = `${entry.textContent} ${operatorSymbol}`;
 }
+
+const add = () => result = a + b;
+const subtract = () => result = a - b;
+const multiply = () => result = a * b;
+const divide = () => result = a / b;
 
 function runOperations() {
     switch(operator) {
