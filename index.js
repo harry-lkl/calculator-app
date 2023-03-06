@@ -137,9 +137,9 @@ function operate(id) {
             a = toNum();
             result = a;
             if (xFunction === 'squared') {
-                operation.textContent = `${c}² =`;
+                operation.textContent = `(${c})² =`;
             } else if (xFunction === 'sqrt') {
-                operation.textContent = `sqrt`;
+                operation.textContent = `√(${c}) =`;
             } else  if (xFunction === '') {
                 operation.textContent = `${a} =`;
             } else {
@@ -156,9 +156,9 @@ function operate(id) {
                 return;
             }
             if (xFunction === 'squared') {
-                operation.textContent = `${a} ${operatorSymbol} ${c}² =`;
+                operation.textContent = `${a} ${operatorSymbol} (${c})² =`;
             } else if (xFunction === 'sqrt') {
-                operation.textContent = `sqrt`;
+                operation.textContent = `${a} ${operatorSymbol} √(${c}) =`;
             } else  if (xFunction === '') {
                 operation.textContent = `${a} ${operatorSymbol} ${b} =`;
             } else {
@@ -240,8 +240,6 @@ function runOperations() {
 }
 
 //  x-functions
-const sqrt = () => result = Math.sqrt(b);
-
 function runFunction(id) {
     backspaceLock = true;
     b = toNum();
@@ -278,7 +276,18 @@ function squared() {
     c = toNum();
     result = b ** 2;
     entry.textContent = result;
-    operation.textContent = `${a} ${operatorSymbol} ${c}²`;
+    operation.textContent = `${a} ${operatorSymbol} (${c})²`;
+    b = result;
+    result = '';
+}
+
+function sqrt() {
+    xFunction = 'sqrt';
+    b = toNum();
+    c = toNum();
+    result = Math.sqrt(b);
+    entry.textContent = result;
+    operation.textContent = `${a} ${operatorSymbol} √(${c})`;
     b = result;
     result = '';
 }
@@ -322,3 +331,5 @@ function negate() {
     entry.textContent = -currentNum;
     formatNum();
 }
+
+// `${a}`
