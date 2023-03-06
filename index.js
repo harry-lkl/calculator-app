@@ -253,7 +253,6 @@ function runFunction(id) {
         case 'sqrt':
             sqrt();
         }
-    formatNum();
 }
 
 function percent() {
@@ -285,11 +284,21 @@ function sqrt() {
     xFunction = 'sqrt';
     b = toNum();
     c = toNum();
-    result = Math.sqrt(b);
-    entry.textContent = result;
     operation.textContent = `${a} ${operatorSymbol} √(${c})`;
-    b = result;
-    result = '';
+    if (b < 0) {
+        entry.textContent = `imagine`
+        disabled = true;
+        console.log(b);
+        return;
+    } else if (b >= 0) {
+        result = Math.sqrt(b);
+        entry.textContent = result;
+        console.log(result);
+    } else {
+        console.log(`error: sqrt`);
+    }
+/*     b = result;
+    result = ''; */
 }
 
 //  entry modifiers
