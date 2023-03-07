@@ -13,9 +13,10 @@ let userEnteredEqual = false;
 let userEnteredNum = true;
 let userEnteredOperator = false;
 let xFunction = '';
-let a = '';
-let b = '';
-let c = '';
+let storedNum = '';
+let currentNum = '';
+let storedNumStr = '';
+let currentNumStr = '';
 let result = '';
 
 //  resets
@@ -29,9 +30,10 @@ function resetAll() {
     userEnteredNum = true;
     userEnteredOperator = false;
     xFunction = '';
-    a = '';
-    b = '';
-    c = '';
+    currentNum = '';
+    currentNumStr = '';
+    storedNum = '';
+    storedNumStr = '';
     result = '';
     entry.textContent = 0;
     operation.textContent = '';
@@ -114,7 +116,13 @@ function addNumber(id) {
         case 'nine':
             entry.textContent += '9';
     }
+    currentNum = toNum();
+    currentNumStr = currentNum;
     formatNum();
+}
+
+function storeNum() {
+
 }
 
 //  operations
@@ -123,51 +131,40 @@ function operate(id) {
     if (id === 'equal') {
         isChaining = false;
         userEnteredNum = false;
-        if (operator === '') {
+        if (userEnteredEqual === false) {
             userEnteredEqual = true;
-            a = toNum();
-            result = a;
-            if (xFunction === 'squared') {
-                operation.textContent = `(${c})² =`;
-            } else if (xFunction === 'sqrt') {
-                operation.textContent = `√(${c}) =`;
-            } else  if (xFunction === '') {
-                operation.textContent = `${a} =`;
-            } else {
-                console.log(`error: equal post operation`)
-            }
-        } else if (operator !== '' && userEnteredEqual === false) {
-            userEnteredEqual = true;
-            b = toNum();
-            runOperations();
+            currentNum = toNum();
+            currentNumStr = currentNum;
+            if (operator === '') result = currentNum;
+            if (operator !== '') runOperations();
             if (typeof result === 'string' && result.indexOf('e') !== -1) {
                 entry.textContent = `pfft lmao`;
                 operation.textContent = result;
                 disabled = true;
                 return;
             }
-            if (xFunction === 'squared') {
-                operation.textContent = `${a} ${operatorSymbol} (${c})² =`;
-            } else if (xFunction === 'sqrt') {
-                operation.textContent = `${a} ${operatorSymbol} √(${c}) =`;
-            } else  if (xFunction === '') {
-                operation.textContent = `${a} ${operatorSymbol} ${b} =`;
-            } else {
-                console.log(`error: equal post operation`)
-            }
+            operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`;
             entry.textContent = result;
+            console.log(`${storedNumStr} ${operatorSymbol} ${currentNumStr} = ${result}`)
             formatNum();
-        } else if (operator !== '' && userEnteredEqual === true) {
+        } else if (userEnteredEqual === true) {
             userEnteredEqual = false;
-            a = result;
-            entry.textContent = b;
-            result = '';
-            b = '';
-            operate(id);
+            if (operator === '') {
+                return operate(id);
+            } else if (operator !== '') {
+                storedNum = toNum();
+                storedNumStr = storedNum;
+                entry.textContent = currentNum;
+                operate(id);
+            } else {
+                console.log(`error: equal chain`);
+                disabled = true;
+            }
         } else {
             console.log(`error: equal`)
             disabled = true;
         }
+        console.log(id);
     } else {
         backspaceLock = false;
         userEnteredEqual = false;
@@ -175,14 +172,20 @@ function operate(id) {
         if (isChaining === true && userEnteredNum === true) {
             userEnteredNum = false;
             operate('equal');
-            a = toNum();
+            currentNum = toNum();
+            currentNumStr = currentNum;
             setOperation(id);
             operate(id);
+            console.log(id);
+            return;
         } else {
             isChaining = true;
             userEnteredNum = false;
-            a = toNum();
+            storedNum = toNum();
+            storedNumStr = storedNum;
             setOperation(id);
+            console.log(id);
+            return;
         }
     }
 }
@@ -208,10 +211,10 @@ function setOperation(id) {
     operation.textContent = `${entry.textContent} ${operatorSymbol}`;
 }
 
-const add = () => result = a + b;
-const subtract = () => result = a - b;
-const multiply = () => result = a * b;
-const divide = () => result = a / b;
+const add = () => result = storedNum + currentNum;
+const subtract = () => result = storedNum - currentNum;
+const multiply = () => result = storedNum * currentNum;
+const divide = () => result = storedNum / currentNum;
 
 function runOperations() {
     switch(operator) {
@@ -225,7 +228,7 @@ function runOperations() {
             multiply();
             break;
         case 'divide':
-            if (b === 0) return result = `error: x/0`;
+            if (currentNum === 0) return result = `error: x/0`;
             divide();
     }
 }
@@ -233,7 +236,7 @@ function runOperations() {
 //  x-functions
 function runFunction(id) {
     backspaceLock = true;
-    b = toNum();
+    currentNum = toNum();
     switch(id) {
         case 'percent':
             percent();
@@ -248,47 +251,47 @@ function runFunction(id) {
 
 function percent() {
     if (operator === 'add' || operator === 'subtract') {
-        b = toNum();
-        result = a * b / 100;
+        currentNum = toNum();
+        result = storedNum * currentNum / 100;
     } else {
-        b = toNum();
-        result = b / 100;
+        currentNum = toNum();
+        result = currentNum / 100;
     }
     entry.textContent = result;
-    b = result;
+    currentNum = result;
     result = '';
-    operation.textContent = `${a} ${operatorSymbol} ${b}`
+    operation.textContent = `${storedNum} ${operatorSymbol} ${currentNum}`
     formatNum();
 }
 
 function squared() {
     xFunction = 'squared';
-    b = toNum();
+    currentNum = toNum();
     c = toNum();
-    result = b ** 2;
+    result = currentNum ** 2;
     entry.textContent = result;
-    operation.textContent = `${a} ${operatorSymbol} (${c})²`;
-    b = result;
+    operation.textContent = `${storedNum} ${operatorSymbol} (${c})²`;
+    currentNum = result;
     result = '';
     formatNum();
 }
 
 function sqrt() {
     xFunction = 'sqrt';
-    b = toNum();
+    currentNum = toNum();
     c = toNum();
-    operation.textContent = `${a} ${operatorSymbol} √(${c})`;
-    if (b < 0) {
+    operation.textContent = `${storedNum} ${operatorSymbol} √(${c})`;
+    if (currentNum < 0) {
         entry.textContent = `imagine`
         disabled = true;
         return;
-    } else if (b >= 0) {
-        result = Math.sqrt(b);
+    } else if (currentNum >= 0) {
+        result = Math.sqrt(currentNum);
         entry.textContent = result;
     } else {
         console.log(`error: sqrt`);
     }
-    b = result;
+    currentNum = result;
     result = '';
     formatNum();
 }
@@ -307,7 +310,7 @@ function modify(id) {
             break;
         case 'clearEntry':
             entry.textContent = 0;
-            operation.textContent =`${a} ${operatorSymbol}`;
+            operation.textContent =`${storedNum} ${operatorSymbol}`;
             break;
         case 'negate':
             negate();
@@ -333,7 +336,3 @@ function negate() {
     entry.textContent = -currentNum;
     formatNum();
 }
-
-// negate + squared or sqrt + number
-// a: first num c: first num string b: second num d: second num string
-// check if +/-, squared, or sqrt
