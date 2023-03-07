@@ -269,6 +269,7 @@ function percent() {
     b = result;
     result = '';
     operation.textContent = `${a} ${operatorSymbol} ${b}`
+    formatNum();
 }
 
 function squared() {
@@ -280,6 +281,7 @@ function squared() {
     operation.textContent = `${a} ${operatorSymbol} (${c})²`;
     b = result;
     result = '';
+    formatNum();
 }
 
 function sqrt() {
@@ -299,8 +301,9 @@ function sqrt() {
     } else {
         console.log(`error: sqrt`);
     }
-/*     b = result;
-    result = ''; */
+    b = result;
+    result = '';
+    formatNum();
 }
 
 //  entry modifiers
@@ -344,6 +347,5 @@ function negate() {
     formatNum();
 }
 
-// need to fix being able to enter numbers into result of squared and sqrt
-
-// ('-')('√')('(')('(')('number')
+// negate + squared or sqrt + number
+// a: first num c: first num string b: second num d: second num string
