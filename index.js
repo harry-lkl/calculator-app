@@ -92,6 +92,7 @@ function addNumber(id) {
     }
     if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
     if (digitCount >= entryMaxLength && userEnteredOperator === false) return;
+    if (xFunction !== '') return;
     userEnteredOperator = false;
     switch(id) {
         case 'zero':
@@ -129,6 +130,7 @@ function addNumber(id) {
 
 //  operations
 function operate(id) {
+    xFunction = '';
     if (id === 'equal') {
         isChaining = false;
         userEnteredNum = false;
@@ -331,6 +333,7 @@ function backspace() {
 }
 
 function dot() {
+    if (xFunction !== '') return;
     if (userEnteredEqual === true) addNumber('zero');
     if (entry.textContent.indexOf('.') === -1) entry.textContent += '.';
 }
@@ -341,4 +344,6 @@ function negate() {
     formatNum();
 }
 
-// `${a}`
+// need to fix being able to enter numbers into result of squared and sqrt
+
+// ('-')('√')('(')('(')('number')
