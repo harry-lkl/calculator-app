@@ -37,16 +37,6 @@ function resetAll() {
     operation.textContent = '';
 }
 
-function resetOperation() {
-    operator = '';
-    operatorSymbol = '';
-    xFunction = '';
-    a = '';
-    b = '';
-    c = '';
-    result = '';
-}
-
 //  formatting
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => +yeetCommas();
