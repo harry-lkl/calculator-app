@@ -51,7 +51,6 @@ const clearEntry = () => entry.textContent = '';
 //  key-press listener
 calculator.addEventListener('click', function (e) {
         if (disabled === true) {
-            console.log(`disabled`);
             resetAll();
         } else if (disabled === false) {
             switch(e.target.className) {
@@ -282,12 +281,10 @@ function sqrt() {
     if (b < 0) {
         entry.textContent = `imagine`
         disabled = true;
-        console.log(b);
         return;
     } else if (b >= 0) {
         result = Math.sqrt(b);
         entry.textContent = result;
-        console.log(result);
     } else {
         console.log(`error: sqrt`);
     }
@@ -339,3 +336,4 @@ function negate() {
 
 // negate + squared or sqrt + number
 // a: first num c: first num string b: second num d: second num string
+// check if +/-, squared, or sqrt
