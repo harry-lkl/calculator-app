@@ -332,14 +332,19 @@ function modify(id) {
 
 function backspace() {
     if (backspaceLock === true) return;
-    const currentNum = yeetCommas();
-    if (currentNum.length === 1) {
-        negated = false;
+    const absNumString = yeetCommas().replace(/-/g, '');
+    const absNumLength = absNumString.length;
+    const numString = yeetCommas();
+    const numLength = numString.length;
+    if (absNumLength === 1) {
         xFunction = '';
+        clearEntry();
         addNumber('zero');
         return;
     }
-    entry.textContent = currentNum.slice(0, currentNum.length - 1);
+    currentNum = numString.slice(0, numLength - 1);
+    currentNumStr = currentNum;
+    entry.textContent = currentNum;
     formatNum();
 }
 
@@ -350,14 +355,13 @@ function dot() {
 }
 
 function negate() {
-    if (negated === false) {
-        negated = true;
+    const numString = yeetCommas();
+    if (numString === '0') return;
+    if (numString.indexOf('-') !== 0) {
         currentNumStr = `-${currentNumStr}`;
-    } else if (negated === true) {
-        negated = false;
+    } else if (numString.indexOf('-') === 0) {
         currentNumStr = currentNumStr.slice(1);
     }
-    const currentNum = toNum();
-    entry.textContent = -currentNum;
+    entry.textContent = -numString;
     formatNum();
 }
