@@ -121,10 +121,6 @@ function addNumber(id) {
     formatNum();
 }
 
-function storeNum() {
-
-}
-
 //  operations
 function operate(id) {
     xFunction = '';
