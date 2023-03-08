@@ -7,6 +7,7 @@ const entryMaxLength = 12;
 let backspaceLock = false;
 let disabled = false;
 let isChaining = false;
+let negated = false;
 let operator = '';
 let operatorSymbol = '';
 let userEnteredEqual = false;
@@ -24,6 +25,7 @@ function resetAll() {
     backspaceLock = false;
     disabled = false;
     isChaining = false;
+    negated = false;
     operator = '';
     operatorSymbol = '';
     userEnteredEqual = false;
@@ -52,26 +54,26 @@ const clearEntry = () => entry.textContent = '';
 
 //  key-press listener
 calculator.addEventListener('click', function (e) {
-        if (disabled === true) {
-            resetAll();
-        } else if (disabled === false) {
-            switch(e.target.className) {
-                case 'key number':
-                    addNumber(e.target.id);
-                    break;
-                case 'key operator':
-                    operate(e.target.id);
-                    break;
-                case 'key function':
-                    runFunction(e.target.id);
-                    break;
-                case 'key modifier':
-                    modify(e.target.id);
-            }
-        } else {
-            return console.log(`error: event listeners`)
-            disabled = true;
+    if (disabled === true) {
+        resetAll();
+    } else if (disabled === false) {
+        switch(e.target.className) {
+            case 'key number':
+                addNumber(e.target.id);
+                break;
+            case 'key operator':
+                operate(e.target.id);
+                break;
+            case 'key function':
+                runFunction(e.target.id);
+                break;
+            case 'key modifier':
+                modify(e.target.id);
         }
+    } else {
+        return console.log(`error: event listeners`)
+        disabled = true;
+    }
     });
 
 //  numbers
@@ -123,7 +125,6 @@ function addNumber(id) {
 
 //  operations
 function operate(id) {
-    xFunction = '';
     if (id === 'equal') {
         isChaining = false;
         userEnteredNum = false;
@@ -151,6 +152,8 @@ function operate(id) {
             normalOperator(id);
         }
     }
+    negated = false;
+    xFunction = '';
 }
 
 function normalEqual() {
@@ -330,7 +333,12 @@ function modify(id) {
 function backspace() {
     if (backspaceLock === true) return;
     const currentNum = yeetCommas();
-    if (currentNum.length === 1) return entry.textContent = '0';
+    if (currentNum.length === 1) {
+        negated = false;
+        xFunction = '';
+        addNumber('zero');
+        return;
+    }
     entry.textContent = currentNum.slice(0, currentNum.length - 1);
     formatNum();
 }
@@ -342,6 +350,13 @@ function dot() {
 }
 
 function negate() {
+    if (negated === false) {
+        negated = true;
+        currentNumStr = `-${currentNumStr}`;
+    } else if (negated === true) {
+        negated = false;
+        currentNumStr = currentNumStr.slice(1);
+    }
     const currentNum = toNum();
     entry.textContent = -currentNum;
     formatNum();
