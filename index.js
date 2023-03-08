@@ -133,33 +133,10 @@ function operate(id) {
         userEnteredNum = false;
         if (userEnteredEqual === false) {
             userEnteredEqual = true;
-            currentNum = toNum();
-            currentNumStr = currentNum;
-            if (operator === '') result = currentNum;
-            if (operator !== '') runOperations();
-            if (typeof result === 'string' && result.indexOf('e') !== -1) {
-                entry.textContent = `pfft lmao`;
-                operation.textContent = result;
-                disabled = true;
-                return;
-            }
-            operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`;
-            entry.textContent = result;
-            console.log(`${storedNumStr} ${operatorSymbol} ${currentNumStr} = ${result}`)
-            formatNum();
+            normalEqual();
         } else if (userEnteredEqual === true) {
             userEnteredEqual = false;
-            if (operator === '') {
-                return operate(id);
-            } else if (operator !== '') {
-                storedNum = toNum();
-                storedNumStr = storedNum;
-                entry.textContent = currentNum;
-                operate(id);
-            } else {
-                console.log(`error: equal chain`);
-                disabled = true;
-            }
+            chainEqual(id);
         } else {
             console.log(`error: equal`)
             disabled = true;
@@ -171,23 +148,60 @@ function operate(id) {
         userEnteredOperator = true;
         if (isChaining === true && userEnteredNum === true) {
             userEnteredNum = false;
-            operate('equal');
-            currentNum = toNum();
-            currentNumStr = currentNum;
-            setOperation(id);
-            operate(id);
-            console.log(id);
-            return;
+            chainOperator(id);
         } else {
             isChaining = true;
             userEnteredNum = false;
-            storedNum = toNum();
-            storedNumStr = storedNum;
-            setOperation(id);
-            console.log(id);
-            return;
+            normalOperator(id);
         }
     }
+}
+
+function normalEqual() {
+    currentNum = toNum();
+    currentNumStr = currentNum;
+    if (operator === '') result = currentNum;
+    if (operator !== '') runOperations();
+    if (typeof result === 'string' && result.indexOf('e') !== -1) {
+        entry.textContent = `pfft lmao`;
+        operation.textContent = result;
+        disabled = true;
+        return;
+    }
+    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`;
+    entry.textContent = result;
+    console.log(`${storedNumStr} ${operatorSymbol} ${currentNumStr} = ${result}`)
+    formatNum();
+}
+
+function chainEqual(id) {
+    if (operator === '') {
+        return operate(id);
+    } else if (operator !== '') {
+        storedNum = toNum();
+        storedNumStr = storedNum;
+        entry.textContent = currentNum;
+        operate(id);
+    } else {
+        console.log(`error: equal chain`);
+        disabled = true;
+    }
+}
+
+function normalOperator(id) {
+    storedNum = toNum();
+    storedNumStr = storedNum;
+    setOperation(id);
+    console.log(id);
+}
+
+function chainOperator(id) {
+    operate('equal');
+    currentNum = toNum();
+    currentNumStr = currentNum;
+    setOperation(id);
+    operate(id);
+    console.log(id);
 }
 
 function setOperation(id) {
