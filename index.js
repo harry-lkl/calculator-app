@@ -145,16 +145,16 @@ function operate(id) {
         console.log(id);
     } else {
         backspaceLock = false;
-        userEnteredEqual = false;
         userEnteredOperator = true;
         if (isChaining === true && userEnteredNum === true) {
             userEnteredNum = false;
-            chainOperator(id);
+            chainOperation(id);
         } else {
             isChaining = true;
             userEnteredNum = false;
-            normalOperator(id);
+            normalOperation(id);
         }
+        userEnteredEqual = false;
     }
     xFunction = '';
 }
@@ -174,25 +174,20 @@ function normalEqual() {
 }
 
 function chainEqual() {
-        storedNum = toNum();
-        storedNumStr = storedNum;
-        operate('equal');
-}
-
-function normalOperator(id) {
-    storedNum = currentNum;
-    storedNumStr = currentNumStr;
-    setOperation(id);
-    console.log(id);
-}
-
-function chainOperator(id) {
+    storedNum = toNum();
+    storedNumStr = storedNum;
     operate('equal');
-    currentNum = toNum();
-    currentNumStr = currentNum;
+}
+
+function normalOperation(id) {
+    storedNum = toNum();
+    if (xFunction === '') storedNumStr = storedNum;
     setOperation(id);
+}
+
+function chainOperation(id) {
+    operate('equal');
     operate(id);
-    console.log(id);
 }
 
 function setOperation(id) {
