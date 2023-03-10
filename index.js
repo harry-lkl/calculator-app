@@ -14,10 +14,10 @@ let userEnteredEqual = false;
 let userEnteredNum = true;
 let userEnteredOperator = false;
 let xFunction = '';
+let currentNum = '0';
+let currentNumStr = '0';
 let storedNum = '';
-let currentNum = '';
 let storedNumStr = '';
-let currentNumStr = '';
 let result = '';
 
 //  resets
@@ -32,16 +32,18 @@ function resetAll() {
     userEnteredNum = true;
     userEnteredOperator = false;
     xFunction = '';
-    currentNum = '';
-    currentNumStr = '';
+    currentNum = '0';
+    currentNumStr = '0';
     storedNum = '';
     storedNumStr = '';
     result = '';
-    entry.textContent = 0;
+    entry.textContent = currentNum;
     operation.textContent = '';
 }
 
 //  formatting
+const clearEntry = () => entry.textContent = '';
+const displayOperation = () => operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => +yeetCommas();
 function formatNum() {
@@ -50,7 +52,6 @@ function formatNum() {
     if (decimalIndex !== -1) maxDecimals = entryMaxLength - decimalIndex;
     entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
 }
-const clearEntry = () => entry.textContent = '';
 
 //  key-press listener
 calculator.addEventListener('click', function (e) {
@@ -79,13 +80,11 @@ calculator.addEventListener('click', function (e) {
 //  numbers
 function addNumber(id) {
     userEnteredNum = true;
-    let digitCount = yeetCommas().length;
-    if (userEnteredEqual === true) {
-        resetAll();
-    }
-    if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
-    if (digitCount >= entryMaxLength && userEnteredOperator === false) return;
     if (xFunction !== '') return;
+    let digitCount = yeetCommas().length;
+    if (digitCount >= entryMaxLength && userEnteredOperator === false) return;
+    if (userEnteredEqual === true) resetAll();
+    if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
     userEnteredOperator = false;
     switch(id) {
         case 'zero':
@@ -128,12 +127,17 @@ function operate(id) {
     if (id === 'equal') {
         isChaining = false;
         userEnteredNum = false;
+        if (operator === '') {
+            userEnteredEqual = true;
+            result = currentNum;
+            return displayOperation();
+        }
         if (userEnteredEqual === false) {
             userEnteredEqual = true;
             normalEqual();
         } else if (userEnteredEqual === true) {
             userEnteredEqual = false;
-            chainEqual(id);
+            chainEqual();
         } else {
             console.log(`error: equal`)
             disabled = true;
@@ -152,44 +156,32 @@ function operate(id) {
             normalOperator(id);
         }
     }
-    negated = false;
     xFunction = '';
 }
 
 function normalEqual() {
-    currentNum = toNum();
-    currentNumStr = currentNum;
-    if (operator === '') result = currentNum;
-    if (operator !== '') runOperations();
+    runOperations();
     if (typeof result === 'string' && result.indexOf('e') !== -1) {
         entry.textContent = `pfft lmao`;
         operation.textContent = result;
         disabled = true;
         return;
     }
-    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`;
+    displayOperation();
     entry.textContent = result;
-    console.log(`${storedNumStr} ${operatorSymbol} ${currentNumStr} = ${result}`)
     formatNum();
+    console.log(`${storedNumStr} ${operatorSymbol} ${currentNumStr} = ${result}`)
 }
 
-function chainEqual(id) {
-    if (operator === '') {
-        return operate(id);
-    } else if (operator !== '') {
+function chainEqual() {
         storedNum = toNum();
         storedNumStr = storedNum;
-        entry.textContent = currentNum;
-        operate(id);
-    } else {
-        console.log(`error: equal chain`);
-        disabled = true;
-    }
+        operate('equal');
 }
 
 function normalOperator(id) {
-    storedNum = toNum();
-    storedNumStr = storedNum;
+    storedNum = currentNum;
+    storedNumStr = currentNumStr;
     setOperation(id);
     console.log(id);
 }
@@ -221,7 +213,7 @@ function setOperation(id) {
             operatorSymbol = '÷';
             operator = 'divide';
     }
-    operation.textContent = `${entry.textContent} ${operatorSymbol}`;
+    operation.textContent = `${storedNumStr} ${operatorSymbol}`;
 }
 
 const add = () => result = storedNum + currentNum;
@@ -279,13 +271,12 @@ function percent() {
 
 function squared() {
     xFunction = 'squared';
-    currentNum = toNum();
-    c = toNum();
     result = currentNum ** 2;
-    entry.textContent = result;
-    operation.textContent = `${storedNum} ${operatorSymbol} (${c})²`;
     currentNum = result;
+    currentNumStr = `(${currentNumStr})²`
+    entry.textContent = result;
     result = '';
+    displayOperation();
     formatNum();
 }
 
@@ -322,8 +313,9 @@ function modify(id) {
             resetAll();
             break;
         case 'clearEntry':
-            entry.textContent = 0;
-            operation.textContent =`${storedNum} ${operatorSymbol}`;
+            currentNum = '0';
+            currentNumStr = currentNum;
+            displayOperation();
             break;
         case 'negate':
             negate();
