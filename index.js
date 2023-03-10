@@ -142,7 +142,6 @@ function operate(id) {
             console.log(`error: equal`)
             disabled = true;
         }
-        console.log(id);
     } else {
         backspaceLock = false;
         userEnteredOperator = true;
@@ -176,7 +175,8 @@ function normalEqual() {
 function chainEqual() {
     storedNum = toNum();
     storedNumStr = storedNum;
-    operate('equal');
+    userEnteredEqual = true;
+    normalEqual();
 }
 
 function normalOperation(id) {
