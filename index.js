@@ -166,23 +166,30 @@ function normalEqual() {
         disabled = true;
         return;
     }
+    console.log(`${storedNumStr} ${operatorSymbol} ${currentNumStr} = ${result}`)
     displayOperation();
     entry.textContent = result;
     formatNum();
-    console.log(`${storedNumStr} ${operatorSymbol} ${currentNumStr} = ${result}`)
 }
 
 function chainEqual() {
-    storedNum = toNum();
+    storedNum = result;
     storedNumStr = storedNum;
     userEnteredEqual = true;
     normalEqual();
+    // storednum operator currentnum result
+    // result in storednum, keep currentnum
 }
 
 function normalOperation(id) {
-    storedNum = toNum();
-    if (xFunction === '') storedNumStr = storedNum;
+    if (userEnteredEqual === true) {
+        currentNum = result;
+        currentNumStr = currentNum;
+    }
+    storedNum = currentNum;
+    storedNumStr = currentNumStr;
     setOperation(id);
+    operation.textContent = `${storedNumStr} ${operatorSymbol}`
 }
 
 function chainOperation(id) {
@@ -266,12 +273,10 @@ function percent() {
 
 function squared() {
     xFunction = 'squared';
-    result = currentNum ** 2;
-    currentNum = result;
+    currentNum = currentNum ** 2;
     currentNumStr = `(${currentNumStr})²`
-    entry.textContent = result;
-    result = '';
-    displayOperation();
+    entry.textContent = currentNum;
+    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`
     formatNum();
 }
 
