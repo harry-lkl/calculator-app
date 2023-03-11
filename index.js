@@ -42,7 +42,11 @@ function resetAll() {
 }
 
 //  formatting
-const clearEntry = () => entry.textContent = '';
+function clearEntry() {
+    entry.textContent = '';
+    currentNum = '';
+    currentNumStr = currentNum;
+}
 const displayOperation = () => operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`
 const yeetCommas = () => entry.textContent.replace(/,/g, '');
 const toNum = () => +yeetCommas();
@@ -315,7 +319,7 @@ function modify(id) {
         case 'clearEntry':
             currentNum = '0';
             currentNumStr = currentNum;
-            displayOperation();
+            entry.textContent = currentNum;
             break;
         case 'negate':
             negate();
@@ -324,7 +328,7 @@ function modify(id) {
 
 function backspace() {
     if (backspaceLock === true) return;
-    const absNumString = yeetCommas().replace(/-/g, '');
+    const absNumString = yeetCommas().replace(/-|(0.)/g, '');
     const absNumLength = absNumString.length;
     const numString = yeetCommas();
     const numLength = numString.length;
@@ -334,7 +338,7 @@ function backspace() {
         addNumber('zero');
         return;
     }
-    currentNum = numString.slice(0, numLength - 1);
+    currentNum = +numString.slice(0, numLength - 1);
     currentNumStr = currentNum;
     entry.textContent = currentNum;
     formatNum();
