@@ -42,20 +42,24 @@ function resetAll() {
 }
 
 //  formatting
+const displayOperation = () => operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`
+
 function clearEntry() {
     entry.textContent = '';
     currentNum = '';
     currentNumStr = currentNum;
 }
-const displayOperation = () => operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`
-const yeetCommas = () => entry.textContent.replace(/,/g, '');
-const toNum = () => +yeetCommas();
-function formatNum() {
-    const decimalIndex = yeetCommas().indexOf('.');
-    let maxDecimals = entryMaxLength;
-    if (decimalIndex !== -1) maxDecimals = entryMaxLength - decimalIndex;
-    entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
+
+function clearEntryKey() {
+    if (userEnteredEqual === true) {
+        return resetAll();
+    } else {
+        currentNum = '0';
+        currentNumStr = currentNum;
+        entry.textContent = currentNum;
+    }
 }
+
 function yeetDot() {
     if (xFunction === '') {
         currentNum = +currentNum;
@@ -63,6 +67,16 @@ function yeetDot() {
         entry.textContent = currentNum;
         formatNum();
     }
+}
+
+// entry formatting
+const yeetCommas = () => entry.textContent.replace(/,/g, '');
+const toNum = () => +yeetCommas();
+function formatNum() {
+    const decimalIndex = yeetCommas().indexOf('.');
+    let maxDecimals = entryMaxLength;
+    if (decimalIndex !== -1) maxDecimals = entryMaxLength - decimalIndex;
+    entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
 }
 
 //  key-press listener
@@ -318,6 +332,23 @@ function sqrt() {
     }
 }
 
+function negate() {
+    if (currentNum === '0') return;
+    numString = currentNumStr.toString();
+    if (numString.indexOf('-') !== 0) {
+        currentNumStr = `-${currentNumStr}`;
+    } else if (numString.indexOf('-') === 0) {
+        currentNumStr = currentNumStr.slice(1);
+    } else {
+        console.log(`error: negate`);
+        disabled = true;
+    }
+    currentNum = -currentNum;
+    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`
+    entry.textContent = currentNum;
+    formatNum();
+}
+
 //  entry modifiers
 function modify(id) {
     switch(id) {
@@ -331,9 +362,7 @@ function modify(id) {
             resetAll();
             break;
         case 'clearEntry':
-            currentNum = '0';
-            currentNumStr = currentNum;
-            entry.textContent = currentNum;
+            clearEntryKey();
     }
 }
 
@@ -363,21 +392,4 @@ function dot() {
         currentNum += '.';
         currentNumStr += '.';
     }
-}
-
-function negate() {
-    if (currentNum === '0') return;
-    numString = currentNumStr.toString();
-    if (numString.indexOf('-') !== 0) {
-        currentNumStr = `-${currentNumStr}`;
-    } else if (numString.indexOf('-') === 0) {
-        currentNumStr = currentNumStr.slice(1);
-    } else {
-        console.log(`error: negate`);
-        disabled = true;
-    }
-    currentNum = -currentNum;
-    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`
-    entry.textContent = currentNum;
-    formatNum();
 }
