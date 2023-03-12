@@ -56,9 +56,18 @@ function formatNum() {
     if (decimalIndex !== -1) maxDecimals = entryMaxLength - decimalIndex;
     entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
 }
+function yeetDot() {
+    if (xFunction === '') {
+        currentNum = +currentNum;
+        currentNumStr = +currentNumStr;
+        entry.textContent = currentNum;
+        formatNum();
+    }
+}
 
 //  key-press listener
 calculator.addEventListener('click', function (e) {
+    console.log(currentNum, currentNumStr);
     if (disabled === true) {
         resetAll();
     } else if (disabled === false) {
@@ -79,6 +88,7 @@ calculator.addEventListener('click', function (e) {
         return console.log(`error: event listeners`)
         disabled = true;
     }
+    console.log(currentNum, currentNumStr);
     });
 
 //  numbers
@@ -128,6 +138,7 @@ function addNumber(id) {
 
 //  operations
 function operate(id) {
+    yeetDot();
     if (id === 'equal') {
         isChaining = false;
         userEnteredNum = false;
@@ -181,8 +192,6 @@ function chainEqual() {
     storedNumStr = storedNum;
     userEnteredEqual = true;
     normalEqual();
-    // storednum operator currentnum result
-    // result in storednum, keep currentnum
 }
 
 function normalOperation(id) {
@@ -247,7 +256,7 @@ function runOperations() {
 //  x-functions
 function runFunction(id) {
     backspaceLock = true;
-    currentNum = toNum();
+    yeetDot();
     switch(id) {
         case 'percent':
             percent();
@@ -260,6 +269,7 @@ function runFunction(id) {
         }
 }
 
+// fix this
 function percent() {
     if (operator === 'add' || operator === 'subtract') {
         currentNum = toNum();
@@ -284,23 +294,24 @@ function squared() {
     formatNum();
 }
 
+// and this
 function sqrt() {
     xFunction = 'sqrt';
-    currentNum = toNum();
-    c = toNum();
-    operation.textContent = `${storedNum} ${operatorSymbol} √(${c})`;
     if (currentNum < 0) {
+        operation.textContent = `error: sqrt(negative)`
         entry.textContent = `imagine`
         disabled = true;
+        console.log(`hi`);
         return;
     } else if (currentNum >= 0) {
-        result = Math.sqrt(currentNum);
+        currentNum = Math.sqrt(currentNum);
         entry.textContent = result;
     } else {
         console.log(`error: sqrt`);
     }
     currentNum = result;
     result = '';
+    operation.textContent = `${storedNum} ${operatorSymbol} ${currentNumStr}`;
     formatNum();
 }
 
@@ -345,9 +356,15 @@ function backspace() {
 }
 
 function dot() {
+    console.log(currentNum, currentNumStr);
     if (xFunction !== '') return;
     if (userEnteredEqual === true) addNumber('zero');
-    if (entry.textContent.indexOf('.') === -1) entry.textContent += '.';
+    if (entry.textContent.indexOf('.') === -1) {
+        entry.textContent += '.';
+        currentNum += '.';
+        currentNumStr += '.';
+    }
+    console.log(currentNum, currentNumStr);
 }
 
 function negate() {
