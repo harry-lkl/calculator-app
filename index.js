@@ -368,13 +368,14 @@ function dot() {
 }
 
 function negate() {
-    const numString = yeetCommas();
-    if (numString === '0') return;
+    if (currentNum === '0') return;
+    numString = currentNumStr.toString();
     if (numString.indexOf('-') !== 0) {
         currentNumStr = `-${currentNumStr}`;
     } else if (numString.indexOf('-') === 0) {
         currentNumStr = currentNumStr.slice(1);
     }
-    entry.textContent = -numString;
+    currentNum = -currentNum;
+    entry.textContent = currentNum;
     formatNum();
 }
