@@ -203,6 +203,8 @@ function normalOperation(id) {
     storedNumStr = currentNumStr;
     setOperation(id);
     operation.textContent = `${storedNumStr} ${operatorSymbol}`
+    entry.textContent = storedNum;
+    formatNum();
 }
 
 function chainOperation(id) {
