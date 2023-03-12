@@ -273,10 +273,7 @@ function runFunction(id) {
     yeetDot();
     if (userEnteredEqual === true) {
         userEnteredEqual = false;
-        let tempNum = result;
-        resetAll();
-        currentNum = tempNum;
-        currentNumStr = currentNum;
+        storeResult();
     }
     switch(id) {
         case 'percent':
@@ -291,6 +288,13 @@ function runFunction(id) {
         case 'negate':
             negate();
         }
+}
+
+function storeResult() {
+    let tempNum = result;
+    resetAll();
+    currentNum = tempNum;
+    currentNumStr = currentNum;
 }
 
 function percent() {
