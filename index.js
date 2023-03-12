@@ -272,16 +272,13 @@ function runFunction(id) {
 // fix this
 function percent() {
     if (operator === 'add' || operator === 'subtract') {
-        currentNum = toNum();
-        result = storedNum * currentNum / 100;
+        currentNum = storedNum * currentNum / 100;
     } else {
-        currentNum = toNum();
-        result = currentNum / 100;
+        currentNum = currentNum / 100;
     }
-    entry.textContent = result;
-    currentNum = result;
-    result = '';
+    currentNumStr = currentNum;
     operation.textContent = `${storedNum} ${operatorSymbol} ${currentNum}`
+    entry.textContent = currentNum;
     formatNum();
 }
 
@@ -374,7 +371,9 @@ function negate() {
         disabled = true;
     }
     currentNum = -currentNum;
+    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`
     entry.textContent = currentNum;
     formatNum();
 }
 // this needs to update operation.textContent as well
+// functions need to store results first after equal is entered
