@@ -44,6 +44,12 @@ function resetAll() {
 //  formatting
 const displayOperation = () => operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`
 
+function displayFunctionOperation() {
+    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`
+    entry.textContent = currentNum;
+    formatNum();
+}
+
 function clearEntry() {
     entry.textContent = '';
     currentNum = '';
@@ -304,18 +310,14 @@ function percent() {
         currentNum = currentNum / 100;
     }
     currentNumStr = currentNum;
-    operation.textContent = `${storedNum} ${operatorSymbol} ${currentNum}`
-    entry.textContent = currentNum;
-    formatNum();
+    displayFunctionOperation();
 }
 
 function squared() {
     xFunction = 'squared';
     currentNum = currentNum ** 2;
     currentNumStr = `(${currentNumStr})²`
-    entry.textContent = currentNum;
-    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`
-    formatNum();
+    displayFunctionOperation();
 }
 
 function sqrt() {
@@ -328,9 +330,7 @@ function sqrt() {
     } else if (currentNum >= 0) {
         currentNum = Math.sqrt(currentNum);
         currentNumStr = `√(${currentNumStr})`;
-        entry.textContent = currentNum;
-        operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`;
-        formatNum();
+        displayFunctionOperation();
     } else {
         console.log(`error: sqrt`);
     }
@@ -348,9 +348,7 @@ function negate() {
         disabled = true;
     }
     currentNum = -currentNum;
-    operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`
-    entry.textContent = currentNum;
-    formatNum();
+    displayFunctionOperation();
 }
 
 //  entry modifiers
