@@ -301,18 +301,16 @@ function sqrt() {
         operation.textContent = `error: sqrt(negative)`
         entry.textContent = `imagine`
         disabled = true;
-        console.log(`hi`);
         return;
     } else if (currentNum >= 0) {
         currentNum = Math.sqrt(currentNum);
-        entry.textContent = result;
+        currentNumStr = `√(${currentNumStr})`;
+        entry.textContent = currentNum;
+        operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr}`;
+        formatNum();
     } else {
         console.log(`error: sqrt`);
     }
-    currentNum = result;
-    result = '';
-    operation.textContent = `${storedNum} ${operatorSymbol} ${currentNumStr}`;
-    formatNum();
 }
 
 //  entry modifiers
