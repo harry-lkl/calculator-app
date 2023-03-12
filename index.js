@@ -67,7 +67,6 @@ function yeetDot() {
 
 //  key-press listener
 calculator.addEventListener('click', function (e) {
-    console.log(currentNum, currentNumStr);
     if (disabled === true) {
         resetAll();
     } else if (disabled === false) {
@@ -88,7 +87,6 @@ calculator.addEventListener('click', function (e) {
         return console.log(`error: event listeners`)
         disabled = true;
     }
-    console.log(currentNum, currentNumStr);
     });
 
 //  numbers
@@ -259,6 +257,13 @@ function runOperations() {
 function runFunction(id) {
     backspaceLock = true;
     yeetDot();
+    if (userEnteredEqual === true) {
+        userEnteredEqual = false;
+        let tempNum = result;
+        resetAll();
+        currentNum = tempNum;
+        currentNumStr = currentNum;
+    }
     switch(id) {
         case 'percent':
             percent();
@@ -268,10 +273,12 @@ function runFunction(id) {
             break;
         case 'sqrt':
             sqrt();
+            break;
+        case 'negate':
+            negate();
         }
 }
 
-// fix this
 function percent() {
     if (operator === 'add' || operator === 'subtract') {
         currentNum = storedNum * currentNum / 100;
@@ -327,9 +334,6 @@ function modify(id) {
             currentNum = '0';
             currentNumStr = currentNum;
             entry.textContent = currentNum;
-            break;
-        case 'negate':
-            negate();
     }
 }
 
@@ -377,5 +381,3 @@ function negate() {
     entry.textContent = currentNum;
     formatNum();
 }
-// this needs to update operation.textContent as well
-// functions need to store results first after equal is entered
