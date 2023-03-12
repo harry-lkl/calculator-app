@@ -294,7 +294,6 @@ function squared() {
     formatNum();
 }
 
-// and this
 function sqrt() {
     xFunction = 'sqrt';
     if (currentNum < 0) {
@@ -354,15 +353,13 @@ function backspace() {
 }
 
 function dot() {
-    console.log(currentNum, currentNumStr);
     if (xFunction !== '') return;
-    if (userEnteredEqual === true) addNumber('zero');
+    if (userEnteredEqual === true || userEnteredOperator === true) addNumber('zero');
     if (entry.textContent.indexOf('.') === -1) {
         entry.textContent += '.';
         currentNum += '.';
         currentNumStr += '.';
     }
-    console.log(currentNum, currentNumStr);
 }
 
 function negate() {
@@ -372,8 +369,12 @@ function negate() {
         currentNumStr = `-${currentNumStr}`;
     } else if (numString.indexOf('-') === 0) {
         currentNumStr = currentNumStr.slice(1);
+    } else {
+        console.log(`error: negate`);
+        disabled = true;
     }
     currentNum = -currentNum;
     entry.textContent = currentNum;
     formatNum();
 }
+// this needs to update operation.textContent as well
