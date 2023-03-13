@@ -430,8 +430,11 @@ function memoryKeys(id) {
     memory.textContent = memoryNum;
 }
 
+const memoryAdd = () => memoryNum += currentNum;
 const memoryClear = () => memoryNum = '';
 const memoryStore = () => memoryNum = +currentNum;
+const memorySubtract = () => memoryNum -= currentNum;
+
 function memoryRecall() {
     currentNum = memoryNum;
     currentNumStr = currentNum;
