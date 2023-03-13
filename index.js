@@ -90,7 +90,7 @@ calculator.addEventListener('click', function (e) {
     if (disabled === true) {
         resetAll();
     } else if (disabled === false) {
-        console.log(e.target.id);
+        console.log(e);
         switch(e.target.className) {
             case 'key number':
                 addNumber(e.target.id);
