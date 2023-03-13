@@ -405,6 +405,8 @@ function dot() {
 // m+: memory+currentNum
 // m-: memory-currentNum
 // ms: store currentNum in memory
+let memoryNum = '';
+
 function memoryKeys(id) {
     if (disabled === true) return;
     if (memoryNum === '' && id !== memoryStore) return;
@@ -425,3 +427,5 @@ function memoryKeys(id) {
             memoryStore();
     }
 }
+
+const memoryClear = () => memoryNum = '';
