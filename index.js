@@ -119,7 +119,8 @@ function addNumber(id) {
     let digitCount = yeetCommas().length;
     if (digitCount >= entryMaxLength && userEnteredOperator === false) return;
     if (userEnteredEqual === true) resetAll();
-    if (userEnteredOperator === true || entry.textContent === '0') clearEntry();
+    if (userEnteredMemory === true || userEnteredOperator === true || entry.textContent === '0') clearEntry();
+    userEnteredMemory = false;
     userEnteredOperator = false;
     switch(id) {
         case 'zero':
@@ -399,17 +400,14 @@ function dot() {
     }
 }
 
-// memory listers
-// memoryClear: clear memory
-// memoryRecall: move memory to entry
-// m+: memory+currentNum
-// m-: memory-currentNum
-// ms: store currentNum in memory
 let memoryNum = '';
+let userEnteredMemory = false;
 
 function memoryKeys(id) {
     if (disabled === true) return;
     if (memoryNum === '' && (id === memoryClear || id === memoryRecall)) return;
+    userEnteredNum = false;
+    userEnteredMemory = true;
     switch(id) {
         case 'memoryClear':
             memoryClear();
@@ -429,10 +427,10 @@ function memoryKeys(id) {
     memory.textContent = memoryNum;
 }
 
-const memoryAdd = () => memoryNum += currentNum;
+const memoryAdd = () => memoryNum += toNum();
 const memoryClear = () => memoryNum = '';
-const memoryStore = () => memoryNum = +currentNum;
-const memorySubtract = () => memoryNum -= currentNum;
+const memoryStore = () => memoryNum = toNum();
+const memorySubtract = () => memoryNum -= toNum();
 
 function memoryRecall() {
     currentNum = memoryNum;
