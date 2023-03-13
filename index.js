@@ -102,6 +102,9 @@ calculator.addEventListener('click', function (e) {
                 break;
             case 'key modifier':
                 modify(e.target.id);
+                break;
+            case 'memoryKey':
+                memoryKeys(e.target.id);
         }
     } else {
         return console.log(`error: event listeners`)
@@ -393,5 +396,32 @@ function dot() {
         entry.textContent += '.';
         currentNum += '.';
         currentNumStr += '.';
+    }
+}
+
+// memory listers
+// memoryClear: clear memory
+// memoryRecall: move memory to entry
+// m+: memory+currentNum
+// m-: memory-currentNum
+// ms: store currentNum in memory
+function memoryKeys(id) {
+    if (disabled === true) return;
+    if (memoryNum === '' && id !== memoryStore) return;
+    switch(id) {
+        case 'memoryClear':
+            memoryClear();
+            break;
+        case 'memoryRecall':
+            memoryRecall();
+            break;
+        case 'memory+':
+            memoryAdd();
+            break;
+        case 'memory-':
+            memorySubtract();
+            break;
+        case 'memoryStore':
+            memoryStore();
     }
 }
