@@ -429,3 +429,4 @@ function memoryKeys(id) {
 }
 
 const memoryClear = () => memoryNum = '';
+const memoryStore = () => memoryNum = +currentNum;
