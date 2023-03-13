@@ -90,6 +90,7 @@ calculator.addEventListener('click', function (e) {
     if (disabled === true) {
         resetAll();
     } else if (disabled === false) {
+        console.log(e.target.id);
         switch(e.target.className) {
             case 'key number':
                 addNumber(e.target.id);
@@ -409,7 +410,7 @@ let memoryNum = '';
 
 function memoryKeys(id) {
     if (disabled === true) return;
-    if (memoryNum === '' && id !== memoryStore) return;
+    if (memoryNum === '' && (id === memoryClear || id === memoryRecall)) return;
     switch(id) {
         case 'memoryClear':
             memoryClear();
@@ -426,7 +427,14 @@ function memoryKeys(id) {
         case 'memoryStore':
             memoryStore();
     }
+    memory.textContent = memoryNum;
 }
 
 const memoryClear = () => memoryNum = '';
 const memoryStore = () => memoryNum = +currentNum;
+function memoryRecall() {
+    currentNum = memoryNum;
+    currentNumStr = currentNum;
+    entry.textContent = currentNum;
+    formatNum();
+}
