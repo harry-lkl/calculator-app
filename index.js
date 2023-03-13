@@ -1,7 +1,7 @@
 const memory = document.getElementById('memory');
 const operation = document.getElementById('operation');
 const entry = document.getElementById('entry');
-const calculator = document.getElementById('keys');
+const calculator = document.getElementById('calculator');
 const entryMaxLength = 12;
 
 let backspaceLock = false;
@@ -90,7 +90,6 @@ calculator.addEventListener('click', function (e) {
     if (disabled === true) {
         resetAll();
     } else if (disabled === false) {
-        console.log(e);
         switch(e.target.className) {
             case 'key number':
                 addNumber(e.target.id);
