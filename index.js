@@ -400,6 +400,7 @@ function dot() {
     }
 }
 
+// memory
 let memoryNum = '';
 let userEnteredMemory = false;
 

@@ -1,5 +1,9 @@
 body {
-    margin: 0;
+    margin: 0 2rem;
+}
+
+button {
+    cursor: pointer;
 }
 
 #calculator {
@@ -54,6 +58,20 @@ body {
 
 .key {
     font-size: 3rem;
+    border: solid black 0.3rem;
+    border-radius: 1rem;
+    box-shadow: 0.4rem 0.4rem;
+}
+
+.key:hover {
+    border-color: lightgreen;
+}
+
+.key:active {
+    box-shadow: 0.1rem 0.1rem;
+    position: relative;
+    bottom: -0.3rem;
+    right: -0.3rem;
 }
 
 #zero {
