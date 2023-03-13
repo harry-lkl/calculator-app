@@ -1,6 +1,6 @@
 :root {
-    --main-border-color: lightgreen;
-    --sub-border-color: lightcoral;
+    --main-color: rgb(199, 255, 199);
+    --sub-color: rgb(237, 175, 175);
 }
 
 body {
@@ -16,7 +16,7 @@ button {
 
 #calculator {
     display: grid;
-    grid-template-rows: 4fr 1fr 6fr;  /* key rule */
+    grid-template-rows: 4fr 1fr 6fr;
     grid-template-columns: 1fr;
     grid-template-areas: "screenBorder" 
                         "memoryKeys" 
@@ -28,17 +28,22 @@ button {
     display: grid;
     background-color: black;
     clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%, 0 23%);
-    margin-top: 1rem;
+    margin: 1rem 0;
 }
 
 #screen {
     display: grid;
     place-self: center;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: 4fr 4fr 8fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "operation" 
+                        "memory" 
+                        "entry"
+                        "mainColorBand"
+                        "subColorBand";
     font-size: 4rem;
     height: 96%;
-    width: 96%;
+    width: 97%;
     align-items: end;
     justify-items: end;
     background-color: white;
@@ -46,17 +51,31 @@ button {
 }
 
 #operation {
-    grid-column-end: span 4;
+    align-self: center;
+    margin: 0 1rem;
 }
 
 #memory {
-    grid-column-end: span 4;
+    align-self: center;
+    margin: 0 1rem;
 }
 
 #entry {
-    grid-column-end: span 4;
-    grid-row-end: span 2;
-    font-size: 7.5rem;
+    align-self: center;
+    font-size: 7.4rem;
+    margin: 0 1rem;
+}
+
+#mainColorBand {
+    background-color: var(--main-color);
+    height: 100%;
+    width: 100%;
+}
+
+#subColorBand {
+    background-color: var(--sub-color);
+    height: 100%;
+    width: 100%;
 }
 
 #memoryKeys {
@@ -75,7 +94,7 @@ button {
 }
 
 .memoryKey:hover {
-    border-color: var(--main-border-color);
+    border-color: var(--main-color);
 }
 
 .memoryKey:active {
@@ -101,7 +120,7 @@ button {
 }
 
 .key:hover {
-    border-color: var(--sub-border-color);
+    border-color: var(--sub-color);
 }
 
 .key:active {

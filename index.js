@@ -341,7 +341,7 @@ function sqrt() {
 }
 
 function negate() {
-    if (currentNum === '0') return;
+    if (currentNum === 0) return;
     numString = currentNumStr.toString();
     if (numString.indexOf('-') !== 0) {
         currentNumStr = `-${currentNumStr}`;
