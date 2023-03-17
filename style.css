@@ -4,6 +4,8 @@
     --gaps: 3vw;
 }
 
+@media (max-width: 900px) {
+
 html,
 body {
   margin: 0;
@@ -147,4 +149,5 @@ button {
 
 #zero {
     grid-column-end: span 2;
+}
 }
