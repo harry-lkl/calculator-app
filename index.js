@@ -85,32 +85,50 @@ function formatNum() {
     entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
 }
 
-//  key-press listener
+//  input listeners
 calculator.addEventListener('click', function (e) {
     if (disabled === true) {
         resetAll();
     } else if (disabled === false) {
-        switch(e.target.className) {
-            case 'key number':
-                addNumber(e.target.id);
-                break;
-            case 'key operator':
-                operate(e.target.id);
-                break;
-            case 'key function':
-                runFunction(e.target.id);
-                break;
-            case 'key modifier':
-                modify(e.target.id);
-                break;
-            case 'memoryKey':
-                memoryKeys(e.target.id);
-        }
+        const className = e.target.className;
+        const id = e.target.id;
+        mainSelector(className, id);
     } else {
         return console.log(`error: event listeners`)
         disabled = true;
     }
     });
+
+window.addEventListener('keydown', input);
+function input(e) {
+    console.log(e.key);
+    let key = document.querySelector(`.key[data-key = "${e.key}"]`)
+    if (e.key === '\\') key = document.querySelector(`.key[data-key = "÷"]`)
+    console.log(key);
+    if (!key) return;
+    const className = key.className;
+    const id = key.id;
+    mainSelector(className, id);
+}
+
+function mainSelector(className, id) {
+    switch(className) {
+        case 'key number':
+            addNumber(id);
+            break;
+        case 'key operator':
+            operate(id);
+            break;
+        case 'key function':
+            runFunction(id);
+            break;
+        case 'key modifier':
+            modify(id);
+            break;
+        case 'key memory':
+            memoryKeys(id);
+    }
+}
 
 //  numbers
 function addNumber(id) {
