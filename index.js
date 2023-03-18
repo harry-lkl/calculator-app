@@ -87,24 +87,17 @@ function formatNum() {
 
 //  input listeners
 calculator.addEventListener('click', function (e) {
-    if (disabled === true) {
-        resetAll();
-    } else if (disabled === false) {
-        const className = e.target.className;
-        const id = e.target.id;
-        mainSelector(className, id);
-    } else {
-        return console.log(`error: event listeners`)
-        disabled = true;
-    }
-    });
+    if (disabled === true) return resetAll();
+    const className = e.target.className;
+    const id = e.target.id;
+    mainSelector(className, id);
+});
 
 window.addEventListener('keydown', input);
 function input(e) {
-    console.log(e.key);
+    if (disabled === true) return resetAll();
     let key = document.querySelector(`.key[data-key = "${e.key}"]`)
     if (e.key === '\\') key = document.querySelector(`.key[data-key = "÷"]`)
-    console.log(key);
     if (!key) return;
     const className = key.className;
     const id = key.id;
@@ -425,8 +418,10 @@ let userEnteredMemory = false;
 function memoryKeys(id) {
     if (disabled === true) return;
     if (memoryNum === '' && (id === memoryClear || id === memoryRecall)) return;
-    userEnteredNum = false;
+    userEnteredEqual = false;
     userEnteredMemory = true;
+    userEnteredNum = false;
+    userEnteredOperator = false;
     switch(id) {
         case 'memoryClear':
             memoryClear();
