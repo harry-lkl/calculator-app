@@ -344,9 +344,9 @@ function negate() {
     if (currentNum === 0) return;
     numString = currentNumStr.toString();
     if (numString.indexOf('-') !== 0) {
-        currentNumStr = `-${numString}`;
+        currentNumStr = `-${currentNumStr}`;
     } else if (numString.indexOf('-') === 0) {
-        currentNumStr = numString.slice(1);
+        currentNumStr = currentNumStr.slice(1);
     } else {
         console.log(`error: negate`);
         disabled = true;
