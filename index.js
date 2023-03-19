@@ -385,6 +385,7 @@ function modify(id) {
 
 function backspace() {
     if (backspaceLock === true) return;
+    if (userEnteredEqual === true) resetAll();
     const absNumString = yeetCommas().replace(/-|(0.)/g, '');
     const absNumLength = absNumString.length;
     const numString = yeetCommas();
