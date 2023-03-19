@@ -453,3 +453,5 @@ function memoryRecall() {
     entry.textContent = currentNum;
     formatNum();
 }
+
+//negate throws error after repeats?
