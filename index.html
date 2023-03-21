@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>neocalc</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   </head>
   <body>
     <div id="shell">
@@ -31,10 +32,12 @@
           <button class="key function" data-key="_" id="negate">+/-</button>
           <button class="key modifier" data-key="Delete" id="clearEntry">CE</button>
           <button class="key modifier" data-key="Escape" id="clearAll">C</button>
-          <button class="key modifier" data-key="Backspace" id="backspace">⌫</button>
+          <button class="key modifier" data-key="Backspace" id="backspace">
+            <span class="material-symbols-outlined">backspace</span>
+          </button>
           <button class="key function" data-key="%" id="percent">%</button>
           <button class="key function" data-key="^" id="squared">x²</button>
-          <button class="key function" data-key="&" id="sqrt">√x</button>
+          <button class="key function" data-key="&" id="sqrt">²/x</button>
           <button class="key operator" data-key="÷" id="divide">÷</button>
           <button class="key number" data-key="7" id="seven">7</button>
           <button class="key number" data-key="8" id="eight">8</button>
@@ -58,3 +61,4 @@
 	<script src="index.js"></script>
   </body>
 </html>
+<!-- <span class="material-symbols-outlined">&#xE8B6;</span> -->
