@@ -73,8 +73,6 @@ button {
                         "subColorBand";
     height: 96%;
     width: 97%;
-    align-items: center;
-    justify-items: end;
     background-color: white;
     clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%, 0 23%);
 }
@@ -92,8 +90,10 @@ button {
 }
 
 #entryBox {
-    font-size: 3rem;
-    height: 4rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
 }
 
 #entry {
@@ -240,8 +240,13 @@ button {
         font-size: 2.4rem;
     }
     
+    #entryBox {
+        height: 6rem;
+    }
+    
     #entry {
-        font-size: 3rem;
+        word-break: break-all;
+        word-wrap: break-word;
     }
 
     #memoryKeys {

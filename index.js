@@ -1,9 +1,11 @@
+const calculator = document.getElementById('calculator');
 const memory = document.getElementById('memory');
 const operation = document.getElementById('operation');
 const entry = document.getElementById('entry');
-const calculator = document.getElementById('calculator');
-const entryMaxLength = 12;
 const entryBox = document.getElementById('entryBox');
+const entryBoxDefaultHeight = entryBox.clientHeight;
+const entryDefaultFontSize = '90px';
+const entryMaxLength = 12;
 
 let backspaceLock = false;
 let disabled = false;
@@ -41,6 +43,16 @@ function resetAll() {
     entry.textContent = currentNum;
     operation.textContent = '';
 }
+
+/* resetAll() */
+function init() {
+    resetAll();
+    entry.style.fontSize = entryDefaultFontSize;
+    resizeEntry();
+}
+
+init();
+const adjustedEntryFontSize = entry.style.fontSize;
 
 //  formatting
 const displayOperation = () => operation.textContent = `${storedNumStr} ${operatorSymbol} ${currentNumStr} =`
@@ -84,19 +96,19 @@ function formatNum() {
     let maxDecimals = entryMaxLength;
     if (decimalIndex !== -1) maxDecimals = entryMaxLength - decimalIndex;
     entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
+    resizeEntry();
 }
 
 function resizeEntry() {
-    if (entry.clientHeight <= entryBox.clientHeight) return;
+    if (entry.clientHeight <= entryBoxDefaultHeight) return;
     let fontSize = window.getComputedStyle(entry).fontSize;
-        console.log(fontSize, entry.clientHeight, entryBox.clientHeight);
+console.log(fontSize, entry.clientHeight, entryBox.clientHeight);
     entry.style.fontSize = `${(parseFloat(fontSize) - 1)}px`;
     resizeEntry();
 }
   
 function processEntry() {
-    entry.style.fontSize = '48px';
-    console.log(`hi`)
+    entry.style.fontSize = adjustedEntryFontSize;
     resizeEntry();
 }
 
@@ -106,6 +118,7 @@ calculator.addEventListener('click', function (e) {
     const className = e.target.className;
     const id = e.target.id;
     mainSelector(className, id);
+    processEntry();
 });
 
 window.addEventListener('keydown', input);
@@ -469,5 +482,3 @@ function memoryRecall() {
     entry.textContent = currentNum;
     formatNum();
 }
-
-//negate throws error after repeats?
