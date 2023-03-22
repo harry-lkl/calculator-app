@@ -2,10 +2,7 @@ const entry = document.getElementById('entry');
 const operation = document.getElementById('operation');
 const memory = document.getElementById('memory');
 const history = [];
-
-let currentNum = '';
-let currentNumStr = '';
-let currentOperation = {
+const operationObj = {
     firstNum: '',
     firstNumStr: '',
     secondNum: '',
@@ -14,8 +11,11 @@ let currentOperation = {
     operatorSymbol: '',
     result: '',
 }
-let ranFunction = false;
 
+let currentNum = '';
+let currentNumStr = '';
+let currentOperation = operationObj;
+let ranFunction = false;
 
 // init
 function init() {
