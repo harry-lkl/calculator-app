@@ -44,19 +44,6 @@ function keyInput(e) {
     mainSelector(`${key.className}`, `${key.id}`, `${e.key}`);
 }
 
-// reset
-function resetOperationObj() {
-    currentOperation = {
-        firstNum: '0',
-        firstNumStr: '0',
-        secondNum: '',
-        secondNumStr: '',
-        operator: '',
-        operatorSymbol: '',
-        result: '',
-    }
-}
-
 // main selector
 function mainSelector(className, id, key) {
     console.log(key);
