@@ -1,27 +1,71 @@
+const entry = document.getElementById('entry');
+const operation = document.getElementById('operation');
+const memory = document.getElementById('memory');
+const history = [];
+
+let currentNum = '';
+let currentNumStr = '';
+let currentOperation = {
+    firstNum: '',
+    firstNumStr: '',
+    secondNum: '',
+    secondNumStr: '',
+    operator: '',
+    operatorSymbol: '',
+    result: '',
+}
+let ranFunction = false;
+
+
+// init
+function init() {
+    addNumber('0');
+    entry.style.fontSize = '3rem'; // default fontSize
+}
+init();
+
 //  input listeners
 window.addEventListener('click', clickInput);
 function clickInput(e) {
+    if (!e.target.classList.contains('key')) return console.log(`no`);
     if (e.target.id === 'backspaceIcon') return mainSelector('key modifier', 'backspace');
-    mainSelector(`${e.target.className}`, `${e.target.id}`);
+    mainSelector(`${e.target.className}`, `${e.target.id}`, `${e.target.textContent}`);
 }
 
 window.addEventListener('keydown', keyInput);
 function keyInput(e) {
-    let key = document.querySelector(`.key[data-key = "${e.key}"]`)
-    if (e.key === '\\') key = document.querySelector(`.key[data-key = "÷"]`)
+    let key = 'error: no key';
+    if (e.key === '\\') {
+        key = document.querySelector(`.key[data-key = "÷"]`)
+    } else {
+        key = document.querySelector(`.key[data-key = "${e.key}"]`)
+    }
     if (!key) return;
-    mainSelector(`${e.target.className}`, `${e.target.id}`);
+    mainSelector(`${key.className}`, `${key.id}`, `${e.key}`);
+}
+
+// reset
+function resetOperationObj() {
+    currentOperation = {
+        firstNum: '0',
+        firstNumStr: '0',
+        secondNum: '',
+        secondNumStr: '',
+        operator: '',
+        operatorSymbol: '',
+        result: '',
+    }
 }
 
 // main selector
-function mainSelector(className, id) {
-    console.log(className, id);
+function mainSelector(className, id, key) {
+    console.log(key);
     switch(className) {
         case 'key number':
-            addNumber(id);
+            addNumber(key);
             break;
         case 'key operator':
-            setOperator(id);
+            selectOperator(id, key);
             break;
         case 'key function':
             runFunction(id);
@@ -30,16 +74,19 @@ function mainSelector(className, id) {
             modifyDisplay(id);
             break;
         case 'key memory':
-            memorySelector(id);
+            selectMemory(id);
     }
 }
 
 //  numbers
-function addNumber(id) {
-    console.log(id);
+function addNumber(key) {
+    if (entry.textContent === '0') entry.textContent = '';
+    entry.textContent += key;
+    currentNum = entry.textContent;
+    currentNumStr = currentNum;
 }
 
-function setOperator(id) {
+function selectOperator(id) {
     return console.log(id);
 }
 //  operations
