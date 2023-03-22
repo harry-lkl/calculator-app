@@ -66,9 +66,9 @@ button {
     place-self: center;
     grid-template-rows: 4fr 4fr 8fr 1fr 1fr;
     grid-template-columns: 1fr;
-    grid-template-areas: "operation" 
-                        "memory" 
-                        "entry"
+    grid-template-areas: "operationBox" 
+                        "memoryBox" 
+                        "entryBox"
                         "mainColorBand"
                         "subColorBand";
     height: 96%;
@@ -91,8 +91,14 @@ button {
     font-size: 10vw;
 }
 
+#entryBox {
+    font-size: 3rem;
+    height: 4rem;
+}
+
 #entry {
-    font-size: 11.8vw;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 
 #mainColorBand, #subColorBand {

@@ -3,6 +3,7 @@ const operation = document.getElementById('operation');
 const entry = document.getElementById('entry');
 const calculator = document.getElementById('calculator');
 const entryMaxLength = 12;
+const entryBox = document.getElementById('entryBox');
 
 let backspaceLock = false;
 let disabled = false;
@@ -85,6 +86,20 @@ function formatNum() {
     entry.textContent = toNum().toLocaleString('en', {maximumFractionDigits: maxDecimals});
 }
 
+function resizeEntry() {
+    if (entry.clientHeight <= entryBox.clientHeight) return;
+    let fontSize = window.getComputedStyle(entry).fontSize;
+        console.log(fontSize, entry.clientHeight, entryBox.clientHeight);
+    entry.style.fontSize = `${(parseFloat(fontSize) - 1)}px`;
+    resizeEntry();
+}
+  
+function processEntry() {
+    entry.style.fontSize = '48px';
+    console.log(`hi`)
+    resizeEntry();
+}
+
 //  input listeners
 calculator.addEventListener('click', function (e) {
     if (disabled === true) return resetAll();
@@ -102,6 +117,7 @@ function input(e) {
     const className = key.className;
     const id = key.id;
     mainSelector(className, id);
+    processEntry();
 }
 
 function mainSelector(className, id) {
