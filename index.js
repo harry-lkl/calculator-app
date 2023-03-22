@@ -80,6 +80,7 @@ function mainSelector(className, id, key) {
 
 //  numbers
 function addNumber(key) {
+    if (ranFunction === true) return;
     if (entry.textContent === '0') entry.textContent = '';
     entry.textContent += key;
     currentNum = entry.textContent;
