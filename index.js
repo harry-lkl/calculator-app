@@ -123,7 +123,7 @@ function updateCurrentNum() {
 }
 
 function selectOperator(key) {
-    if (key === '=') return operate(key);
+    if (key === '=') return operate();
     if (!currentOperation.operator) {
         storeNum();
         setOperator(key);
@@ -146,7 +146,7 @@ function storeNum() {
 }
 
 //  operations
-function operate(key) {
+function operate() {
     if (lastKey === '=') chainEqual();
     if (lastKeyClass === 'key operator' && !currentOperation.currentNum) autoFillSecondNum();
     if (currentOperation.operator) currentOperation.result = doMaths();
@@ -184,7 +184,8 @@ function doMaths() {
 }
 
 function chainOperation() {
-
+    // equal
+    // set the thing
 }
 
 //  x-functions
