@@ -46,7 +46,7 @@ function resetHandler(key) {
 
 // init
 function init() {
-    addNumber('0');
+    mainSelector('key number', 'zero', '0');
     entry.style.fontSize = '3rem'; // default fontSize
 }
 init();
@@ -54,7 +54,7 @@ init();
 //  input listeners
 window.addEventListener('click', clickInput);
 function clickInput(e) {
-    if (!e.target.classList.contains('key')) return console.log(`not valid key`);
+    if (!e.target.classList.contains('key')) return /* console.log(`not valid key`) */;
     if (e.target.id === 'backspaceIcon') return mainSelector('key modifier', 'backspace');
     mainSelector(`${e.target.className}`, `${e.target.id}`, `${e.target.textContent}`);
 }
@@ -94,6 +94,7 @@ function mainSelector(className, id, key) {
     lastKey = key;
     lastKeyClass = className;
     console.log(currentOperation);
+    console.log(className, id, key);
 }
 
 //  formatting
