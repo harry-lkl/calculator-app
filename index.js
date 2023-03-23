@@ -136,7 +136,7 @@ function selectOperator(key) {
     updateScreen('operator');
 }
 
-function setOperator() {
+function setOperator(key) {
     currentOperation.operator = key;
 }
 
