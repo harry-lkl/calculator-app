@@ -124,22 +124,31 @@ function updateCurrentNum(key) {
 }
 
 // operators
-function selectOperator(key) {
+function selectOperator(key) { // + - * ÷ =
     if (key === '=') return operate(key);
-    if (!currentOperation.operator) {
+    if (lastKey === '=') { // continue after equal
+        recallResult();
+        setOperator(key);
+        console.log(currentOperation)
+    } else if (!currentOperation.operator) { // fresh number
         storeNum();
         setOperator(key);
-    } else if (!currentOperation.currentNum && currentOperation.operator) {
+    } else if (!currentOperation.currentNum && currentOperation.operator) { // swap between operators
         setOperator(key);
-    } else if (currentOperation.storedNum && currentOperation.operator && currentOperation.currentNum) {
+    } else if (currentOperation.storedNum && currentOperation.operator && currentOperation.currentNum) { // ready to chain
         chainOperation(key);
-    }
+    } 
     resetHandler('operator');
     updateScreen('operator');
 }
 
 function setOperator(key) {
     currentOperation.operator = key;
+}
+
+function recallResult() {
+    currentOperation.storedNum = history[0].result;
+    currentOperation.storedNumStr = history[0].result;
 }
 
 function storeNum() {
