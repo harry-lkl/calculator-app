@@ -113,11 +113,11 @@ function addNumber(key) {
     if (lastKeyClass === 'key operator') resetHandler('number');
     if (lastKey === '=') resetHandler('all');
     if (currentOperation.currentNum === '0') currentOperation.currentNum = '';
-    updateCurrentNum();
+    updateCurrentNum(key);
     updateScreen('number');
 }
 
-function updateCurrentNum() {
+function updateCurrentNum(key) {
     currentOperation.currentNum += key;
     currentOperation.currentNumStr = currentOperation.currentNum;
 }
@@ -184,7 +184,7 @@ function doMaths() {
 }
 
 function chainOperation() {
-    // equal
+    operate();
     // set the thing
 }
 
