@@ -16,6 +16,7 @@ let currentNum = '';
 let currentNumStr = '';
 let currentOperation = operationObj;
 let lastKey = '';
+let lastKeyClass = '';
 let ranFunction = false;
 
 function resetHandler(key) {
@@ -27,6 +28,11 @@ function resetHandler(key) {
             currentOperation = operationObj;
             ranFunction = false;
             break; */
+            break;
+        case 'number':
+            currentNum = '';
+            currentNumStr = '';
+            entry.textContent = '';
     }
 }
 
@@ -76,6 +82,8 @@ function mainSelector(className, id, key) {
         case 'key memory':
             selectMemory(id);
     }
+    lastKey = key;
+    lastKeyClass = className;
     formatScreen();
 }
 
@@ -87,6 +95,7 @@ function formatScreen() {
 //  numbers
 function addNumber(key) {
     if (ranFunction === true) return;
+    if (lastKeyClass === 'key operator') resetHandler('number');
     if (currentNum === '0') currentNum = '';
     currentNum += key;
     currentNumStr = currentNum;
@@ -105,6 +114,7 @@ function operate(key) {
     currentOperation.secondNumStr = currentNumStr;
     if (currentOperation.operator) currentOperation.result = maths(); // if there's an operator, do maths
     if (!currentOperation.result) return errorHandler();
+    entry.textContent = currentOperation.result;
     history.push(currentOperation);
     formatScreen();
     resetHandler(key);
