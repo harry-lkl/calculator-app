@@ -19,6 +19,7 @@ let memoryNum = '';
 function resetHandler(key) {
     switch(key) {
         case '=':
+            console.log(`hi`);
             currentOperation = {...operationObj};
             break;
         case 'number':
@@ -100,7 +101,7 @@ function updateScreen(type) {
         case 'operator':
             operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator}`;
             break;
-        case 'equal':
+        case '=':
             operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr}`;
             entry.textContent = currentOperation.result;
             break;
@@ -122,8 +123,9 @@ function updateCurrentNum(key) {
     currentOperation.currentNumStr = currentOperation.currentNum;
 }
 
+// operators
 function selectOperator(key) {
-    if (key === '=') return operate();
+    if (key === '=') return operate(key);
     if (!currentOperation.operator) {
         storeNum();
         setOperator(key);
@@ -147,13 +149,13 @@ function storeNum() {
 
 //  operations
 function operate() {
-    if (lastKey === '=') chainEqual();
+    if (lastKey === '=') chainEqual(key);
     if (lastKeyClass === 'key operator' && !currentOperation.currentNum) autoFillSecondNum();
     if (currentOperation.operator) currentOperation.result = doMaths();
     if (!currentOperation.result) return errorHandler();
     history.unshift({...currentOperation});
-    updateScreen('equal');
-    resetHandler('key');
+    updateScreen(key);
+    resetHandler(key);
 }
 
 function chainEqual() {
@@ -184,6 +186,7 @@ function doMaths() {
 }
 
 function chainOperation() {
+    return;
     operate();
     // set the thing
 }
