@@ -12,7 +12,7 @@ const operationObj = {
 }
 
 let chainingOperator = false;
-let currentOperation = operationObj;
+let currentOperation = {...operationObj};
 let lastKey = '';
 let lastKeyClass = '';
 let memoryNum = '';
@@ -21,16 +21,26 @@ let ranFunction = false;
 function resetHandler(key) {
     switch(key) {
         case '=':
-/*             chainingOperator = false;
-            currentNum = currentOperation.result;
-            currentNumStr = currentNum;
-            currentOperation = operationObj;
-            ranFunction = false; */
+            chainingOperator = false;
+            currentOperation = {...operationObj};
+            ranFunction = false;
             break;
         case 'number':
+            entry.textContent = '';
+            break;
+        case 'operator':
             currentOperation.currentNum = '';
             currentOperation.currentNumStr = '';
+            break;
+        case 'all':
+            chainingOperator = false;
+            currentOperation = {...operationObj};
+            lastKey = '';
+            lastKeyClass = '';
+            ranFunction = false;
             entry.textContent = '';
+            operation.textContent = '';
+            init();
     }
 }
 
@@ -52,10 +62,12 @@ function clickInput(e) {
 window.addEventListener('keydown', keyInput);
 function keyInput(e) {
     let key = 'error: no key';
-    if (e.key === '\\') {
+    if (e.key !== '\\') {
+        key = document.querySelector(`.key[data-key = "${e.key}"]`)
+    } else if (e.key === '\\') {
         key = document.querySelector(`.key[data-key = "÷"]`)
     } else {
-        key = document.querySelector(`.key[data-key = "${e.key}"]`)
+        errorHandler('error: key input')
     }
     if (!key) return;
     mainSelector(`${key.className}`, `${key.id}`, `${key.textContent}`);
@@ -81,7 +93,7 @@ function mainSelector(className, id, key) {
     }
     lastKey = key;
     lastKeyClass = className;
-    console.log(className, id, key, currentOperation)
+    console.log(className, id, key, currentOperation, history)
 }
 
 //  formatting
@@ -104,6 +116,7 @@ function updateScreen(type) {
 function addNumber(key) {
     if (ranFunction === true) return;
     if (lastKeyClass === 'key operator') resetHandler('number');
+    if (lastKey === '=') resetHandler('all');
     if (currentOperation.currentNum === '0') currentOperation.currentNum = '';
     currentOperation.currentNum += key;
     currentOperation.currentNumStr = currentOperation.currentNum;
@@ -112,21 +125,41 @@ function addNumber(key) {
 
 function selectOperator(key) {
     if (key === '=') return operate(key);
-    currentOperation.storedNum = currentOperation.currentNum;
-    currentOperation.storedNumStr = currentOperation.currentNumStr;
-    currentOperation.operator = key;
+    if (lastKeyClass === 'key operator' && key !== '=') {
+        currentOperation.operator = key;
+    } else if (lastKeyClass !== 'key operator') {
+        currentOperation.storedNum = currentOperation.currentNum;
+        currentOperation.storedNumStr = currentOperation.currentNumStr;
+        currentOperation.operator = key;
+    }
+    resetHandler('operator');
     updateScreen('operator');
 }
+
 //  operations
 function operate(key) {
-    if (currentOperation.operator) currentOperation.result = maths();
+    if (lastKey === '=') chainEqual();
+    if (lastKeyClass === 'key operator' && lastKey !== '=') autoFillSecondNum();
+    if (currentOperation.operator) currentOperation.result = doMaths();
     if (!currentOperation.result) return errorHandler();
+    history.unshift({...currentOperation});
     updateScreen('equal');
-    history.push(currentOperation);
     resetHandler('key');
 }
 
-function maths() {
+function chainEqual() {
+    currentOperation.storedNum = `${history[0].result}`;
+    currentOperation.storedNumStr = `${history[0].result}`
+    currentOperation.currentNum = `${history[0].currentNum}`;
+    currentOperation.currentNumStr = `${history[0].currentNumStr}`;
+}
+
+function autoFillSecondNum() {
+    currentOperation.currentNum = currentOperation.storedNum;
+    currentOperation.currentNumStr = currentOperation.storedNumStr;
+}
+
+function doMaths() {
     a = parseFloat(currentOperation.storedNum);
     b = parseFloat(currentOperation.currentNum);
     switch(currentOperation.operator) {
@@ -161,7 +194,6 @@ function runFunction(id) {
 
 //  entry modifiers
 function modifyDisplay(id) {
-    return console.log(id);
     switch(id) {
         case 'backspace':
             backspace();
@@ -170,7 +202,7 @@ function modifyDisplay(id) {
             dot();
             break;
         case 'clearAll':
-            resetAll();
+            resetHandler('all');
             break;
         case 'clearEntry':
             clearEntry();
@@ -198,5 +230,5 @@ function memorySelector(id) {
 }
 
 function errorHandler() {
-    console.log(`triggered error handler`)
+    console.log(`triggered error handler plz send help`)
 }
