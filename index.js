@@ -148,7 +148,7 @@ function storeNum() {
 }
 
 //  operations
-function operate() {
+function operate(key) {
     if (lastKey === '=') chainEqual(key);
     if (lastKeyClass === 'key operator' && !currentOperation.currentNum) autoFillSecondNum();
     if (currentOperation.operator) currentOperation.result = doMaths();
