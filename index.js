@@ -11,19 +11,15 @@ const operationObj = {
     result: '',
 }
 
-let chainingOperator = false;
 let currentOperation = {...operationObj};
 let lastKey = '';
 let lastKeyClass = '';
 let memoryNum = '';
-let ranFunction = false;
 
 function resetHandler(key) {
     switch(key) {
         case '=':
-            chainingOperator = false;
             currentOperation = {...operationObj};
-            ranFunction = false;
             break;
         case 'number':
             entry.textContent = '';
@@ -33,11 +29,9 @@ function resetHandler(key) {
             currentOperation.currentNumStr = '';
             break;
         case 'all':
-            chainingOperator = false;
             currentOperation = {...operationObj};
             lastKey = '';
             lastKeyClass = '';
-            ranFunction = false;
             entry.textContent = '';
             operation.textContent = '';
             init();
@@ -115,26 +109,40 @@ function updateScreen(type) {
 
 //  numbers
 function addNumber(key) {
-    if (ranFunction === true) return;
+    // if (ranQuickFunction) return;
     if (lastKeyClass === 'key operator') resetHandler('number');
     if (lastKey === '=') resetHandler('all');
     if (currentOperation.currentNum === '0') currentOperation.currentNum = '';
+    updateCurrentNum();
+    updateScreen('number');
+}
+
+function updateCurrentNum() {
     currentOperation.currentNum += key;
     currentOperation.currentNumStr = currentOperation.currentNum;
-    updateScreen('number');
 }
 
 function selectOperator(key) {
     if (key === '=') return operate(key);
-    if (lastKeyClass === 'key operator' && key !== '=') {
-        currentOperation.operator = key;
-    } else if (lastKeyClass !== 'key operator') {
-        currentOperation.storedNum = currentOperation.currentNum;
-        currentOperation.storedNumStr = currentOperation.currentNumStr;
-        currentOperation.operator = key;
+    if (!currentOperation.operator) {
+        storeNum();
+        setOperator();
+    } else if (!currentOperation.currentNum && currentOperation.operator) {
+        setOperator();
+    } else if (currentOperation.storedNum && currentOperation.operator && currentOperation.currentNum) {
+        chainOperation();
     }
     resetHandler('operator');
     updateScreen('operator');
+}
+
+function setOperator() {
+    currentOperation.operator = key;
+}
+
+function storeNum() {
+    currentOperation.storedNum = currentOperation.currentNum;
+    currentOperation.storedNumStr = currentOperation.currentNumStr;
 }
 
 //  operations
@@ -173,6 +181,10 @@ function doMaths() {
         case '÷':
             return a / b;
     }
+}
+
+function chainOperation() {
+
 }
 
 //  x-functions
