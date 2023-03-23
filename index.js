@@ -3,35 +3,33 @@ const operation = document.getElementById('operation');
 const memory = document.getElementById('memory');
 const history = [];
 const operationObj = {
-    firstNum: '',
-    firstNumStr: '',
-    secondNum: '',
-    secondNumStr: '',
+    storedNum: '',
+    storedNumStr: '',
+    currentNum: '',
+    currentNumStr: '',
     operator: '',
     result: '',
 }
 
 let chainingOperator = false;
-let currentNum = '';
-let currentNumStr = '';
 let currentOperation = operationObj;
 let lastKey = '';
 let lastKeyClass = '';
+let memoryNum = '';
 let ranFunction = false;
 
 function resetHandler(key) {
     switch(key) {
         case '=':
 /*             chainingOperator = false;
-            currentNum = result;
-            currentNumStr = result;
+            currentNum = currentOperation.result;
+            currentNumStr = currentNum;
             currentOperation = operationObj;
-            ranFunction = false;
-            break; */
+            ranFunction = false; */
             break;
         case 'number':
-            currentNum = '';
-            currentNumStr = '';
+            currentOperation.currentNum = '';
+            currentOperation.currentNumStr = '';
             entry.textContent = '';
     }
 }
@@ -65,7 +63,6 @@ function keyInput(e) {
 
 // main selector
 function mainSelector(className, id, key) {
-    console.log(className, id, key, currentOperation)
     switch(className) {
         case 'key number':
             addNumber(key);
@@ -84,45 +81,54 @@ function mainSelector(className, id, key) {
     }
     lastKey = key;
     lastKeyClass = className;
-    formatScreen();
+    console.log(className, id, key, currentOperation)
 }
 
-//formatting
-function formatScreen() {
-    // update operation, memory, and entry;
+//  formatting
+function updateScreen(type) {
+    switch(type) {
+        case 'number':
+            entry.textContent = currentOperation.currentNum;
+            break;
+        case 'operator':
+            operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator}`;
+            break;
+        case 'equal':
+            operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr}`;
+            entry.textContent = currentOperation.result;
+            break;
+    }
 }
 
 //  numbers
 function addNumber(key) {
     if (ranFunction === true) return;
     if (lastKeyClass === 'key operator') resetHandler('number');
-    if (currentNum === '0') currentNum = '';
-    currentNum += key;
-    currentNumStr = currentNum;
-    entry.textContent = currentNum;
+    if (currentOperation.currentNum === '0') currentOperation.currentNum = '';
+    currentOperation.currentNum += key;
+    currentOperation.currentNumStr = currentOperation.currentNum;
+    updateScreen('number');
 }
 
 function selectOperator(key) {
     if (key === '=') return operate(key);
-    currentOperation.firstNum = currentNum;
-    currentOperation.firstNumStr = currentNumStr;
+    currentOperation.storedNum = currentOperation.currentNum;
+    currentOperation.storedNumStr = currentOperation.currentNumStr;
     currentOperation.operator = key;
+    updateScreen('operator');
 }
 //  operations
 function operate(key) {
-    currentOperation.secondNum = currentNum;
-    currentOperation.secondNumStr = currentNumStr;
-    if (currentOperation.operator) currentOperation.result = maths(); // if there's an operator, do maths
+    if (currentOperation.operator) currentOperation.result = maths();
     if (!currentOperation.result) return errorHandler();
-    entry.textContent = currentOperation.result;
+    updateScreen('equal');
     history.push(currentOperation);
-    formatScreen();
-    resetHandler(key);
+    resetHandler('key');
 }
 
 function maths() {
-    a = parseFloat(currentOperation.firstNum);
-    b = parseFloat(currentOperation.secondNum);
+    a = parseFloat(currentOperation.storedNum);
+    b = parseFloat(currentOperation.currentNum);
     switch(currentOperation.operator) {
         case '+':
             return a + b;

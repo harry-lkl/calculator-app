@@ -81,6 +81,13 @@ button {
     margin-right: 1vw;
 }
 
+#operationBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+
 #operation {
     font-size: 5.3vw;
 }
