@@ -93,7 +93,7 @@ function mainSelector(className, id, key) {
     }
     lastKey = key;
     lastKeyClass = className;
-    console.log(className, id, key, currentOperation, history)
+    console.log(currentOperation);
 }
 
 //  formatting
@@ -139,7 +139,7 @@ function selectOperator(key) {
 //  operations
 function operate(key) {
     if (lastKey === '=') chainEqual();
-    if (lastKeyClass === 'key operator' && lastKey !== '=') autoFillSecondNum();
+    if (lastKeyClass === 'key operator' && !currentOperation.currentNum) autoFillSecondNum();
     if (currentOperation.operator) currentOperation.result = doMaths();
     if (!currentOperation.result) return errorHandler();
     history.unshift({...currentOperation});
