@@ -126,11 +126,11 @@ function selectOperator(key) {
     if (key === '=') return operate(key);
     if (!currentOperation.operator) {
         storeNum();
-        setOperator();
+        setOperator(key);
     } else if (!currentOperation.currentNum && currentOperation.operator) {
-        setOperator();
+        setOperator(key);
     } else if (currentOperation.storedNum && currentOperation.operator && currentOperation.currentNum) {
-        chainOperation();
+        chainOperation(key);
     }
     resetHandler('operator');
     updateScreen('operator');
