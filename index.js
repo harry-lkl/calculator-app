@@ -61,7 +61,7 @@ function clickInput(e) {
 
 window.addEventListener('keydown', keyInput);
 function keyInput(e) {
-    let key = 'error: no key';
+    let key = '';
     if (e.key !== '\\') {
         key = document.querySelector(`.key[data-key = "${e.key}"]`)
     } else if (e.key === '\\') {
