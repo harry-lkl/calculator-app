@@ -100,7 +100,8 @@ function updateScreen(type) {
             operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator}`;
             break;
         case '=':
-            operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr}`;
+            operation.textContent = 
+                `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr} =`;
             entry.textContent = currentOperation.result;
             break;
     }
