@@ -35,6 +35,11 @@ function resetHandler(key) {
             entry.textContent = '';
             operation.textContent = '';
             init();
+            break;
+        case 'entry':
+            currentOperation.currentNum = '';
+            currentOperation.currentNumStr = '';
+            entry.textContent = '';
     }
 }
 
@@ -230,7 +235,7 @@ function modifyDisplay(id) {
             resetHandler('all');
             break;
         case 'clearEntry':
-            clearEntry();
+            resetHandler('entry');
     }
 }
 
