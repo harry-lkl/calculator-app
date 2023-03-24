@@ -99,6 +99,7 @@ function resetHandler(key) {
             entry.textContent = '';
     }
 }
+
 function updateScreen(type) {
     switch(type) {
         case 'number':
@@ -282,10 +283,9 @@ function dot() {
 }
 
 function yeetDot() {
-/*     const dotIndexString = '';
-    const strLength = ''; */
-    if (!currentOperation.currentNum) return;
+    if (!currentOperation.currentNumStr.endsWith('.')) return;
     currentOperation.currentNum = parseFloat(currentOperation.currentNum);
+    currentOperation.currentNumStr = currentOperation.currentNumStr.slice(0, -1);
 }
 
 function memorySelector(id) {
