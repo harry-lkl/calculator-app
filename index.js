@@ -62,11 +62,11 @@ window.addEventListener('keydown', keyInput);
 function keyInput(e) {
     let key = '';
     if (e.key !== '\\') {
-        key = document.querySelector(`.key[data-key = "${e.key}"]`)
+        key = document.querySelector(`.key[data-key = "${e.key}"]`);
     } else if (e.key === '\\') {
-        key = document.querySelector(`.key[data-key = "÷"]`)
+        key = document.querySelector(`.key[data-key = "÷"]`);
     } else {
-        errorHandler('error: key input')
+        return errorHandler('error: key input');
     }
     if (!key) return;
     mainSelector(`${key.className}`, `${key.id}`, `${key.textContent}`);
@@ -255,6 +255,10 @@ function dot() {
     currentOperation.currentNum += '.';
     currentOperation.currentNumStr += '.';
     updateScreen('number');
+}
+
+function yeetDot() {
+
 }
 
 function memorySelector(id) {
