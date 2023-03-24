@@ -274,8 +274,8 @@ function dot() {
     }
     const dotIndex = currentOperation.currentNum.indexOf('.');
     if (dotIndex !== -1) return;
-    if (lastKey === '=') {
-        mainSelector('function number', 'zero', '0');
+    if (lastKey === '=' || currentOperation.currentNum === '') {
+        addNumber('0');
     }
     currentOperation.currentNum += '.';
     currentOperation.currentNumStr += '.';
