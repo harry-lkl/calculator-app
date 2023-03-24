@@ -156,9 +156,14 @@ function storeNum() {
     currentOperation.storedNumStr = currentOperation.currentNumStr;
 }
 
+function chainOperation(key) {
+    return;
+    mainSelector('key number', 'equal', '=');
+}
+
 //  operations
 function operate(key) {
-    if (lastKey === '=') chainEqual(key);
+    if (lastKey === '=') chainEqual();
     if (lastKeyClass === 'key operator' && !currentOperation.currentNum) autoFillSecondNum();
     if (currentOperation.operator) currentOperation.result = doMaths();
     if (!currentOperation.result) return errorHandler();
@@ -172,6 +177,7 @@ function chainEqual() {
     currentOperation.storedNumStr = `${history[0].result}`
     currentOperation.currentNum = `${history[0].currentNum}`;
     currentOperation.currentNumStr = `${history[0].currentNumStr}`;
+    currentOperation.operator = `${history[0].operator}`;
 }
 
 function autoFillSecondNum() {
@@ -192,12 +198,6 @@ function doMaths() {
         case '÷':
             return a / b;
     }
-}
-
-function chainOperation() {
-    return;
-    operate();
-    // set the thing
 }
 
 //  x-functions
