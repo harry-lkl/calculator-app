@@ -170,6 +170,7 @@ function operate(key) {
     if (lastKey === '=') chainEqual();
     if (currentOperation.storedNum && currentOperation.operator && !currentOperation.currentNum) {
         autoFillSecondNum();
+        currentOperation.result = doMaths();
     } else if (currentOperation.storedNum && currentOperation.operator && currentOperation.currentNum) {
         currentOperation.result = doMaths();
     } else if (!currentOperation.storedNum && !currentOperation.operator && currentOperation.currentNum) {
