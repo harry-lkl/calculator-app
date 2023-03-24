@@ -168,7 +168,7 @@ function chainOperation(key) {
 //  operations
 function operate(key) {
     if (lastKey === '=') chainEqual();
-    if (lastKeyClass === 'key operator' && !currentOperation.currentNum) autoFillSecondNum();
+    if (!currentOperation.currentNum) autoFillSecondNum();
     if (currentOperation.operator) currentOperation.result = doMaths();
     if (!currentOperation.result) return errorHandler(`doMaths falsy result`);
     history.unshift({...currentOperation});
