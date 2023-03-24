@@ -168,8 +168,15 @@ function chainOperation(key) {
 //  operations
 function operate(key) {
     if (lastKey === '=') chainEqual();
-    if (!currentOperation.currentNum) autoFillSecondNum();
-    if (currentOperation.operator) currentOperation.result = doMaths();
+    if (currentOperation.storedNum && currentOperation.operator && !currentOperation.currentNum) {
+        autoFillSecondNum();
+    } else if (currentOperation.storedNum && currentOperation.operator && currentOperation.currentNum) {
+        currentOperation.result = doMaths();
+    } else if (!currentOperation.storedNum && !currentOperation.operator && currentOperation.currentNum) {
+        currentOperation.result = currentOperation.currentNum;
+    } else {
+        return errorHandler(`operate error`);
+    }
     if (!currentOperation.result) return errorHandler(`doMaths falsy result`);
     history.unshift({...currentOperation});
     updateScreen(key);
@@ -237,6 +244,17 @@ function modifyDisplay(id) {
         case 'clearEntry':
             resetHandler('entry');
     }
+}
+
+function dot() {
+    if (lastKeyClass === 'key operator') resetHandler('number');
+    const dotIndex = currentOperation.currentNum.indexOf('.');
+    if (dotIndex !== -1) return;
+    if (lastKey === '=') mainSelector('function number', 'zero', '0');
+    entry.textContent += '.';
+    currentOperation.currentNum += '.';
+    currentOperation.currentNumStr += '.';
+    updateScreen('number');
 }
 
 function memorySelector(id) {
