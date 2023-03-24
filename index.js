@@ -26,8 +26,10 @@ init();
 //  input listeners
 window.addEventListener('click', clickInput);
 function clickInput(e) {
-    if (!e.target.classList.contains('key')) return /* console.log(`not valid key`) */;
-    if (e.target.id === 'backspaceIcon') return mainSelector('key modifier', 'backspace');
+    if (!e.target.classList.contains('key')) return;
+    if (e.target.id === 'backspaceIcon') {
+        return mainSelector('key modifier', 'backspace');
+    }
     mainSelector(`${e.target.className}`, `${e.target.id}`, `${e.target.textContent}`);
 }
 
@@ -117,9 +119,15 @@ function updateScreen(type) {
 //  numbers
 function addNumber(key) {
     // if (ranQuickFunction) return;
-    if (lastKeyClass === 'key operator') resetHandler('number');
-    if (lastKey === '=') resetHandler('all');
-    if (currentOperation.currentNum === '0') currentOperation.currentNum = '';
+    if (lastKeyClass === 'key operator') {
+        resetHandler('number');
+    }
+    if (lastKey === '=') {
+        resetHandler('all');
+    }
+    if (currentOperation.currentNum === '0') {
+        currentOperation.currentNum = '';
+    }
     appendNum(key);
     updateScreen('number');
 }
@@ -131,7 +139,9 @@ function appendNum(key) {
 
 // operators
 function selectOperator(key) { // + - * ÷ =
-    if (key === '=') return operate(key);
+    if (key === '=') {
+        return operate(key);
+    }
     yeetDot();
     if (lastKey === '=') { // continue after equal
         recallResult();
@@ -175,7 +185,9 @@ function chainOperation(key) {
 //  operations
 function operate(key) {
     yeetDot();
-    if (lastKey === '=') chainEqual();
+    if (lastKey === '=') {
+        chainEqual();
+    }
     if (currentOperation.storedNum !== '' && currentOperation.operator && currentOperation.currentNum === '') {
         autoFillSecondNum();
         currentOperation.result = doMaths();
@@ -186,7 +198,7 @@ function operate(key) {
     } else {
         return errorHandler(`operate error`);
     }
-    if (typeof currentOperation.result !== 'number') return errorHandler(`doMaths falsy result`);
+    if (typeof currentOperation.result !== 'number') return errorHandler(`result NaN`);
     history.unshift({...currentOperation});
     updateScreen(key);
     resetHandler(key);
@@ -256,11 +268,14 @@ function modifyDisplay(id) {
 }
 
 function dot() {
-    if (lastKeyClass === 'key operator') resetHandler('number');
+    if (lastKeyClass === 'key operator') {
+        resetHandler('number');
+    }
     const dotIndex = currentOperation.currentNum.indexOf('.');
     if (dotIndex !== -1) return;
-    if (lastKey === '=') mainSelector('function number', 'zero', '0');
-    entry.textContent += '.';
+    if (lastKey === '=') {
+        mainSelector('function number', 'zero', '0');
+    }
     currentOperation.currentNum += '.';
     currentOperation.currentNumStr += '.';
     updateScreen('number');
