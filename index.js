@@ -19,7 +19,6 @@ let memoryNum = '';
 function resetHandler(key) {
     switch(key) {
         case '=':
-            console.log(`hi`);
             currentOperation = {...operationObj};
             break;
         case 'number':
@@ -88,8 +87,7 @@ function mainSelector(className, id, key) {
     }
     lastKey = key;
     lastKeyClass = className;
-    console.log(currentOperation);
-    console.log(className, id, key);
+    console.log(className, id, key, currentOperation);
 }
 
 //  formatting
@@ -129,7 +127,6 @@ function selectOperator(key) { // + - * ÷ =
     if (lastKey === '=') { // continue after equal
         recallResult();
         setOperator(key);
-        console.log(currentOperation)
     } else if (!currentOperation.operator) { // fresh number
         storeNum();
         setOperator(key);
@@ -157,8 +154,9 @@ function storeNum() {
 }
 
 function chainOperation(key) {
-    return;
-    mainSelector('key number', 'equal', '=');
+    operate('=');
+    recallResult();
+    setOperator(key);
 }
 
 //  operations
@@ -166,7 +164,7 @@ function operate(key) {
     if (lastKey === '=') chainEqual();
     if (lastKeyClass === 'key operator' && !currentOperation.currentNum) autoFillSecondNum();
     if (currentOperation.operator) currentOperation.result = doMaths();
-    if (!currentOperation.result) return errorHandler();
+    if (!currentOperation.result) return errorHandler(`doMaths falsy result`);
     history.unshift({...currentOperation});
     updateScreen(key);
     resetHandler(key);
@@ -255,6 +253,6 @@ function memorySelector(id) {
     }
 }
 
-function errorHandler() {
-    console.log(`triggered error handler plz send help`)
+function errorHandler(string) {
+    console.log(`${string}`);
 }
