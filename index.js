@@ -118,11 +118,11 @@ function addNumber(key) {
     if (lastKeyClass === 'key operator') resetHandler('number');
     if (lastKey === '=') resetHandler('all');
     if (currentOperation.currentNum === '0') currentOperation.currentNum = '';
-    updateCurrentNum(key);
+    appendNum(key);
     updateScreen('number');
 }
 
-function updateCurrentNum(key) {
+function appendNum(key) {
     currentOperation.currentNum += key;
     currentOperation.currentNumStr = currentOperation.currentNum;
 }
