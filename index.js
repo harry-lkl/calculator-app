@@ -16,33 +16,6 @@ let lastKey = '';
 let lastKeyClass = '';
 let memoryNum = '';
 
-function resetHandler(key) {
-    switch(key) {
-        case '=':
-            currentOperation = {...operationObj};
-            break;
-        case 'number':
-            entry.textContent = '';
-            break;
-        case 'operator':
-            currentOperation.currentNum = '';
-            currentOperation.currentNumStr = '';
-            break;
-        case 'all':
-            currentOperation = {...operationObj};
-            lastKey = '';
-            lastKeyClass = '';
-            entry.textContent = '';
-            operation.textContent = '';
-            init();
-            break;
-        case 'entry':
-            currentOperation.currentNum = '';
-            currentOperation.currentNumStr = '';
-            entry.textContent = '';
-    }
-}
-
 // init
 function init() {
     mainSelector('key number', 'zero', '0');
@@ -98,6 +71,32 @@ function mainSelector(className, id, key) {
 }
 
 //  formatting
+function resetHandler(key) {
+    switch(key) {
+        case '=':
+            currentOperation = {...operationObj};
+            break;
+        case 'number':
+            entry.textContent = '';
+            break;
+        case 'operator':
+            currentOperation.currentNum = '';
+            currentOperation.currentNumStr = '';
+            break;
+        case 'all':
+            currentOperation = {...operationObj};
+            lastKey = '';
+            lastKeyClass = '';
+            entry.textContent = '';
+            operation.textContent = '';
+            init();
+            break;
+        case 'entry':
+            currentOperation.currentNum = '';
+            currentOperation.currentNumStr = '';
+            entry.textContent = '';
+    }
+}
 function updateScreen(type) {
     switch(type) {
         case 'number':
@@ -105,6 +104,7 @@ function updateScreen(type) {
             break;
         case 'operator':
             operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator}`;
+            entry.textContent = `${currentOperation.storedNum}`
             break;
         case '=':
             operation.textContent = 
@@ -136,12 +136,16 @@ function selectOperator(key) { // + - * ÷ =
     if (lastKey === '=') { // continue after equal
         recallResult();
         setOperator(key);
-    } else if (!currentOperation.operator) { // fresh number
+    } else if (!currentOperation.operator && currentOperation.currentNum !== '') { // fresh number
         storeNum();
         setOperator(key);
-    } else if (!currentOperation.currentNum && currentOperation.operator) { // swap between operators
+    } else if(!currentOperation.operator && currentOperation.currentNum ==='') { // empty current number
+        appendNum('0');
+        storeNum();
         setOperator(key);
-    } else if (currentOperation.storedNum && currentOperation.operator && currentOperation.currentNum) { // ready to chain
+    } else if (currentOperation.currentNum === '' && currentOperation.operator) { // swap between operators
+        setOperator(key);
+    } else if (currentOperation.storedNum !== '' && currentOperation.operator && currentOperation.currentNum !== '') {
         chainOperation(key);
     } 
     resetHandler('operator');
@@ -172,17 +176,17 @@ function chainOperation(key) {
 function operate(key) {
     yeetDot();
     if (lastKey === '=') chainEqual();
-    if (currentOperation.storedNum && currentOperation.operator && !currentOperation.currentNum) {
+    if (currentOperation.storedNum !== '' && currentOperation.operator && currentOperation.currentNum === '') {
         autoFillSecondNum();
         currentOperation.result = doMaths();
-    } else if (currentOperation.storedNum && currentOperation.operator && currentOperation.currentNum) {
+    } else if (currentOperation.storedNum !== '' && currentOperation.operator && currentOperation.currentNum !== '') {
         currentOperation.result = doMaths();
-    } else if (!currentOperation.storedNum && !currentOperation.operator && currentOperation.currentNum) {
+    } else if (currentOperation.storedNum === '' && !currentOperation.operator && currentOperation.currentNum !== '') {
         currentOperation.result = currentOperation.currentNum;
     } else {
         return errorHandler(`operate error`);
     }
-    if (!currentOperation.result) return errorHandler(`doMaths falsy result`);
+    if (typeof currentOperation.result !== 'number') return errorHandler(`doMaths falsy result`);
     history.unshift({...currentOperation});
     updateScreen(key);
     resetHandler(key);
