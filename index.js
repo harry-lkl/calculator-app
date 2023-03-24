@@ -92,7 +92,9 @@ function mainSelector(className, id, key) {
     }
     lastKey = key;
     lastKeyClass = className;
-    console.log(className, id, key, currentOperation);
+    console.log(className, id, key);
+    console.table(currentOperation);
+    console.table(history);
 }
 
 //  formatting
@@ -130,6 +132,7 @@ function appendNum(key) {
 // operators
 function selectOperator(key) { // + - * ÷ =
     if (key === '=') return operate(key);
+    yeetDot();
     if (lastKey === '=') { // continue after equal
         recallResult();
         setOperator(key);
@@ -155,7 +158,7 @@ function recallResult() {
 }
 
 function storeNum() {
-    currentOperation.storedNum = parseFloat(currentOperation.currentNum);
+    currentOperation.storedNum = currentOperation.currentNum;
     currentOperation.storedNumStr = currentOperation.currentNumStr;
 }
 
@@ -167,6 +170,7 @@ function chainOperation(key) {
 
 //  operations
 function operate(key) {
+    yeetDot();
     if (lastKey === '=') chainEqual();
     if (currentOperation.storedNum && currentOperation.operator && !currentOperation.currentNum) {
         autoFillSecondNum();
@@ -259,8 +263,10 @@ function dot() {
 }
 
 function yeetDot() {
-    const dotIndexString = '';
-    const strLength = '';
+/*     const dotIndexString = '';
+    const strLength = ''; */
+    if (!currentOperation.currentNum) return;
+    currentOperation.currentNum = parseFloat(currentOperation.currentNum);
 }
 
 function memorySelector(id) {
