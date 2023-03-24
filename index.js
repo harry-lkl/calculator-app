@@ -155,7 +155,7 @@ function recallResult() {
 }
 
 function storeNum() {
-    currentOperation.storedNum = currentOperation.currentNum;
+    currentOperation.storedNum = parseFloat(currentOperation.currentNum);
     currentOperation.storedNumStr = currentOperation.currentNumStr;
 }
 
@@ -258,7 +258,8 @@ function dot() {
 }
 
 function yeetDot() {
-
+    const dotIndexString = '';
+    const strLength = '';
 }
 
 function memorySelector(id) {
