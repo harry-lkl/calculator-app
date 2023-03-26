@@ -305,7 +305,7 @@ function percent() {
 
 function squared() {
     hasRunUnaryOperation = true;
-    if (lastKey === '=') { // continue after equal
+    if (lastKey === '=') {
         recallResult('current');
     }
     currentOperation.currentNum **= 2;
@@ -315,6 +315,15 @@ function squared() {
 
 function sqrt() {
     hasRunUnaryOperation = true;
+    if (lastKey === '=') {
+        recallResult('current');
+    }
+    if (currentOperation.currentNum < 0) {
+        return errorHandler(`imagine`);
+    }
+    currentOperation.currentNum = Math.sqrt(currentOperation.currentNum);
+    currentOperation.currentNumStr = `²/(${currentOperation.currentNumStr})`;
+    updateScreen('unary');
 }
 
 //  entry modifiers
