@@ -194,17 +194,17 @@ function operate(key) {
     if (lastKey === '=') {
         chainEqual();
     }
-    if (currentOperation.storedNum !== '' && currentOperation.operator && currentOperation.currentNum === '') {
+    if (checkOperationState() === 'ready set go') {
+        currentOperation.result = doMaths();
+    } else if (checkOperationState() === 'no second operand') {
         autoFillSecondNum();
         currentOperation.result = doMaths();
-    } else if (currentOperation.storedNum !== '' && currentOperation.operator && currentOperation.currentNum !== '') {
-        currentOperation.result = doMaths();
-    } else if (currentOperation.storedNum === '' && !currentOperation.operator && currentOperation.currentNum !== '') {
+    } else if (checkOperationState() === 'only first operand') {
         currentOperation.result = currentOperation.currentNum;
-    } else if (currentOperation.storedNum === '' && !currentOperation.operator && currentOperation.currentNum === '') {
-        currentOperation.result = 0;
+    } else if (checkOperationState() === 'why') {
         currentOperation.currentNum = 0;
         currentOperation.currentNumStr = '0';
+        currentOperation.result = 0;
     } else {
         return errorHandler(`operate error`);
     }
@@ -239,6 +239,20 @@ function doMaths() {
             return a * b;
         case '÷':
             return a / b;
+    }
+}
+
+function checkOperationState() {
+    if(currentOperation.storedNum !== '' && currentOperation.operator && currentOperation.currentNum === '') {
+        return 'no second operand';
+    } else if (currentOperation.storedNum !== '' && currentOperation.operator && currentOperation.currentNum !== '') {
+        return 'ready set go';
+    } else if (currentOperation.storedNum === '' && !currentOperation.operator && currentOperation.currentNum !== '') {
+        return 'only first operand';
+    } else if (currentOperation.storedNum === '' && !currentOperation.operator && currentOperation.currentNum === '') {
+        return 'why';
+    } else {
+        return errorHandler(`state check error`);
     }
 }
 
