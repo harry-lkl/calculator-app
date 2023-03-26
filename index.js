@@ -301,6 +301,19 @@ function negate() {
 
 function percent() {
     hasRunUnaryOperation = true;
+    let a = currentOperation.storedNum;
+    let b = currentOperation.currentNum;
+    if (lastKey === '=') {
+        recallResult('current');
+    }
+    if (currentOperation.operator === '+' || currentOperation.operator === '-') {
+        currentOperation.currentNum = a * b / 100;
+        currentOperation.currentNumStr = `${currentOperation.currentNum}`;
+    } else if (currentOperation.operator === '×' || currentOperation.operator === '÷' || currentOperation.operator === '') {
+        currentOperation.currentNum /= 100;
+        currentOperation.currentNumStr = `${currentOperation.currentNum}`;
+    }
+    updateScreen('unary');
 }
 
 function squared() {
