@@ -81,6 +81,9 @@ function resetHandler(key) {
         case 'number':
             entry.textContent = '';
             break;
+        case 'backspace':
+            entry.textContent = '';
+            break;
         case 'operator':
             currentOperation.currentNum = '';
             currentOperation.currentNumStr = '';
@@ -114,6 +117,8 @@ function updateScreen(type) {
                 `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr} =`;
             entry.textContent = currentOperation.result;
             break;
+        case 'backspace':
+            entry.textContent = currentOperation.currentNum;
     }
 }
 
@@ -199,7 +204,7 @@ function operate(key) {
     } else {
         return errorHandler(`operate error`);
     }
-    if (typeof currentOperation.result !== 'number') return errorHandler(`result NaN`);
+    if (currentOperation.operator === '÷' && currentOperation.currentNumStr === '0') return errorHandler(`pffft lmao`);
     history.unshift({...currentOperation});
     updateScreen(key);
     resetHandler(key);
@@ -268,6 +273,25 @@ function modifyDisplay(id) {
     }
 }
 
+function backspace() {
+    if (lastKey === '=') {
+        return resetHandler('all');
+    } else if (lastKeyClass === 'key operator') {
+        return resetHandler('backspace');
+    }
+    if (!currentOperation.currentNum) return;
+    detach();
+    updateScreen('backspace');
+}
+
+function detach() {
+    const num = currentOperation.currentNum;
+    const numLength = num.length;
+    const newNum = currentOperation.currentNum.slice(0, numLength - 1);
+    currentOperation.currentNum = newNum;
+    currentOperation.currentNumStr = newNum;
+}
+
 function dot() {
     if (lastKeyClass === 'key operator') {
         resetHandler('number');
@@ -311,3 +335,5 @@ function memorySelector(id) {
 function errorHandler(string) {
     console.log(`${string}`);
 }
+
+// bug: delete into chain equal, errors equal
