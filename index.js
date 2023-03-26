@@ -12,10 +12,11 @@ const operationObj = {
 }
 
 let currentOperation = {...operationObj};
+let hasRunUnaryOperation = true;
+let isDisabled = false;
 let lastKey = '';
 let lastKeyClass = '';
 let memoryNum = '';
-let isDisabled = false;
 
 // init
 function init() {
@@ -37,7 +38,6 @@ function clickInput(e) {
 window.addEventListener('keydown', keyInput);
 function keyInput(e) {
     let key = '';
-    console.log(e);
     if (e.key !== '/') {
         key = document.querySelector(`.key[data-key = "${e.key}"]`);
     } else if (e.key === '/') {
@@ -82,6 +82,7 @@ function resetHandler(key) {
     switch(key) {
         case '=':
             currentOperation = {...operationObj};
+            hasRunUnaryOperation = false;
             break;
         case 'number':
             entry.textContent = '';
@@ -92,10 +93,12 @@ function resetHandler(key) {
         case 'operator':
             currentOperation.currentNum = '';
             currentOperation.currentNumStr = '';
+            hasRunUnaryOperation = false;
             break;
         case 'all':
-            isDisabled = false;
             currentOperation = {...operationObj};
+            hasRunUnaryOperation = false;
+            isDisabled = false;
             lastKey = '';
             lastKeyClass = '';
             entry.textContent = '';
@@ -106,6 +109,7 @@ function resetHandler(key) {
             currentOperation.currentNum = '';
             currentOperation.currentNumStr = '';
             entry.textContent = '';
+            hasRunUnaryOperation = false;
     }
 }
 
@@ -216,8 +220,8 @@ function operate(key) {
     }
     if (currentOperation.operator === '÷' && currentOperation.currentNumStr === '0') return errorHandler(`pffft lmao`);
     history.unshift({...currentOperation});
-    updateScreen(key);
-    resetHandler(key);
+    updateScreen('=');
+    resetHandler('=');
 }
 
 function chainEqualHandler() {
@@ -264,8 +268,10 @@ function checkOperationState() {
 
 //  x-functions
 function runFunction(id) {
-    return console.log(id);
     switch(id) {
+        case 'negate':
+            negate();
+            break;
         case 'percent':
             percent();
             break;
@@ -274,10 +280,23 @@ function runFunction(id) {
             break;
         case 'sqrt':
             sqrt();
-            break;
-        case 'negate':
-            negate();
         }
+}
+
+function negate() {
+
+}
+
+function percent() {
+    hasRunUnaryOperation = true;
+}
+
+function squared() {
+    hasRunUnaryOperation = true;
+}
+
+function sqrt() {
+    hasRunUnaryOperation = true;
 }
 
 //  entry modifiers
@@ -303,7 +322,7 @@ function backspace() {
     } else if (lastKeyClass === 'key operator') {
         return resetHandler('backspace');
     }
-    if (!currentOperation.currentNum) return;
+    if (!currentOperation.currentNum || hasRunUnaryOperation === true) return;
     detach();
     updateScreen('backspace');
 }
