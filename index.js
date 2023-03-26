@@ -238,9 +238,9 @@ function operate(key) {
 
 function chainEqualHandler() {
     currentOperation.storedNum = `${history[0].result}`;
-    currentOperation.storedNumStr = `${history[0].result}`
+    currentOperation.storedNumStr = currentOperation.storedNum;
     currentOperation.currentNum = `${history[0].currentNum}`;
-    currentOperation.currentNumStr = `${history[0].currentNumStr}`;
+    currentOperation.currentNumStr =  currentOperation.currentNum;
     currentOperation.operator = `${history[0].operator}`;
 }
 
