@@ -37,9 +37,10 @@ function clickInput(e) {
 window.addEventListener('keydown', keyInput);
 function keyInput(e) {
     let key = '';
-    if (e.key !== '\\') {
+    console.log(e);
+    if (e.key !== '/') {
         key = document.querySelector(`.key[data-key = "${e.key}"]`);
-    } else if (e.key === '\\') {
+    } else if (e.key === '/') {
         key = document.querySelector(`.key[data-key = "÷"]`);
     } else {
         return errorHandler('error: key input');
