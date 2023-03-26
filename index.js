@@ -201,6 +201,10 @@ function operate(key) {
         currentOperation.result = doMaths();
     } else if (currentOperation.storedNum === '' && !currentOperation.operator && currentOperation.currentNum !== '') {
         currentOperation.result = currentOperation.currentNum;
+    } else if (currentOperation.storedNum === '' && !currentOperation.operator && currentOperation.currentNum === '') {
+        currentOperation.result = 0;
+        currentOperation.currentNum = 0;
+        currentOperation.currentNumStr = '0';
     } else {
         return errorHandler(`operate error`);
     }
