@@ -192,7 +192,7 @@ function chainOperation(key) {
 function operate(key) {
     yeetDot();
     if (lastKey === '=') {
-        chainEqual();
+        chainEqualHandler();
     }
     if (checkOperationState() === 'ready set go') {
         currentOperation.result = doMaths();
@@ -214,7 +214,7 @@ function operate(key) {
     resetHandler(key);
 }
 
-function chainEqual() {
+function chainEqualHandler() {
     currentOperation.storedNum = `${history[0].result}`;
     currentOperation.storedNumStr = `${history[0].result}`
     currentOperation.currentNum = `${history[0].currentNum}`;
