@@ -119,22 +119,27 @@ function updateScreen(type) {
             entry.textContent = currentOperation.currentNum;
             break;
         case 'operator':
-            operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator}`;
             entry.textContent = `${currentOperation.storedNum}`
+            operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator}`;
             break;
         case '=':
+            entry.textContent = currentOperation.result;
             operation.textContent = 
                 `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr} =`;
-            entry.textContent = currentOperation.result;
             break;
         case 'backspace':
             entry.textContent = currentOperation.currentNum;
+            break;
+        case 'unary':
+            entry.textContent = currentOperation.currentNum;
+            operation.textContent = 
+            `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr}`;
     }
 }
 
 //  numbers
 function addNumber(key) {
-    // if (ranQuickFunction) return;
+    if (hasRunUnaryOperation === true) return;
     if (lastKeyClass === 'key operator') {
         resetHandler('number');
     }
@@ -160,7 +165,7 @@ function selectOperator(key) { // + - * ÷ =
     }
     yeetDot();
     if (lastKey === '=') { // continue after equal
-        recallResult();
+        recallResult('stored');
         setOperator(key);
     } else if (!currentOperation.operator && currentOperation.currentNum !== '') { // fresh number
         storeNum();
@@ -182,9 +187,16 @@ function setOperator(key) {
     currentOperation.operator = key;
 }
 
-function recallResult() {
-    currentOperation.storedNum = history[0].result;
-    currentOperation.storedNumStr = history[0].result;
+function recallResult(operandTo) {
+    switch (operandTo) {
+        case 'stored':
+            currentOperation.storedNum = history[0].result;
+            currentOperation.storedNumStr = history[0].result;
+            break;
+        case 'current':
+            currentOperation.currentNum = history[0].result;
+            currentOperation.currentNumStr = history[0].result;
+    }
 }
 
 function storeNum() {
@@ -293,6 +305,12 @@ function percent() {
 
 function squared() {
     hasRunUnaryOperation = true;
+    if (lastKey === '=') { // continue after equal
+        recallResult('current');
+    }
+    currentOperation.currentNum **= 2;
+    currentOperation.currentNumStr = `(${currentOperation.currentNumStr})²`
+    updateScreen('unary');
 }
 
 function sqrt() {
@@ -317,12 +335,12 @@ function modifyDisplay(id) {
 }
 
 function backspace() {
+    if (currentOperation.currentNum === '' || hasRunUnaryOperation === true) return;
     if (lastKey === '=') {
         return resetHandler('all');
     } else if (lastKeyClass === 'key operator') {
         return resetHandler('backspace');
     }
-    if (currentOperation.currentNum === '' || hasRunUnaryOperation === true) return;
     detach();
     updateScreen('backspace');
 }
