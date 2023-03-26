@@ -15,6 +15,7 @@ let currentOperation = {...operationObj};
 let lastKey = '';
 let lastKeyClass = '';
 let memoryNum = '';
+let isDisabled = false;
 
 // init
 function init() {
@@ -49,6 +50,9 @@ function keyInput(e) {
 
 // main selector
 function mainSelector(className, id, key) {
+    if (isDisabled === true) {
+        return resetHandler('all');
+    }
     switch(className) {
         case 'key number':
             addNumber(key);
@@ -89,6 +93,7 @@ function resetHandler(key) {
             currentOperation.currentNumStr = '';
             break;
         case 'all':
+            isDisabled = false;
             currentOperation = {...operationObj};
             lastKey = '';
             lastKeyClass = '';
@@ -351,7 +356,7 @@ function memorySelector(id) {
 }
 
 function errorHandler(string) {
-    console.log(`${string}`);
+    operation.textContent = (`error:`)
+    entry.textContent = (`${string}`);
+    isDisabled = true;
 }
-
-// bug: delete into chain equal, errors equal
