@@ -12,7 +12,7 @@ const operationObj = {
 }
 
 let currentOperation = {...operationObj};
-let hasRunUnaryOperation = true;
+let hasRunUnaryOperation = false;
 let isDisabled = false;
 let lastKey = '';
 let lastKeyClass = '';
@@ -322,7 +322,7 @@ function backspace() {
     } else if (lastKeyClass === 'key operator') {
         return resetHandler('backspace');
     }
-    if (!currentOperation.currentNum || hasRunUnaryOperation === true) return;
+    if (currentOperation.currentNum === '' || hasRunUnaryOperation === true) return;
     detach();
     updateScreen('backspace');
 }
