@@ -371,7 +371,7 @@ function modifyDisplay(id) {
             resetHandler('all');
             break;
         case 'clearEntry':
-            resetHandler('entry');
+            clearEntry();
     }
 }
 
@@ -412,6 +412,13 @@ function yeetDot() {
     if (!currentOperation.currentNumStr.endsWith('.')) return;
     currentOperation.currentNum = parseFloat(currentOperation.currentNum);
     currentOperation.currentNumStr = currentOperation.currentNumStr.slice(0, -1);
+}
+
+function clearEntry() {
+    if (currentOperation.operator === '') {
+        return resetHandler('all');
+    }
+    resetHandler('entry');
 }
 
 // memory
@@ -478,6 +485,7 @@ function memoryStore() {
     updateScreen('memory');
 }
 
+// error handler
 function errorHandler(string) {
     operation.textContent = (`error:`)
     entry.textContent = (`${string}`);
@@ -485,3 +493,4 @@ function errorHandler(string) {
 }
 
 // chainOperation bugged
+// chainEqual bugged
