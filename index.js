@@ -449,11 +449,25 @@ function memoryRecall() {
 }
 
 function memoryAdd() {
-
+    if (memoryNum === '') {
+        return;
+    }
+    if (lastKey === '=') {
+        recallResult('current');
+    }
+    memoryNum += parseFloat(currentOperation.currentNum);
+    updateScreen('memory');
 }
 
 function memorySubtract() {
-
+    if (memoryNum === '') {
+        return;
+    }
+    if (lastKey === '=') {
+        recallResult('current');
+    }
+    memoryNum -= parseFloat(currentOperation.currentNum);
+    updateScreen('memory');
 }
 
 function memoryStore() {
