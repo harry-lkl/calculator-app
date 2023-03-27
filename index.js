@@ -190,8 +190,8 @@ function setOperator(key) {
     currentOperation.operator = key;
 }
 
-function recallResult(storeIn) {
-    switch (storeIn) {
+function recallResult(target) {
+    switch (target) {
         case 'stored':
             currentOperation.storedNum = history[0].result;
             currentOperation.storedNumStr = history[0].result.toString();
@@ -209,7 +209,7 @@ function storeNum() {
 
 function chainOperation(key) {
     operate('=');
-    recallResult();
+    recallResult('stored');
     setOperator(key);
 }
 
