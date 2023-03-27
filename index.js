@@ -187,8 +187,8 @@ function setOperator(key) {
     currentOperation.operator = key;
 }
 
-function recallResult(operandTo) {
-    switch (operandTo) {
+function recallResult(storeIn) {
+    switch (storeIn) {
         case 'stored':
             currentOperation.storedNum = history[0].result;
             currentOperation.storedNumStr = history[0].result.toString();
