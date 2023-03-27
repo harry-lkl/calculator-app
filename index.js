@@ -440,7 +440,12 @@ function memoryClear() {
 }
 
 function memoryRecall() {
-
+    if (memoryNum === '') {
+        return;
+    }
+    currentOperation.currentNum = parseFloat(memoryNum);
+    currentOperation.currentNumStr = memoryNum.toString();
+    updateScreen('unary');
 }
 
 function memoryAdd() {
@@ -461,3 +466,5 @@ function errorHandler(string) {
     entry.textContent = (`${string}`);
     isDisabled = true;
 }
+
+// chainOperation bugged
