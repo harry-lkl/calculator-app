@@ -191,11 +191,11 @@ function recallResult(operandTo) {
     switch (operandTo) {
         case 'stored':
             currentOperation.storedNum = history[0].result;
-            currentOperation.storedNumStr = history[0].result;
+            currentOperation.storedNumStr = history[0].result.toString();
             break;
         case 'current':
             currentOperation.currentNum = history[0].result;
-            currentOperation.currentNumStr = history[0].result;
+            currentOperation.currentNumStr = history[0].result.toString();
     }
 }
 
@@ -296,7 +296,23 @@ function runFunction(id) {
 }
 
 function negate() {
-
+    if (lastKey === '=') {
+        recallResult('current');
+    }
+    if (currentOperation.currentNum === '0') {
+        return;
+    }
+    const dashIndex = currentOperation.currentNumStr.indexOf('-');
+    const strLength = currentOperation.currentNumStr.length;
+    if (dashIndex === 0) {
+        currentOperation.currentNumStr = currentOperation.currentNumStr.slice(1);
+    } else if (dashIndex !== 0) {
+        currentOperation.currentNumStr = `-${currentOperation.currentNumStr}`
+    } else {
+        return errorHandler(`negate error`)
+    }
+    currentOperation.currentNum *= -1;
+    updateScreen('unary');
 }
 
 function percent() {
