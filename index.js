@@ -68,7 +68,7 @@ function mainSelector(className, id, key) {
             modifyDisplay(id);
             break;
         case 'key memory':
-            selectMemory(id);
+            memorySelector(id);
     }
     lastKey = key;
     lastKeyClass = className;
@@ -451,7 +451,8 @@ function memorySubtract() {
 }
 
 function memoryStore() {
-    
+    memoryNum = parseFloat(currentOperation.currentNum);
+    updateScreen('memory');
 }
 
 function errorHandler(string) {
