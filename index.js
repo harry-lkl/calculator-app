@@ -435,7 +435,8 @@ function memorySelector(id) {
 }
 
 function memoryClear() {
-
+    memoryNum = '';
+    updateScreen('memory');
 }
 
 function memoryRecall() {
