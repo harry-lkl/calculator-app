@@ -457,6 +457,9 @@ function memorySubtract() {
 }
 
 function memoryStore() {
+    if (lastKey === '=') {
+        recallResult('current');
+    }
     memoryNum = parseFloat(currentOperation.currentNum);
     updateScreen('memory');
 }
