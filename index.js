@@ -133,7 +133,10 @@ function updateScreen(type) {
         case 'unary':
             entry.textContent = currentOperation.currentNum;
             operation.textContent = 
-            `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr}`;
+                `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr}`;
+            break;
+        case 'memory':
+            memory.textContent = memoryNum;
     }
 }
 
@@ -411,8 +414,8 @@ function yeetDot() {
     currentOperation.currentNumStr = currentOperation.currentNumStr.slice(0, -1);
 }
 
+// memory
 function memorySelector(id) {
-    return console.log(id);
     switch(id) {
         case 'memoryClear':
             memoryClear();
@@ -429,6 +432,26 @@ function memorySelector(id) {
         case 'memoryStore':
             memoryStore();
     }
+}
+
+function memoryClear() {
+
+}
+
+function memoryRecall() {
+
+}
+
+function memoryAdd() {
+
+}
+
+function memorySubtract() {
+
+}
+
+function memoryStore() {
+    
 }
 
 function errorHandler(string) {
