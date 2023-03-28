@@ -1,7 +1,9 @@
 const entry = document.getElementById('entry');
-const operation = document.getElementById('operation');
-const memory = document.getElementById('memory');
+const entryFontSize = '4rem';
 const history = [];
+/* const memory = document.getElementById('memory'); */
+const operation = document.getElementById('operation');
+const operationFontSize = '2rem'
 const operationObj = {
     storedNum: '',
     storedNumStr: '',
@@ -21,7 +23,8 @@ let memoryNum = '';
 // init
 function init() {
     mainSelector('key number', 'zero', '0');
-    entry.style.fontSize = '3rem'; // default fontSize
+    entry.style.fontSize = entryFontSize;
+    operation.style.fontSize = operationFontSize;
 }
 init();
 
@@ -138,6 +141,19 @@ function updateScreen(type) {
         case 'memory':
             memory.textContent = memoryNum;
     }
+}
+
+function resizeEntry() {
+    if (entry.clientHeight <= entryBoxDefaultHeight) return;
+    let fontSize = window.getComputedStyle(entry).fontSize;
+console.log(fontSize, entry.clientHeight, entryBox.clientHeight);
+    entry.style.fontSize = `${(parseFloat(fontSize) - 1)}px`;
+    resizeEntry();
+}
+  
+function processEntry() {
+    entry.style.fontSize = adjustedEntryFontSize;
+    resizeEntry();
 }
 
 //  numbers

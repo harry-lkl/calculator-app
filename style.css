@@ -2,14 +2,14 @@
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans);
 
 :root {
-    --main-color: rgb(20, 179, 60);
+    --main-color: rgb(19, 227, 0);
     --sub-color: rgb(249, 57, 105);
-    --main-accent-color: rgb(122, 254, 122);
+    --main-accent-color: rgb(110, 254, 97);
     --sub-accent-color: rgb(255, 151, 151);
     --widecard-color: rgb(255, 171, 15);
-    --border-color: rgb(34, 34, 34);
+    --border-color: rgb(42, 42, 42);
     --shadow-color: rgb(34, 34, 34);
-    --default-color: rgb(34, 34, 34);
+    --default-color: rgb(54, 54, 54);
     --gaps: 3vw;
 }
 
@@ -70,10 +70,12 @@ button {
 #screen {
     display: grid;
     place-self: center;
-    grid-template-rows: 4fr 4fr 8fr 1fr 1fr;
+/*     grid-template-rows: 4fr 4fr 8fr 1fr 1fr; */
+    grid-template-rows: 4fr 1fr 1fr 10fr 1fr 1fr;
     grid-template-columns: 1fr;
-    grid-template-areas: "operationBox" 
-                        "memoryBox" 
+    grid-template-areas: "operationBox"
+                        "spacer"
+                        "spacer"
                         "entryBox"
                         "mainColorBand"
                         "subColorBand";
@@ -96,12 +98,25 @@ button {
 }
 
 #operation {
-    font-size: 5.3vw;
+    font-size: 2rem;
+}
+
+.spacer {
+    height: 100%;
+    width: 100%;
+}
+
+/* #memoryBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
 }
 
 #memory {
-    font-size: 10vw;
+    font-size: 2rem;
 }
+ */
 
 #entryBox {
     display: flex;
@@ -268,17 +283,12 @@ button {
         font-size: 1.5rem;
     }
     
-    #memory {
+/*     #memory {
         font-size: 2.4rem;
-    }
+    } */
     
     #entryBox {
         height: 6rem;
-    }
-    
-    #entry {
-        word-break: break-all;
-        word-wrap: break-word;
     }
 
     #memoryKeys {
