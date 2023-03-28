@@ -233,7 +233,9 @@ function operate(key) {
     } else {
         return errorHandler(`operate error`);
     }
-    if (currentOperation.operator === '÷' && currentOperation.currentNumStr === '0') return errorHandler(`pffft lmao`);
+    if (!isFinite(currentOperation.result)) {
+        return errorHandler(`pffft lmao`);
+    }
     history.unshift({...currentOperation});
     updateScreen('=');
     resetHandler('=');
