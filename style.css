@@ -2,8 +2,14 @@
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans);
 
 :root {
-    --main-color: rgb(199, 255, 199);
-    --sub-color: rgb(237, 175, 175);
+    --main-color: rgb(20, 179, 60);
+    --sub-color: rgb(249, 57, 105);
+    --main-accent-color: rgb(122, 254, 122);
+    --sub-accent-color: rgb(255, 151, 151);
+    --widecard-color: rgb(255, 171, 15);
+    --border-color: rgb(34, 34, 34);
+    --shadow-color: rgb(34, 34, 34);
+    --default-color: rgb(34, 34, 34);
     --gaps: 3vw;
 }
 
@@ -56,7 +62,7 @@ button {
 
 #screenBorder {
     display: grid;
-    background-color: black;
+    background-color: var(--border-color);
     clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%, 0 23%);
     border-radius: 2vw;
 }
@@ -71,10 +77,11 @@ button {
                         "entryBox"
                         "mainColorBand"
                         "subColorBand";
-    height: 96%;
+    height: 95%;
     width: 97%;
     background-color: white;
     clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%, 0 23%);
+    color: var(--default-color);
 }
 
 #operation, #memory, #entry {
@@ -114,11 +121,11 @@ button {
 }
 
 #mainColorBand {
-    background-color: var(--main-color);
+    background-color: var(--main-accent-color);
 }
 
 #subColorBand {
-    background-color: var(--sub-color);
+    background-color: var(--sub-accent-color);
 }
 
 #zero {
@@ -147,18 +154,35 @@ button {
     justify-content: center;
     align-items: center;
     font-size: 8vw;
-    border: solid black 1vw;
+    border: solid var(--border-color) 1vw;
     border-radius: 2vw;
-    box-shadow: 1vw 1vw;
+    box-shadow: 1vw 1vw var(--shadow-color);
     font-family: 'Bungee', serif;
+    color: var(--default-color);
+}
+
+.key.operator {
+    color: var(--main-color);
+}
+
+.key.function {
+    color: var(--main-color);
+}
+
+.key.modifier, #negate {
+    color: var(--widecard-color);
+}
+
+#dot {
+    color: var(--default-color);
 }
 
 .key:hover {
-    border-color: var(--sub-color);
+    border-color: var(--sub-accent-color);
 }
 
 .memory:hover {
-    border-color: var(--main-color);
+    border-color: var(--main-accent-color);
 }
 
 .key:active {
@@ -170,9 +194,10 @@ button {
 
 .memory {
     font-size: 7vw;
-    border: solid black 1vw;
+    color: var(--sub-color);
+    border: solid var(--border-color) 1vw;
     border-radius: 2vw;
-    box-shadow: 0.5vw 0.5vw;
+    box-shadow: 0.5vw 0.5vw var(--shadow-color);
 }
 
 .memory:active {
