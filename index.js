@@ -240,11 +240,15 @@ function operate(key) {
 }
 
 function chainEqualHandler() {
-    currentOperation.storedNum = `${history[0].result}`;
-    currentOperation.storedNumStr = currentOperation.storedNum;
     currentOperation.currentNum = `${history[0].currentNum}`;
     currentOperation.currentNumStr =  currentOperation.currentNum;
-    currentOperation.operator = `${history[0].operator}`;
+    if (history[0].storedNum !== '') {
+        currentOperation.storedNum = `${history[0].result}`;
+        currentOperation.storedNumStr = currentOperation.storedNum;
+    }
+    if (history[0].operator !== '') {
+        currentOperation.operator = `${history[0].operator}`;
+    }
 }
 
 function autoFillSecondNum() {
