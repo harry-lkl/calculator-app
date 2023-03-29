@@ -141,6 +141,7 @@ function updateScreen(type) {
             memory.textContent = memoryNum;
     }
     processScreen();
+    formatScreen();
 }
   
 function processScreen() {
@@ -164,6 +165,10 @@ function resizeOperation() {
     let fontSize = window.getComputedStyle(operation).fontSize;
     operation.style.fontSize = `${(parseFloat(fontSize) - 1) / 16}rem`;
     resizeOperation();
+}
+
+function formatScreen() {
+    const entryOutput = entry.textContent;
 }
 
 //  numbers
@@ -315,6 +320,7 @@ function checkOperationState() {
 
 //  x-functions
 function runFunction(id) {
+    yeetDot();
     switch(id) {
         case 'negate':
             negate();
