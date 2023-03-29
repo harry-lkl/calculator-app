@@ -436,7 +436,7 @@ function dot() {
     if (lastKeyClass === 'key operator') {
         resetHandler('number');
     }
-    const dotIndex = currentOperation.currentNum.indexOf('.');
+    const dotIndex = currentOperation.currentNumStr.indexOf('.');
     if (dotIndex !== -1) return;
     if (lastKey === '=' || currentOperation.currentNum === '') {
         addNumber('0');
@@ -529,6 +529,3 @@ function errorHandler(string) {
     entry.textContent = (`${string}`);
     isDisabled = true;
 }
-
-// yeet dot in negate
-// can't dot after negate
