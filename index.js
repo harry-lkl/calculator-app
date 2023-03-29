@@ -1,6 +1,7 @@
 const entry = document.getElementById('entry');
 const entryBox = document.getElementById('entryBox')
 const defaultFontSize = '4rem';
+const defaultSubFontSize = '3rem';
 const history = [];
 /* const memory = document.getElementById('memory'); */
 const operation = document.getElementById('operation');
@@ -145,17 +146,17 @@ function updateScreen(type) {
 }
   
 function processScreen() {
+    operation.style.fontSize = defaultSubFontSize;
+    resizeOperation();
     entry.style.fontSize = defaultFontSize;
     resizeEntry();
-    operation.style.fontSize = defaultFontSize / 2;
-    resizeOperation();
 }
 
 function resizeEntry() {
-    if ((entry.clientHeight / entryBox.clientHeight) < 0.8) {
+    if (entry.clientHeight < entryBox.clientHeight) {
         return;
     }
-    const fontSize = window.getComputedStyle(entry).fontSize;
+    let fontSize = window.getComputedStyle(entry).fontSize;
     entry.style.fontSize = `${(parseFloat(fontSize) - 1) / 16}rem`;
     resizeEntry();
 }
@@ -163,12 +164,13 @@ function resizeEntry() {
 function resizeOperation() {
     if (operation.clientHeight < operationBox.clientHeight) return;
     let fontSize = window.getComputedStyle(operation).fontSize;
-    operation.style.fontSize = `${(parseFloat(fontSize) - 1) / 16}rem`;
+    operation.style.fontSize = `${(parseFloat(fontSize) -1) / 16}rem`;
     resizeOperation();
 }
 
 function formatScreen() {
     const entryOutput = entry.textContent;
+    console.log(entryOutput);
 }
 
 //  numbers
