@@ -1,9 +1,10 @@
 const entry = document.getElementById('entry');
-const entryFontSize = '4rem';
+const entryBox = document.getElementById('entryBox')
+const defaultFontSize = '4rem';
 const history = [];
 /* const memory = document.getElementById('memory'); */
 const operation = document.getElementById('operation');
-const operationFontSize = '2rem'
+const operationBox = document.getElementById('operationBox');
 const operationObj = {
     storedNum: '',
     storedNumStr: '',
@@ -23,8 +24,6 @@ let memoryNum = '';
 // init
 function init() {
     mainSelector('key number', 'zero', '0');
-    entry.style.fontSize = entryFontSize;
-    operation.style.fontSize = operationFontSize;
 }
 init();
 
@@ -141,19 +140,30 @@ function updateScreen(type) {
         case 'memory':
             memory.textContent = memoryNum;
     }
+    processScreen();
+}
+  
+function processScreen() {
+    entry.style.fontSize = defaultFontSize;
+    resizeEntry();
+    operation.style.fontSize = defaultFontSize / 2;
+    resizeOperation();
 }
 
 function resizeEntry() {
-    if (entry.clientHeight <= entryBoxDefaultHeight) return;
-    let fontSize = window.getComputedStyle(entry).fontSize;
-console.log(fontSize, entry.clientHeight, entryBox.clientHeight);
-    entry.style.fontSize = `${(parseFloat(fontSize) - 1)}px`;
+    if ((entry.clientHeight / entryBox.clientHeight) < 0.8) {
+        return;
+    }
+    const fontSize = window.getComputedStyle(entry).fontSize;
+    entry.style.fontSize = `${(parseFloat(fontSize) - 1) / 16}rem`;
     resizeEntry();
 }
-  
-function processEntry() {
-    entry.style.fontSize = adjustedEntryFontSize;
-    resizeEntry();
+
+function resizeOperation() {
+    if (operation.clientHeight < operationBox.clientHeight) return;
+    let fontSize = window.getComputedStyle(operation).fontSize;
+    operation.style.fontSize = `${(parseFloat(fontSize) - 1) / 16}rem`;
+    resizeOperation();
 }
 
 //  numbers
@@ -514,5 +524,5 @@ function errorHandler(string) {
     isDisabled = true;
 }
 
-// chainOperation bugged
-// chainEqual bugged
+// yeet dot in negate
+// can't dot after negate

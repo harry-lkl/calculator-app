@@ -2,9 +2,9 @@
 @import url(https://fonts.googleapis.com/css?family=Fira+Sans);
 
 :root {
-    --main-color: rgb(19, 227, 0);
+    --main-color: rgb(50, 221, 35);
     --sub-color: rgb(249, 57, 105);
-    --main-accent-color: rgb(110, 254, 97);
+    --main-accent-color: rgb(90, 255, 75);
     --sub-accent-color: rgb(255, 151, 151);
     --widecard-color: rgb(255, 171, 15);
     --border-color: rgb(42, 42, 42);
@@ -87,6 +87,7 @@ button {
 }
 
 #operation, #memory, #entry {
+    margin-left: 1vw;
     margin-right: 1vw;
 }
 
@@ -95,10 +96,12 @@ button {
     justify-content: flex-end;
     align-items: center;
     height: 100%;
+    padding-left: 15%;
 }
 
 #operation {
-    font-size: 2rem;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 
 .spacer {
@@ -287,9 +290,9 @@ button {
         font-size: 2.4rem;
     } */
     
-    #entryBox {
+/*     #entryBox {
         height: 6rem;
-    }
+    } */
 
     #memoryKeys {
         gap: 0.8vw;
