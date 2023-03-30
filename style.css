@@ -100,11 +100,7 @@ button {
 #operation {
     word-break: break-all;
     word-wrap: break-word;
-}
-
-.spacer {
-    height: 100%;
-    width: 100%;
+    text-align: right;
 }
 
 /* #memoryBox {
@@ -129,6 +125,7 @@ button {
 #entry {
     word-break: break-all;
     word-wrap: break-word;
+    text-align: right;
 }
 
 #mainColorBand, #subColorBand {
