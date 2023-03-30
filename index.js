@@ -169,6 +169,9 @@ function resizeOperation() {
 }
 
 function formatScreen() {
+    if (entry.textContent === '') {
+        return;
+    }
     const entryOutput = entry.textContent;
     const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumFractionDigits: 15});
     entry.textContent = localEntryOutput;
