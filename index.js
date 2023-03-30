@@ -538,3 +538,4 @@ function errorHandler(string) {
 }
 
 // xfunction causes empty currentNumStr;
+// need to stop overly long numbers being stored into numStr

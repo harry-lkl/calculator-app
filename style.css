@@ -108,17 +108,17 @@ button {
     padding-left: 15%;
 }
 
-/* #memoryBox {
+#memoryBox {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: 100%;
+    height: 0;
 }
 
 #memory {
-    font-size: 2rem;
+    font-size: 0;
 }
- */
+
 
 #entryBox {
     display: flex;
