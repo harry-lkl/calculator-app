@@ -1,7 +1,7 @@
 const entry = document.getElementById('entry');
 const entryBox = document.getElementById('entryBox')
 const defaultFontSize = '3.5rem';
-const defaultSubFontSize = '3rem';
+const defaultSubFontSize = '2.6rem';
 const history = [];
 /* const memory = document.getElementById('memory'); */
 const operation = document.getElementById('operation');
@@ -173,7 +173,7 @@ function formatScreen() {
         return;
     }
     const entryOutput = entry.textContent;
-    const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumFractionDigits: 15});
+    const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumFractionDigits: 14});
     entry.textContent = localEntryOutput;
     console.log(entryOutput, localEntryOutput);
 }
