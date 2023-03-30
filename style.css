@@ -70,10 +70,10 @@ button {
 #screen {
     display: grid;
     place-self: center;
-/*     grid-template-rows: 4fr 4fr 8fr 1fr 1fr; */
-    grid-template-rows: 6fr 10fr 1fr 1fr;
+    grid-template-rows: 4fr 4fr 8fr 1fr 1fr;
     grid-template-columns: 1fr;
     grid-template-areas: "operationBox"
+                        "subOperationBox"
                         "entryBox"
                         "mainColorBand"
                         "subColorBand";
@@ -101,6 +101,14 @@ button {
     word-break: break-all;
     word-wrap: break-word;
     text-align: right;
+}
+
+#subOperationBox {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    padding-left: 15%;
 }
 
 /* #memoryBox {

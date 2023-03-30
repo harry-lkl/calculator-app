@@ -1,6 +1,6 @@
 const entry = document.getElementById('entry');
 const entryBox = document.getElementById('entryBox')
-const defaultFontSize = '4rem';
+const defaultFontSize = '3.5rem';
 const defaultSubFontSize = '3rem';
 const history = [];
 /* const memory = document.getElementById('memory'); */
@@ -141,8 +141,8 @@ function updateScreen(type) {
         case 'memory':
             memory.textContent = memoryNum;
     }
-    processScreen();
     formatScreen();
+    processScreen();
 }
   
 function processScreen() {
@@ -533,3 +533,5 @@ function errorHandler(string) {
     entry.textContent = (`${string}`);
     isDisabled = true;
 }
+
+// xfunction causes empty currentNumStr;
