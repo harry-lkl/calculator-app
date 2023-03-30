@@ -328,6 +328,15 @@ function checkOperationState() {
 //  x-functions
 function runFunction(id) {
     yeetDot();
+    if (lastKey === '=') {
+        recallResult('current');
+    }
+    if (checkOperationState() === 'no second operand') {
+        restoreCurrentNum();
+    }
+    if (checkOperationState() === 'why') {
+        addNumber('0');
+    }
     switch(id) {
         case 'negate':
             negate();
@@ -343,10 +352,12 @@ function runFunction(id) {
         }
 }
 
+function restoreCurrentNum() {
+    currentOperation.currentNum = currentOperation.storedNum;
+    currentOperation.currentNumStr = currentOperation.currentNum.toString();
+}
+
 function negate() {
-    if (lastKey === '=') {
-        recallResult('current');
-    }
     if (currentOperation.currentNum === '0') {
         return;
     }
@@ -367,9 +378,6 @@ function percent() {
     hasRunUnaryOperation = true;
     let a = currentOperation.storedNum;
     let b = currentOperation.currentNum;
-    if (lastKey === '=') {
-        recallResult('current');
-    }
     if (currentOperation.operator === '+' || currentOperation.operator === '-') {
         currentOperation.currentNum = a * b / 100;
         currentOperation.currentNumStr = `${currentOperation.currentNum}`;
@@ -382,9 +390,6 @@ function percent() {
 
 function squared() {
     hasRunUnaryOperation = true;
-    if (lastKey === '=') {
-        recallResult('current');
-    }
     currentOperation.currentNum **= 2;
     currentOperation.currentNumStr = `(${currentOperation.currentNumStr})²`
     updateScreen('unary');
@@ -392,9 +397,6 @@ function squared() {
 
 function sqrt() {
     hasRunUnaryOperation = true;
-    if (lastKey === '=') {
-        recallResult('current');
-    }
     if (currentOperation.currentNum < 0) {
         return errorHandler(`imagine`);
     }
@@ -539,3 +541,5 @@ function errorHandler(string) {
 
 // xfunction causes empty currentNumStr;
 // need to stop overly long numbers being stored into numStr
+// fix not add number not clearing entry after memory key
+// stop user from inputting numbers too long/format if it gets too long
