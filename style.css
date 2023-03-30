@@ -174,30 +174,6 @@ button {
     color: var(--default-color);
 }
 
-.key.operator {
-    color: var(--main-color);
-}
-
-.key.function {
-    color: var(--main-color);
-}
-
-.key.modifier, #negate {
-    color: var(--widecard-color);
-}
-
-#dot {
-    color: var(--default-color);
-}
-
-.key:hover {
-    border-color: var(--sub-accent-color);
-}
-
-.memory:hover {
-    border-color: var(--main-accent-color);
-}
-
 .key:active {
     box-shadow: 0.1vw 0.1vw;
     position: relative;
@@ -227,6 +203,47 @@ button {
     'wght' 700,
     'GRAD' 0,
     'opsz' 12
+}
+
+
+.key.operator {
+    color: var(--main-color);
+}
+
+.key.function {
+    color: var(--main-color);
+}
+
+.key.modifier, #negate {
+    color: var(--widecard-color);
+}
+
+#dot {
+    color: var(--default-color);
+}
+
+.key:hover {
+    border-color: var(--sub-color);
+}
+
+.key.operator:hover {
+    border-color: var(--main-color);
+}
+
+.key.modifier:hover {
+    border-color: var(--widecard-color);
+}
+
+#negate:hover {
+    border-color: var(--widecard-color);
+}
+
+.key.function:hover {
+    border-color: var(--main-color);
+}
+
+.memory:hover {
+    border-color: var(--sub-color);
 }
 
 /* wide screens */
