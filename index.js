@@ -170,7 +170,9 @@ function resizeOperation() {
 
 function formatScreen() {
     const entryOutput = entry.textContent;
-    console.log(entryOutput);
+    const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumFractionDigits: 15});
+    entry.textContent = localEntryOutput;
+    console.log(entryOutput, localEntryOutput);
 }
 
 //  numbers
@@ -445,7 +447,7 @@ function dot() {
     }
     currentOperation.currentNum += '.';
     currentOperation.currentNumStr += '.';
-    updateScreen('number');
+    entry.textContent += '.';
 }
 
 function yeetDot() {
