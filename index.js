@@ -141,7 +141,7 @@ function updateScreen(type) {
         case 'memory':
             memory.textContent = memoryNum;
     }
-    formatScreen();
+    formatScreen(type);
     processScreen();
 }
   
@@ -175,11 +175,11 @@ function resizeOperation() {
     resizeOperation();
 }
 
-function formatScreen() {
+function formatScreen(type) {
     if (entry.textContent === '') {
         return;
     }
-    if (parseFloat(entry.textContent) === 0) {
+    if (parseFloat(entry.textContent) === 0 && type === 'number') {
         return;
     }
     const entryOutput = entry.textContent;
@@ -196,6 +196,10 @@ function addNumber(key) {
     }
     if (lastKey === '=' || lastKeyClass === 'key memory') {
         resetHandler('all');
+    }
+    const digitCount = currentOperation.currentNum.replace(/\D/g, '').length;
+    if (digitCount >= 15) {
+        return;
     }
     if (currentOperation.currentNum === '0') {
         currentOperation.currentNum = '';
@@ -550,4 +554,4 @@ function errorHandler(string) {
 }
 
 // need to stop overly long numbers being stored into numStr
-// stop user from inputting numbers too long/format if it gets too long
+// yeet dot should follow by parseFloat, currently str can be 0.000
