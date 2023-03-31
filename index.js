@@ -173,7 +173,7 @@ function formatScreen() {
         return;
     }
     const entryOutput = entry.textContent;
-    const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumFractionDigits: 14});
+    const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumSignificantDigits: 15});
     entry.textContent = localEntryOutput;
     console.log(entryOutput, localEntryOutput);
 }
@@ -184,7 +184,7 @@ function addNumber(key) {
     if (lastKeyClass === 'key operator') {
         resetHandler('number');
     }
-    if (lastKey === '=') {
+    if (lastKey === '=' || lastKeyClass === 'key memory') {
         resetHandler('all');
     }
     if (currentOperation.currentNum === '0') {
@@ -539,7 +539,6 @@ function errorHandler(string) {
     isDisabled = true;
 }
 
-// xfunction causes empty currentNumStr;
 // need to stop overly long numbers being stored into numStr
-// fix not add number not clearing entry after memory key
 // stop user from inputting numbers too long/format if it gets too long
+// can't do 0.00
