@@ -153,7 +153,14 @@ function processScreen() {
 }
 
 function resizeEntry() {
-    if (entry.clientHeight < entryBox.clientHeight) {
+    const targetHeight = entryBox.clientHeight;
+    const halfTargetHeight = targetHeight * 0.8;
+    const entryLength = entry.textContent.length;
+    console.log(targetHeight, halfTargetHeight, entryLength)
+    if (entryLength >= 10 && entry.clientHeight < halfTargetHeight) {
+        return
+    }
+    if (entryLength <10 && entry.clientHeight < targetHeight) {
         return;
     }
     let fontSize = window.getComputedStyle(entry).fontSize;
