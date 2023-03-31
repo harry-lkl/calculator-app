@@ -179,6 +179,9 @@ function formatScreen() {
     if (entry.textContent === '') {
         return;
     }
+    if (parseFloat(entry.textContent) === 0) {
+        return;
+    }
     const entryOutput = entry.textContent;
     const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumSignificantDigits: 15});
     entry.textContent = localEntryOutput;
@@ -548,4 +551,3 @@ function errorHandler(string) {
 
 // need to stop overly long numbers being stored into numStr
 // stop user from inputting numbers too long/format if it gets too long
-// can't do 0.00
