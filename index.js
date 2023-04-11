@@ -188,7 +188,7 @@ function formatScreen(type) {
     console.log(entryOutput, localEntryOutput);
 }
 
-function parseCurrentNum() {
+function parseCurrentNumStr() {
     if (currentOperation.currentNumStr.indexOf('(') === -1) { // there is no '('
         return currentOperation.currentNumStr = parseFloat(currentOperation.currentNumStr).toString();
     }
