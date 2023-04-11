@@ -198,10 +198,12 @@ function formatScreen(type) {
     console.log(entryOutput, localEntryOutput);
 }
 
-function parseCurrentNumStr() {
-    if (currentOperation.currentNumStr.indexOf('(') === -1) { // there is no '('
-        return currentOperation.currentNumStr = parseFloat(currentOperation.currentNumStr).toString();
+function processCurrentNum() {
+    if (currentOperation.currentNumStr.indexOf('(') !== -1) { // there is '('
+        return;
     }
+    currentOperation.currentNum = parseFloat(currentOperation.currentNum);
+    currentOperation.currentNumStr = parseFloat(currentOperation.currentNumStr).toString();
 }
 
 //  numbers
@@ -235,7 +237,7 @@ function selectOperator(key) { // + - * ÷ =
         return operate(key);
     }
     yeetDot();
-    parseCurrentNumStr()
+    processCurrentNum()
     if (lastKey === '=') { // continue after equal
         recallResult('stored');
         setOperator(key);
@@ -272,7 +274,7 @@ function recallResult(target) {
 }
 
 function storeNum() {
-    currentOperation.storedNum = currentOperation.currentNum;
+    currentOperation.storedNum = parseFloat(currentOperation.currentNum);
     currentOperation.storedNumStr = currentOperation.currentNumStr;
 }
 
@@ -285,7 +287,7 @@ function chainOperation(key) {
 //  operations
 function operate(key) {
     yeetDot();
-    parseCurrentNumStr()
+    processCurrentNum()
     if (lastKey === '=') {
         chainEqualHandler();
     }
@@ -360,7 +362,7 @@ function checkOperationState() {
 //  x-functions
 function runFunction(id) {
     yeetDot();
-    parseCurrentNumStr()
+    processCurrentNum()
     if (lastKey === '=') {
         recallResult('current');
     }
