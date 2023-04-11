@@ -189,6 +189,9 @@ function formatScreen(type) {
     if (type === 'number') {
         return;
     }
+    if (type === 'backspace' && currentOperation.currentNumStr.endsWith('.')) {
+        return;
+    }
     const entryOutput = entry.textContent;
     const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumSignificantDigits: 15});
     entry.textContent = localEntryOutput;
