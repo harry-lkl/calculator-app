@@ -188,6 +188,12 @@ function formatScreen(type) {
     console.log(entryOutput, localEntryOutput);
 }
 
+function parseCurrentNum() {
+    if (currentOperation.currentNumStr.indexOf('(') === -1) { // there is no '('
+        return currentOperation.currentNumStr = parseFloat(currentOperation.currentNumStr);
+    }
+}
+
 //  numbers
 function addNumber(key) {
     if (hasRunUnaryOperation === true) return;
@@ -219,6 +225,7 @@ function selectOperator(key) { // + - * ÷ =
         return operate(key);
     }
     yeetDot();
+    parseCurrentNum()
     if (lastKey === '=') { // continue after equal
         recallResult('stored');
         setOperator(key);
@@ -268,6 +275,7 @@ function chainOperation(key) {
 //  operations
 function operate(key) {
     yeetDot();
+    parseCurrentNum()
     if (lastKey === '=') {
         chainEqualHandler();
     }
@@ -342,6 +350,7 @@ function checkOperationState() {
 //  x-functions
 function runFunction(id) {
     yeetDot();
+    parseCurrentNum()
     if (lastKey === '=') {
         recallResult('current');
     }
@@ -554,4 +563,6 @@ function errorHandler(string) {
 }
 
 // need to stop overly long numbers being stored into numStr
-// yeet dot should follow by parseFloat, currently str can be 0.000
+// can't add more 0's after 0.x, 2.0 becomes 2, desynced from memory
+
+// 0 . 0 + 2 . 0 skipped dot
