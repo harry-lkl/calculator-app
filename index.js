@@ -156,7 +156,6 @@ function resizeEntry() {
     const targetHeight = entryBox.clientHeight;
     const halfTargetHeight = targetHeight * 0.8;
     const entryLength = entry.textContent.length;
-    console.log(targetHeight, halfTargetHeight, entryLength)
     if (entryLength >= 10 && entry.clientHeight < halfTargetHeight) {
         return
     }
@@ -169,9 +168,17 @@ function resizeEntry() {
 }
 
 function resizeOperation() {
-    if (operation.clientHeight < operationBox.clientHeight) return;
+    const targetHeight = operationBox.clientHeight;
+    const halfTargetHeight = targetHeight * 0.8;
+    const operationLength = operation.textContent.length;
+    if (operationLength >= 10 && operation.clientHeight < halfTargetHeight) {
+        return
+    }
+    if (operationLength <10 && operation.clientHeight < targetHeight) {
+        return;
+    }
     let fontSize = window.getComputedStyle(operation).fontSize;
-    operation.style.fontSize = `${(parseFloat(fontSize) -1) / 16}rem`;
+    operation.style.fontSize = `${(parseFloat(fontSize) - 1) / 16}rem`;
     resizeOperation();
 }
 
@@ -225,7 +232,7 @@ function selectOperator(key) { // + - * ÷ =
         return operate(key);
     }
     yeetDot();
-    parseCurrentNum()
+    parseCurrentNumStr()
     if (lastKey === '=') { // continue after equal
         recallResult('stored');
         setOperator(key);
@@ -275,7 +282,7 @@ function chainOperation(key) {
 //  operations
 function operate(key) {
     yeetDot();
-    parseCurrentNum()
+    parseCurrentNumStr()
     if (lastKey === '=') {
         chainEqualHandler();
     }
@@ -350,7 +357,7 @@ function checkOperationState() {
 //  x-functions
 function runFunction(id) {
     yeetDot();
-    parseCurrentNum()
+    parseCurrentNumStr()
     if (lastKey === '=') {
         recallResult('current');
     }
@@ -446,11 +453,17 @@ function modifyDisplay(id) {
 }
 
 function backspace() {
-    if (currentOperation.currentNum === '' || hasRunUnaryOperation === true) return;
-    if (lastKey === '=') {
+    if (checkOperationState() === 'why') {
         return resetHandler('all');
-    } else if (lastKeyClass === 'key operator') {
+    }
+    if (hasRunUnaryOperation === true) {
+        return;
+    }
+    if (lastKeyClass === 'key operator') {
         return resetHandler('backspace');
+    }
+    if (currentOperation.currentNum === '') {
+        return;
     }
     detach();
     updateScreen('backspace');
@@ -564,4 +577,4 @@ function errorHandler(string) {
     isDisabled = true;
 }
 
-// need to stop overly long numbers being stored into numStr
+// 0.1 backspace 0 becomes 0.0
