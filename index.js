@@ -179,7 +179,7 @@ function formatScreen(type) {
     if (entry.textContent === '') {
         return;
     }
-    if (parseFloat(entry.textContent) === 0 && type === 'number') {
+    if (type === 'number') {
         return;
     }
     const entryOutput = entry.textContent;
@@ -190,7 +190,7 @@ function formatScreen(type) {
 
 function parseCurrentNum() {
     if (currentOperation.currentNumStr.indexOf('(') === -1) { // there is no '('
-        return currentOperation.currentNumStr = parseFloat(currentOperation.currentNumStr);
+        return currentOperation.currentNumStr = parseFloat(currentOperation.currentNumStr).toString();
     }
 }
 
@@ -479,9 +479,11 @@ function dot() {
 }
 
 function yeetDot() {
-    if (!currentOperation.currentNumStr.endsWith('.')) return;
+    if (!currentOperation.currentNumStr.endsWith('.')) {
+        return;
+    }
     currentOperation.currentNum = parseFloat(currentOperation.currentNum);
-    currentOperation.currentNumStr = currentOperation.currentNumStr.slice(0, -1);
+    currentOperation.currentNumStr = currentOperation.currentNumStr.slice(0, -1).toString();
 }
 
 function clearEntry() {
@@ -563,6 +565,3 @@ function errorHandler(string) {
 }
 
 // need to stop overly long numbers being stored into numStr
-// can't add more 0's after 0.x, 2.0 becomes 2, desynced from memory
-
-// 0 . 0 + 2 . 0 skipped dot
