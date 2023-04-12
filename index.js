@@ -195,7 +195,7 @@ function formatEntry(type) {
     if (entry.textContent === '') {
         return;
     }
-    if (type === 'number') {
+    if (entry.textContent.indexOf('.') !== -1) {
         return;
     }
     if (type === 'backspace' && currentOperation.currentNumStr.endsWith('.')) {
@@ -243,7 +243,6 @@ function selectOperator(key) { // + - * ÷ =
         return operate(key);
     }
     yeetDot();
-    processCurrentNum()
     if (lastKey === '=') { // continue after equal
         recallResult('stored');
         setOperator(key);
@@ -293,7 +292,6 @@ function chainOperation(key) {
 //  operations
 function operate(key) {
     yeetDot();
-    processCurrentNum()
     if (lastKey === '=') {
         chainEqualHandler();
     }
@@ -368,7 +366,6 @@ function checkOperationState() {
 //  x-functions
 function runFunction(id) {
     yeetDot();
-    processCurrentNum()
     if (lastKey === '=') {
         recallResult('current');
     }
@@ -589,3 +586,5 @@ function errorHandler(string) {
 }
 
 // 0.1^2^2 will mess screen up
+// need to round currentNumStr in some cases
+// formatScreen doesn't actually work rn
