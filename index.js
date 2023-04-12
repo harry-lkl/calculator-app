@@ -3,7 +3,6 @@ const entryBox = document.getElementById('entryBox')
 const defaultFontSize = '3.5rem';
 const defaultSubFontSize = '2.6rem';
 const history = [];
-/* const memory = document.getElementById('memory'); */
 const operation = document.getElementById('operation');
 const operationBox = document.getElementById('operationBox');
 const operationObj = {
@@ -117,6 +116,7 @@ function resetHandler(key) {
 }
 
 function updateScreen(type) {
+    let updateOperation = false;
     switch(type) {
         case 'number':
             entry.textContent = currentOperation.currentNum;
@@ -124,11 +124,13 @@ function updateScreen(type) {
         case 'operator':
             entry.textContent = `${currentOperation.storedNum}`
             operation.textContent = `${currentOperation.storedNumStr} ${currentOperation.operator}`;
+            updateOperation = true;
             break;
         case '=':
             entry.textContent = currentOperation.result;
             operation.textContent = 
                 `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr} =`;
+            updateOperation = true;
             break;
         case 'backspace':
             entry.textContent = currentOperation.currentNum;
@@ -137,17 +139,20 @@ function updateScreen(type) {
             entry.textContent = currentOperation.currentNum;
             operation.textContent = 
                 `${currentOperation.storedNumStr} ${currentOperation.operator} ${currentOperation.currentNumStr}`;
+            updateOperation = true;
             break;
         case 'memory':
             memory.textContent = memoryNum;
     }
     formatScreen(type);
-    processScreen();
+    processScreen(updateOperation);
 }
   
-function processScreen() {
-    operation.style.fontSize = defaultSubFontSize;
-    resizeOperation();
+function processScreen(updateOperation) {
+    if(updateOperation === true) {
+        operation.style.fontSize = defaultSubFontSize;
+        resizeOperation();
+    }
     entry.style.fontSize = defaultFontSize;
     resizeEntry();
 }
@@ -580,4 +585,3 @@ function errorHandler(string) {
 }
 
 // 0.1^2^2 will mess screen up
-// need to format operation numbers just like entry
