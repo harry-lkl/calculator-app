@@ -192,14 +192,11 @@ function formatScreen(type) {
     if (type === 'backspace' && currentOperation.currentNumStr.endsWith('.')) {
         return;
     }
-    const entryOutput = entry.textContent;
-    const localEntryOutput = parseFloat(entryOutput).toLocaleString("en-US", {maximumSignificantDigits: 15});
-    entry.textContent = localEntryOutput;
-    console.log(entryOutput, localEntryOutput);
+    entry.textContent = parseFloat(entry.textContent).toLocaleString("en-US", {maximumSignificantDigits: 15});
 }
 
 function processCurrentNum() {
-    if (currentOperation.currentNumStr.indexOf('(') !== -1) { // there is '('
+    if (hasRunUnaryOperation === true) {
         return;
     }
     currentOperation.currentNum = parseFloat(currentOperation.currentNum);
@@ -582,4 +579,5 @@ function errorHandler(string) {
     isDisabled = true;
 }
 
-// 0.1 backspace 0 becomes 0.0
+// 0.1^2^2 will mess screen up
+// need to format operation numbers just like entry
