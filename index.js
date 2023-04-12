@@ -144,17 +144,21 @@ function updateScreen(type) {
         case 'memory':
             memory.textContent = memoryNum;
     }
-    formatScreen(type);
-    processScreen(updateOperation);
+    formatEntry(type);
+    if (updateOperation === true) {
+        processOperation();
+    }
+    processEntry(updateOperation);
 }
   
-function processScreen(updateOperation) {
-    if(updateOperation === true) {
-        operation.style.fontSize = defaultSubFontSize;
-        resizeOperation();
-    }
+function processEntry(updateOperation) {
     entry.style.fontSize = defaultFontSize;
     resizeEntry();
+}
+
+function processOperation() {
+    operation.style.fontSize = defaultSubFontSize;
+    resizeOperation();
 }
 
 function resizeEntry() {
@@ -187,7 +191,7 @@ function resizeOperation() {
     resizeOperation();
 }
 
-function formatScreen(type) {
+function formatEntry(type) {
     if (entry.textContent === '') {
         return;
     }
